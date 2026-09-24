@@ -28,12 +28,14 @@
 <link rel="preload" as="image" href="fts-arcade-fixture-atlas.png">
 <link rel="preload" as="image" href="the-Cabinet.png">
 <link rel="preload" as="audio" href="crowd.mp3" type="audio/mpeg">
-<title>FTS Arcade Floor 1.0.0 Extended Cabinets</title>
+<title>FTS Arcade Floor 1.1.1 Fixture Facelift</title>
 <!-- 0.5.2 art fit: external world/fixture/screen atlases + Cabinets01-Cabinets04, exact per-CRT crops. -->
 <!-- 0.7.0 feel pass: outer ring 430->510, ceiling 132->192, jump 132->156. Sprint stays 22 mph. Cabinet layout frozen. -->
 <!-- 0.8.1 movement pass: threshold-based Apex-inspired slide, landing-slide buffer, momentum-preserving slide jumps and air steering. -->
 <!-- 0.9.0 soundscape pass: four cardinal crowd zones, HRTF panning, opposite-quadrant muting, random-offset adjacent-zone handoffs. -->
 <!-- 0.9.1 roof pass: procedural celestial-koi point schools orbit just beneath the ceiling annulus; depth-tested, no sprite assets. -->
+<!-- 1.1.1: vending machines, jukebox and token machine are now flat wall panels (no carcass, no collision); the token link and all ids/kinds are unchanged. -->
+<!-- 1.1.0 fixture facelift: 4788x3812 cut-out fixture atlas (17 pieces), stage + DJ booth removed, teller/ad art -> food service window, 9 posters on outer AND core walls, flush wall mounting, per-material hi-res textures + mips. Cabinet layout, movement, ads, exits, links untouched. -->
 <!-- 0.9.2 flush-koi pass: schools now lie ON the ceiling plane and span the whole annulus (square core hole respected). No more centroid-frame collapse. -->
 
 <!-- ── FA3D Meta ─────────────────────────────────────────── -->
@@ -119,7 +121,7 @@ const RUNTIME_ERRORS=[];
 addEventListener('error',e=>{if(e.error||e.message)RUNTIME_ERRORS.push(String(e.error&&e.error.stack||e.message||e.error));});
 addEventListener('unhandledrejection',e=>RUNTIME_ERRORS.push(String(e.reason&&e.reason.stack||e.reason||'unhandled rejection')));
 
-const VERSION='fts-arcade-floor-1.0.0-extended-cabinets';
+const VERSION='fts-arcade-floor-1.1.1-fixture-facelift';
 const TAU=Math.PI*2, DEG=Math.PI/180;
 // Dimensional contract: 1 engine unit = 1 inch.
 // =============================================================================
@@ -351,10 +353,38 @@ const ASSET_FILES=ASSET_NAMES;
 const WORLD_RECTS={
  WALL_MARBLE:[16,16,64,64],WALL_BLACK_GOLD:[96,16,64,64],WALL_LIGHT:[176,16,64,64],WALL_RIB:[256,16,64,64],WALL_GOLD:[336,16,64,64],
  FLOOR_BLACK:[416,16,64,64],FLOOR_ALT:[496,16,64,64],FLOOR_RED:[576,16,64,64],OFFICE_WOOD:[656,16,64,64],OFFICE_DARK:[736,16,64,64],
- STAGE_RED:[816,16,64,64],BRASS_PANEL:[896,16,64,64],CEILING_DARK:[16,96,64,64],EXIT:[96,96,64,64],OFFICE:[176,96,64,64],
+ STAGE_RED:[816,16,64,64] /* retired: stage removed in 1.1.0; tile kept so the world-atlas contract is untouched */,BRASS_PANEL:[896,16,64,64],CEILING_DARK:[16,96,64,64],EXIT:[96,96,64,64],OFFICE:[176,96,64,64],
  STAGE:[256,96,64,64],DJ:[336,96,64,64],FTS:[416,96,64,64],NEON_PINK:[496,96,64,64],NEON_BLUE:[576,96,64,64],NEON_GOLD:[656,96,64,64]
 };
-const FIXTURE_RECTS={VEND_DRINK:[16,16,64,64],VEND_SNACK:[96,16,64,64],JUKEBOX:[176,16,64,64],WHITEBOARD:[256,16,64,64],BULLETIN:[336,16,64,64],TOKEN:[416,16,64,64],POSTER_1:[496,16,64,64],POSTER_2:[576,16,64,64],POSTER_3:[656,16,64,64],AD_SPACE:[736,16,64,64],AD_DEAL:[816,16,64,64],WAYFIND:[896,16,64,64],OFFICE_DOOR:[16,96,64,64],STAGE_SIGN:[96,96,64,64],DJ_SIGN:[176,96,64,64],POSTER_4:[256,96,64,64]};
+// 1.1.0 FIXTURE ATLAS -------------------------------------------------------------------------
+// fts-arcade-fixture-atlas.png is now a 4788x3812 cut-out sheet (was 1024x256 of 64px tiles).
+// Rects are MEASURED (alpha connected-components), never eyeballed. The atlas has label text baked
+// in above each piece: the door and Poster 8 sit directly under theirs, so those two rects start
+// BELOW the text band. Rects are in atlas pixels and are scaled by (naturalWidth / 4788) at crop
+// time, so a down-scaled copy of the SAME layout drops in with no code change.
+// h = authored world height in inches. Width always follows the art aspect: nothing is stretched.
+const FIXTURE_ATLAS_META={width:4788,height:3812};
+const FIXTURE_TEX={texelsPerInch:5,maxSide:384,mips:3}; // N=1 hypotheses: judge by walking up to a poster
+const FIXTURE_ART={
+ VEND_SNACK:{rect:[37,247,493,811],h:72,matte:true}, // source has an OPAQUE white backdrop; edge-connected white is keyed out at bake
+ VEND_DRINK:{rect:[622,252,474,801],h:72},
+ JUKEBOX:{rect:[1161,241,444,826],h:60},
+ TOKEN:{rect:[1754,257,289,796],h:68},
+ BULLETIN:{rect:[2173,506,588,392],h:32},
+ WHITEBOARD:{rect:[2854,450,614,448],h:35},
+ OFFICE_DOOR:{rect:[3687,270,471,993],h:82},
+ SERVICE_WINDOW:{rect:[3664,2679,1123,853],h:39}, // replaces the teller window
+ POSTER_1:{rect:[14,1339,678,875],h:44},
+ POSTER_2:{rect:[803,1280,705,999],h:46},
+ POSTER_3:{rect:[1587,1319,621,931],h:44},
+ POSTER_4:{rect:[2342,1319,686,931],h:44},
+ POSTER_5:{rect:[3150,1319,609,943],h:44},
+ POSTER_6:{rect:[0,2406,784,1178],h:44},
+ POSTER_7:{rect:[893,2433,726,1379],h:52},
+ POSTER_8:{rect:[1749,2449,889,1130],h:44},
+ POSTER_9:{rect:[2739,2482,760,1121],h:46}
+};
+function artSize(key){const a=FIXTURE_ART[key],r=a.rect;return{w:a.h*r[2]/r[3],h:a.h};}
 const SKIN_PARTS=['MARQUEE','LEFT','RIGHT','CONTROL','FRONT'];
 const PACKAGE_SKIN_PARTS=['MARQUEE','LEFT','RIGHT','SCREEN','CONTROL','FRONT'];
 const PACKAGE_ATLAS_META={width:1024,height:1024};
@@ -428,7 +458,11 @@ const MATERIALS=[];
 const MAT={};
 function mat(name,sheet,rect,opts){MAT[name]=MATERIALS.length;MATERIALS.push(Object.assign({name,sheet,rect,stretch:false},opts||{}));return MAT[name];}
 Object.keys(WORLD_RECTS).forEach(k=>mat(k,'world',WORLD_RECTS[k]));
-Object.keys(FIXTURE_RECTS).forEach(k=>mat('FIX_'+k,'fixture',FIXTURE_RECTS[k]));
+Object.keys(FIXTURE_ART).forEach(k=>{
+ // Tile size follows the piece's WORLD size so texels stay square: ~5 texels/in, capped.
+ const a=FIXTURE_ART[k],F=artSize(k),sc=Math.min(FIXTURE_TEX.texelsPerInch,FIXTURE_TEX.maxSide/Math.max(F.w,F.h));
+ mat('FIX_'+k,'fixture',a.rect,{stretch:true,hq:true,matte:!!a.matte,tw:Math.max(16,Math.round(F.w*sc)),th:Math.max(16,Math.round(F.h*sc)),mips:FIXTURE_TEX.mips});
+});
 for(let cc=65;cc<=90;cc++){
  const L=String.fromCharCode(cc);
  for(const p of SKIN_PARTS){const a=cabinetArt(L,p);mat('SKIN_'+L+'_'+p,a.sheet,a.rect,{stretch:true});}
@@ -558,19 +592,22 @@ const CABINET_ROSTER=[
 // Layout/content edits belong here first. Geometry builders consume this manifest.
 // Angles are degrees; positions are inches; links/CTAs are explicit data.
 // -----------------------------------------------------------------------------
+function wallArt(key,cz){const F=artSize(key),r=v=>Math.round(v*100)/100;return{w:r(F.w),z0:r(cz-F.h/2),z1:r(cz+F.h/2)};}
 const AUTHORING={
  schema:'fts-arcade-floor-authoring-1',
  officeClearance:10,
- // Perimeter contract. Posters, ad units, exits, vending, the token machine and
- // the whole stage ensemble were authored in absolute inches against a 430 in
- // outer wall. buildLevel() shifts them radially by (RING.outer - authoredOuter)
- // so they stay ON the wall when the ring is widened; without this the wall
- // panels would hang 80 in out in open air.
+ // Perimeter contract. The three world EXITS are still authored in absolute inches
+ // against a 430 in outer wall and shifted radially by (RING.outer - authoredOuter).
+ // Everything else on the wall (amenities, ad windows, posters) is mounted FLUSH from
+ // facet geometry - see the mount helpers in buildLevel() - so nothing hangs in air.
  // Cabinet pods/singles and the office entry are floor/core furniture and are
  // deliberately NOT shifted - that is what keeps the layout frozen.
  perimeter:{authoredOuter:430},
  packing:{sideGap:.5,backGap:.5},
- stageRotateDeg:22.5,
+ // 1.1.0: the stage, DJ booth, speakers, STAGE_SIGN and DJ_SIGN are gone. Every destination they
+ // linked (TOURNAMENT, frymatic.us) is still reachable via cabinets V/Y/Z and the posters below.
+ posterCenterZ:64,   // eye is 69 in; posters centre just under it
+ windowCenterZ:60,
  cabinetPods:[
   {front:['C','A'],back:['D','B'],cx:-300,cy:210,deg:60},
   {front:['F','G'],back:['E','H'],cx:300,cy:210,deg:120},
@@ -594,26 +631,39 @@ const AUTHORING={
   {letter:'AD',deg:270,r:400},
   {letter:'AE',deg:290,r:400}
  ],
+ // Office entry (core south face, faces the spawn). Sizes come from the art aspect (artSize).
  officeEntry:[
-  {id:'WHITEBOARD',x:-53,y:-119,deg:-90,w:48,z0:36,z1:80,mat:'FIX_WHITEBOARD',label:'WHITEBOARD',url:'https://frymatic.us/FTSArcade/',cta:'VIEW ARCADE NOTES'},
-  {id:'OFFICE_DOOR',x:0,y:-119,deg:-90,w:50,z0:0,z1:82,mat:'FIX_OFFICE_DOOR',label:'OFFICE',url:'https://frymatic.us',cta:''},
-  {id:'BULLETIN',x:53,y:-119,deg:-90,w:48,z0:36,z1:80,mat:'FIX_BULLETIN',label:'BULLETIN BOARD',url:'https://frymatic.us/FTSArcade//SUBMISSION',cta:'VIEW EVENTS'}
+  Object.assign({id:'WHITEBOARD',x:-50,y:-119,deg:-90,mat:'FIX_WHITEBOARD',label:'WHITEBOARD',url:'https://frymatic.us/FTSArcade/',cta:'VIEW ARCADE NOTES'},wallArt('WHITEBOARD',58)),
+  Object.assign({id:'OFFICE_DOOR',x:0,y:-119,deg:-90,mat:'FIX_OFFICE_DOOR',label:'OFFICE',url:'https://frymatic.us',cta:''},wallArt('OFFICE_DOOR',41)),
+  Object.assign({id:'BULLETIN',x:50,y:-119,deg:-90,mat:'FIX_BULLETIN',label:'BULLETIN BOARD',url:'https://frymatic.us/FTSArcade/SUBMISSION',cta:'VIEW EVENTS'},wallArt('BULLETIN',58))
  ],
- wallPortals:[
-  {id:'STAGE_SIGN',x:0,y:387,deg:-90,w:92,z0:78,z1:106,mat:'FIX_STAGE_SIGN',label:'PERFORMANCE ZONE',url:'https://frymatic.us/FTSArcade/TOURNAMENT',cta:'VIEW EVENTS'},
-  {id:'DJ_SIGN',x:104,y:320,deg:-90,w:54,z0:48,z1:68,mat:'FIX_DJ_SIGN',label:'DJ / PERFORMANCE',url:'https://frymatic.us',cta:'OPEN ARCADE HUB'}
+ wallPortals:[], // STAGE_SIGN / DJ_SIGN retired with the stage; the mechanism stays for future wall portals
+ // Amenities are flat wall panels (art only, standing on the floor, no collision), flush to an outer-wall
+ // facet. facet = 0..31 (facet i is centred on (i+.5)*11.25 deg and is 99.9 in long); off = inches along
+ // the facet (+ = counter-clockwise). Width/height come from the art (artSize).
+ amenities:[
+  {id:'VEND_DRINK',label:'DRINK VENDING',art:'VEND_DRINK',facet:17,off:0},
+  {id:'VEND_SNACK',label:'SNACK VENDING',art:'VEND_SNACK',facet:30,off:0},
+  {id:'JUKEBOX',label:'JUKEBOX',art:'JUKEBOX',facet:8,off:0},
+  {id:'TOKEN_VEND',label:'FTS TOKEN VENDING',art:'TOKEN',facet:22,off:0,kind:'token',url:PORTALS.tokens,cta:'BUY TOKENS'}
  ],
+ // Eight programmatic ad units (FTS-RING-01..08, ascending angle). Skinned as food service windows.
+ adFacets:[1,5,10,14,18,21,25,29],
+ // Ten poster records = ten destinations (content inventory: art + link + CTA). Labels and URLs are
+ // VERBATIM from 1.0.0, including two suspected typos left alone on purpose (REDEYE's label reads
+ // 'POSTER 1' twice; PLINKO links '../PLINKo' - GitHub Pages is case-sensitive). `art` picks one of the nine posters (the taco appears twice: HUB and
+ // PLINKO, far apart). wall:'outer' -> facet/off; wall:'core' -> face N|E|S|W / off (x for N,S; y for E,W).
  posters:[
-  {deg:8,label:'POSTER 1',url:'../BRAZENTOWER',cta:'CLIMB THE TOWER'},
-  {deg:82,label:'POSTER 1',url:'../REDEYE/',cta:'ENTER RED EYE'},
-  {deg:98,label:'POSTER 3',url:'../TOURNAMENT',cta:'VIEW TOURNAMENTS'},
-  {deg:172,label:'POSTER 4',url:'https://frymatic.us/FTSArcade/',cta:'OPEN ARCADE HUB'},
-  {deg:188,label:'POSTER 5',url:'../PINBALL',cta:'PLAY MOONSHOT'},
-  {deg:208,label:'POSTER 6',url:'../GRIDWARDEN',cta:'PLAY GRID WARDEN'},
-  {deg:252,label:'POSTER 7',url:'../CAVERACER',cta:'RACE CAVE RACER'},
-  {deg:288,label:'POSTER 8',url:'../PLINKo',cta:'DROP INTO PLINKO'},
-  {deg:332,label:'POSTER 9',url:'../TOURNAMENT',cta:'OPEN EVENT SERIES'},
-  {deg:352,label:'POSTER 10',url:'https://frymatic.us/',cta:'OPEN BRAZEN INDEX'}
+  {art:'POSTER_1',wall:'outer',facet:12,off:0,label:'POSTER 1',url:'../BRAZENTOWER',cta:'CLIMB THE TOWER'},
+  {art:'POSTER_8',wall:'outer',facet:7,off:0,label:'POSTER 1',url:'../REDEYE/',cta:'ENTER RED EYE'},
+  {art:'POSTER_2',wall:'outer',facet:3,off:0,label:'POSTER 3',url:'../TOURNAMENT',cta:'VIEW TOURNAMENTS'},
+  {art:'POSTER_5',wall:'core',face:'S',off:96,label:'POSTER 4',url:'https://frymatic.us/FTSArcade/',cta:'OPEN ARCADE HUB'},
+  {art:'POSTER_7',wall:'outer',facet:20,off:0,label:'POSTER 5',url:'../PINBALL',cta:'PLAY MOONSHOT'},
+  {art:'POSTER_3',wall:'core',face:'N',off:-89.5,label:'POSTER 6',url:'../GRIDWARDEN',cta:'PLAY GRID WARDEN'},
+  {art:'POSTER_6',wall:'core',face:'N',off:89.5,label:'POSTER 7',url:'../CAVERACER',cta:'RACE CAVE RACER'},
+  {art:'POSTER_5',wall:'outer',facet:27,off:0,label:'POSTER 8',url:'../PLINKo',cta:'DROP INTO PLINKO'},
+  {art:'POSTER_9',wall:'core',face:'E',off:80,label:'POSTER 9',url:'../TOURNAMENT',cta:'OPEN EVENT SERIES'},
+  {art:'POSTER_4',wall:'core',face:'S',off:-96,label:'POSTER 10',url:'https://frymatic.us/',cta:'OPEN BRAZEN INDEX'}
  ]
 };
 
@@ -658,7 +708,8 @@ function cabinetSolid(letter,slot,x,y,faceAng,title,url,screenIndex,target='_bla
   ]};
 }
 function boxSolid(id,x,y,ang,w,d,h,front,side,opts){return Object.assign({id,kind:'box',x,y,ang,w,d,collision:true,light:.96,parts:[{w,d,of:0,z0:0,z1:h,front,side,back:side}]},opts||{});}
-function panelSolid(id,x,y,ang,w,z0,z1,front,opts){return Object.assign({id,kind:'panel',x,y,ang,w,d:2,collision:false,light:1,parts:[{w,d:2,of:0,z0,z1,front,side:MAT.WALL_RIB,back:MAT.WALL_RIB}]},opts||{});}
+// Panels carry cut-out art, so the front is STRETCHED to the panel face (art aspect == face aspect by construction).
+function panelSolid(id,x,y,ang,w,z0,z1,front,opts){return Object.assign({id,kind:'panel',x,y,ang,w,d:2,collision:false,light:1,parts:[{w,d:2,of:0,z0,z1,front,side:MAT.WALL_RIB,back:MAT.WALL_RIB,stretch:true}]},opts||{});}
 function dealUrl(unit){return PORTALS.adDeal+'?inventory='+encodeURIComponent(unit)+'&source=fts-arcade-floor';}
 
 function buildLevel(){
@@ -669,9 +720,8 @@ function buildLevel(){
   if(Math.max(Math.abs(mx),Math.abs(my))<RING.inner+14){ln.mid=MAT.OFFICE_DARK;ln.tag='OFFICE_CORE';}
   else{const ang=Math.atan2(my,mx);ln.mid=Math.abs(Math.sin(ang*3))>.72?MAT.WALL_BLACK_GOLD:MAT.WALL_RIB;ln.tag='OUTER_WALL';}
  }
- // Radial shift for wall-anchored dressing only. See AUTHORING.perimeter.
- // To pin any one group back to its authored radius, drop the wallR() call on
- // that line - each group is a single independent edit.
+ // Radial shift, now used ONLY by the three world exits (see AUTHORING.perimeter).
+ // Amenities, ad windows and posters mount flush from facet geometry instead.
  const wallShift=RING.outer-AUTHORING.perimeter.authoredOuter;
  const wallR=r=>r+wallShift;
  const addCab=(letter,x,y,ang)=>{const row=CABINET_ROSTER.find(r=>r[0]===letter),slot=CABINET_ROSTER.findIndex(r=>r[0]===letter)+1,c=cabinetSolid(letter,slot,x,y,ang,row[1],row[2],row[3],row[4]);map.solids.push(c);map.cabinets.push(c);if(c.url)map.targets.push(c);};
@@ -682,33 +732,27 @@ function buildLevel(){
  AUTHORING.cabinetSingles.forEach(c=>addCab(c.letter,c.x,c.y,c.deg*DEG));
  AUTHORING.cabinetAdditions.forEach(c=>{const a=c.deg*DEG;addCab(c.letter,Math.cos(a)*c.r,Math.sin(a)*c.r,a+Math.PI);});
 
- // Counter-clockwise stage sweep: rotate the performance zone along the perimeter
- // to clear more north-floor dance space while preserving the ensemble.
- const stageDelta=(AUTHORING.stageRotateDeg||0)*DEG;
- const addStageBox=(id,x,y,ang,w,d,h,front,side)=>{const p=rotatePose(x,wallR(y),ang,stageDelta);const s=boxSolid(id,p.x,p.y,p.ang,w,d,h,front,side,{collision:true});map.solids.push(s);return s;};
- addStageBox('STAGE_BACK',0,366,-Math.PI/2,190,16,96,MAT.STAGE_RED,MAT.WALL_BLACK_GOLD);
- addStageBox('STAGE_LIP',0,326,-Math.PI/2,210,48,18,MAT.STAGE,MAT.WALL_GOLD);
- addStageBox('DJ_BOOTH',104,304,-Math.PI/2,62,26,45,MAT.DJ,MAT.WALL_RIB);
- addStageBox('SPEAKER_L',-82,337,-Math.PI/2,24,20,74,MAT.WALL_RIB,MAT.WALL_BLACK_GOLD);
- addStageBox('SPEAKER_R',82,337,-Math.PI/2,24,20,74,MAT.WALL_RIB,MAT.WALL_BLACK_GOLD);
+ // ---- 1.1.0 wall mounting -------------------------------------------------------------------
+ // Outer wall = the 32 flat facets (facet i centred on (i+.5)*11.25 deg). Core = the four faces of the
+ // office block. Poses are DERIVED from that geometry, so every mount is flush by construction and the
+ // tests can prove it. (The 1.0.0 polar placement left posters ~10 in and vending ~40 in off the wall.)
+ const WALL_CLEAR=.25;
+ const facetFrame=i=>{const am=(i+.5)*TAU/RING.sides;return{am,apo:RING.outer*Math.cos(Math.PI/RING.sides),nx:Math.cos(am),ny:Math.sin(am),tx:-Math.sin(am),ty:Math.cos(am)};};
+ const outerPose=(facet,off,depth)=>{const f=facetFrame(facet),r=f.apo-WALL_CLEAR-depth/2;return{x:f.nx*r+f.tx*off,y:f.ny*r+f.ty*off,ang:f.am+Math.PI};};
+ const corePose=(face,off,depth)=>{const c=RING.inner+depth/2;return face==='N'?{x:off,y:c,ang:Math.PI/2}:face==='S'?{x:off,y:-c,ang:-Math.PI/2}:face==='E'?{x:c,y:off,ang:0}:{x:-c,y:off,ang:Math.PI};};
 
- const addPortalPanel=(d)=>{const stageDress=d.id==='STAGE_SIGN'||d.id==='DJ_SIGN';const pose=stageDress?rotatePose(d.x,wallR(d.y),d.deg*DEG,stageDelta):{x:d.x,y:d.y,ang:d.deg*DEG};const p=panelSolid(d.id,pose.x,pose.y,pose.ang,d.w,d.z0,d.z1,MAT[d.mat],{kind:'dressing',label:d.label,url:d.url||'',cta:d.cta||'OPEN',target:'_blank'});map.solids.push(p);map.fixtures.push(p);if(p.url)map.targets.push(p);return p;};
+ const addPortalPanel=(d)=>{const pose={x:d.x,y:d.y,ang:d.deg*DEG};const p=panelSolid(d.id,pose.x,pose.y,pose.ang,d.w,d.z0,d.z1,MAT[d.mat],{kind:'dressing',label:d.label,url:d.url||'',cta:d.cta||'OPEN',target:'_blank',mount:'core'});map.solids.push(p);map.fixtures.push(p);if(p.url)map.targets.push(p);return p;};
  AUTHORING.wallPortals.forEach(addPortalPanel);
- AUTHORING.officeEntry.forEach(d=>{if(d.id==='OFFICE_DOOR'){map.solids.push(panelSolid(d.id,d.x,d.y,d.deg*DEG,d.w,d.z0,d.z1,MAT[d.mat],{collision:false,label:d.label}));}else addPortalPanel(d);});
+ AUTHORING.officeEntry.forEach(d=>{if(d.id==='OFFICE_DOOR'){map.solids.push(panelSolid(d.id,d.x,d.y,d.deg*DEG,d.w,d.z0,d.z1,MAT[d.mat],{collision:false,label:d.label,mount:'core'}));}else addPortalPanel(d);});
 
- // Freestanding fixtures.
- const fixture=(id,label,deg,r,w,d,h,matFront,kind='fixture',url='',target='_blank',cta='OPEN')=>{const a=deg*DEG,R=wallR(r),x=Math.cos(a)*R,y=Math.sin(a)*R,s=boxSolid(id,x,y,a+Math.PI,w,d,h,matFront,MAT.WALL_RIB,{kind,label,url,target,cta,collision:true});map.solids.push(s);map.fixtures.push(s);if(url)map.targets.push(s);return s;};
- fixture('VEND_DRINK','DRINK VENDING',198,372,30,28,72,MAT.FIX_VEND_DRINK);
- fixture('VEND_SNACK','SNACK VENDING',342,372,30,28,72,MAT.FIX_VEND_SNACK);
- fixture('JUKEBOX','JUKEBOX',97,294,34,22,60,MAT.FIX_JUKEBOX);
- fixture('TOKEN_VEND','FTS TOKEN VENDING',258,344,28,24,68,MAT.FIX_TOKEN,'token',PORTALS.tokens,'_blank','BUY TOKENS');
+ // Amenities: flat wall panels, floor to art height (ids, kinds and the token link are unchanged from 1.0.0).
+ AUTHORING.amenities.forEach(a=>{const F=artSize(a.art),p=outerPose(a.facet,a.off||0,2),b=panelSolid(a.id,p.x,p.y,p.ang,F.w,0,F.h,MAT['FIX_'+a.art],{kind:a.kind||'fixture',label:a.label,url:a.url||'',target:'_blank',cta:a.cta||'OPEN',mount:'outer',art:a.art});map.solids.push(b);map.fixtures.push(b);if(b.url)map.targets.push(b);});
 
- // Every poster is now content inventory: art + destination + CTA live in AUTHORING.posters.
- AUTHORING.posters.forEach((d,i)=>{const a=d.deg*DEG,r=wallR(416),x=Math.cos(a)*r,y=Math.sin(a)*r,p=panelSolid('POSTER_'+String(i+1).padStart(2,'0'),x,y,a+Math.PI,30,42,86,MAT['FIX_POSTER_'+(1+i%4)],{kind:'dressing',label:d.label,url:d.url,cta:d.cta,target:'_blank'});map.solids.push(p);map.fixtures.push(p);map.targets.push(p);});
+ // Every poster is content inventory: art + destination + CTA live in AUTHORING.posters.
+ AUTHORING.posters.forEach((d,i)=>{const F=artSize(d.art),z0=AUTHORING.posterCenterZ-F.h/2,core=d.wall==='core',pose=core?corePose(d.face,d.off,2):outerPose(d.facet,d.off||0,2),p=panelSolid('POSTER_'+String(i+1).padStart(2,'0'),pose.x,pose.y,pose.ang,F.w,z0,z0+F.h,MAT['FIX_'+d.art],{kind:'dressing',label:d.label,url:d.url,cta:d.cta,target:'_blank',mount:core?'core':'outer',art:d.art});map.solids.push(p);map.fixtures.push(p);map.targets.push(p);});
 
- // Programmatic ad inventory. Every unit has a stable ID and its own deal-form URL.
- const adAngles=[14,76,104,166,194,244,296,346];
- adAngles.forEach((deg,i)=>{const unit='FTS-RING-'+String(i+1).padStart(2,'0'),a=deg*DEG,r=wallR(420),x=Math.cos(a)*r,y=Math.sin(a)*r,p=panelSolid('AD_'+unit,x,y,a+Math.PI,32,34,92,i%2?MAT.FIX_AD_DEAL:MAT.FIX_AD_SPACE,{kind:'ad',label:'AD SPACE '+unit,url:dealUrl(unit),target:'_blank',inventory:unit,cta:'OPEN DEAL FORM'});map.solids.push(p);map.ads.push(p);map.targets.push(p);});
+ // Programmatic ad inventory. Every unit has a stable ID and its own deal-form URL. Skinned as food service windows.
+ AUTHORING.adFacets.forEach((facet,i)=>{const unit='FTS-RING-'+String(i+1).padStart(2,'0'),F=artSize('SERVICE_WINDOW'),z0=AUTHORING.windowCenterZ-F.h/2,pose=outerPose(facet,0,2),p=panelSolid('AD_'+unit,pose.x,pose.y,pose.ang,F.w,z0,z0+F.h,MAT.FIX_SERVICE_WINDOW,{kind:'ad',label:'AD SPACE '+unit,url:dealUrl(unit),target:'_blank',inventory:unit,cta:'OPEN DEAL FORM',mount:'outer',art:'SERVICE_WINDOW'});map.solids.push(p);map.ads.push(p);map.targets.push(p);});
 
  // Three world exits: all use absolute URLs and always confirm before navigation.
  const exitDefs=[
@@ -722,7 +766,6 @@ function buildLevel(){
 }
 
 function basis(a){return{f:{x:Math.cos(a),y:Math.sin(a)},r:{x:Math.sin(a),y:-Math.cos(a)}};}
-function rotatePose(x,y,ang,delta){const c=Math.cos(delta),s=Math.sin(delta);return{x:x*c-y*s,y:x*s+y*c,ang:ang+delta};}
 function obbPush(px,py,s,rad){const b=basis(s.ang),dx=px-s.x,dy=py-s.y,hf=s.d/2+rad,hr=s.w/2+rad;let fr=dx*b.f.x+dy*b.f.y,rr=dx*b.r.x+dy*b.r.y;if(Math.abs(fr)>=hf||Math.abs(rr)>=hr)return null;const pf=hf-Math.abs(fr),pr=hr-Math.abs(rr);if(pf<pr){const q=fr===0?1:Math.sign(fr);fr=q*hf;}else{const q=rr===0?1:Math.sign(rr);rr=q*hr;}return{x:s.x+b.f.x*fr+b.r.x*rr,y:s.y+b.f.y*fr+b.r.y*rr};}
 function solidAabb(s){const b=basis(s.ang),hx=Math.abs(b.f.x)*(s.d/2)+Math.abs(b.r.x)*(s.w/2),hy=Math.abs(b.f.y)*(s.d/2)+Math.abs(b.r.y)*(s.w/2);return{x1:s.x-hx,x2:s.x+hx,y1:s.y-hy,y2:s.y+hy};}
 function solidCorners(s){const b=basis(s.ang),hf=s.d/2,hr=s.w/2;return[
@@ -956,21 +999,53 @@ const RenderCore={
 };
 
 const canvas=document.getElementById('c'),ctx=canvas.getContext('2d'),telemetry=document.getElementById('telemetry'),promptEl=document.getElementById('prompt'),lockEl=document.getElementById('lock'),modal=document.getElementById('modal'),modalEyebrow=document.getElementById('modalEyebrow'),modalTitle=document.getElementById('modalTitle'),modalCopy=document.getElementById('modalCopy'),confirmBtn=document.getElementById('confirmBtn'),cancelBtn=document.getElementById('cancelBtn'),mapBtn=document.getElementById('mapBtn'),audioBtn=document.getElementById('audioBtn');
-const IMG={world:null,cab1:null,cab2:null,cab3:null,cab4:null,screen:null,fixture:null,cabinetRef:null,ready:false,artBaked:false,sourcesReleased:false,meta:{},errors:[]};for(const k of PACKAGE_ASSET_KEYS)IMG[k]=null;let baseBank=[],texBank=[],flatBank=[],shadeTileBank=[],planePixelBank=[],RW=0,RH=0,RSCALE=1,dl=null,showMap=false,activeTarget=null,modalTarget=null,VIGNETTE=null;const PAINT_ORDER=[];const PLANE_SOFT={canvas:null,ctx:null,image:null,u32:null,width:0,height:0};const PLANE_STATS={patternTransforms:0,softwareSpans:0,softwarePixels:0};
+const IMG={world:null,cab1:null,cab2:null,cab3:null,cab4:null,screen:null,fixture:null,cabinetRef:null,ready:false,artBaked:false,sourcesReleased:false,meta:{},errors:[]};for(const k of PACKAGE_ASSET_KEYS)IMG[k]=null;let baseBank=[],texBank=[],flatBank=[],shadeTileBank=[],planePixelBank=[],mipBank=[],mipSrcBank=[],RW=0,RH=0,RSCALE=1,dl=null,showMap=false,activeTarget=null,modalTarget=null,VIGNETTE=null;const PAINT_ORDER=[];const PLANE_SOFT={canvas:null,ctx:null,image:null,u32:null,width:0,height:0};const PLANE_STATS={patternTransforms:0,softwareSpans:0,softwarePixels:0};
 
 function loadImage(src,label){
  const candidates=Array.isArray(src)?src:[src];
  return new Promise(resolve=>{let i=0;const attempt=()=>{if(i>=candidates.length){IMG.errors.push(label||'asset');resolve(null);return;}const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>{i++;attempt();};im.src=candidates[i];};attempt();});
 }
-function cropCanvas(im,r,sheet){const cv=document.createElement('canvas');cv.width=cv.height=64;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;if(sheet==='solid'){g.fillStyle='#03050a';g.fillRect(0,0,64,64);}else if(im&&r)g.drawImage(im,r[0],r[1],r[2],r[3],0,0,64,64);else{g.fillStyle='#222833';g.fillRect(0,0,64,64);g.strokeStyle='#ff4a98';g.strokeRect(2,2,60,60);}return cv;}
+// Key out backdrop white that TOUCHES the crop border (flood fill). Whites enclosed by the piece's own
+// outline (labels, highlights) are never reached. Returns false when the canvas is tainted (file://):
+// the piece then simply keeps its white backdrop instead of throwing.
+function matteEdgeWhite(cv,floor){
+ const w=cv.width,h=cv.height,g=cv.getContext('2d',{willReadFrequently:true});let img;
+ try{img=g.getImageData(0,0,w,h);}catch(e){return false;}
+ const p=img.data,seen=new Uint8Array(w*h),st=new Int32Array(w*h);let sp=0;
+ const bg=i=>{const o=i<<2;return p[o+3]<24||(p[o]>=floor&&p[o+1]>=floor&&p[o+2]>=floor);};
+ const push=i=>{if(!seen[i]&&bg(i)){seen[i]=1;st[sp++]=i;}};
+ for(let x=0;x<w;x++){push(x);push((h-1)*w+x);}for(let y=0;y<h;y++){push(y*w);push(y*w+w-1);}
+ while(sp){const i=st[--sp],x=i%w,y=(i/w)|0;if(x>0)push(i-1);if(x<w-1)push(i+1);if(y>0)push(i-w);if(y<h-1)push(i+w);}
+ // one-pixel halo: bright anti-aliased pixels touching the keyed region are backdrop bleed, feather them out
+ const halo=[];
+ for(let i=0;i<w*h;i++){if(seen[i])continue;const x=i%w,y=(i/w)|0;if(!((x>0&&seen[i-1])||(x<w-1&&seen[i+1])||(y>0&&seen[i-w])||(y<h-1&&seen[i+w])))continue;const o=i<<2,lum=(p[o]+p[o+1]+p[o+2])/3;if(lum>170)halo.push(i,lum);}
+ for(let k=0;k<halo.length;k+=2){const o=halo[k]<<2,lum=halo[k+1];p[o+3]=lum>=225?0:Math.round(p[o+3]*(225-lum)/55);}
+ for(let i=0;i<w*h;i++)if(seen[i])p[(i<<2)+3]=0;
+ g.putImageData(img,0,0);return true;
+}
+// High-quality bake for atlas art: crop at native res (scaled to the actual atlas size), matte if asked,
+// then halve repeatedly (2x2 box) so the final resize is never an aliasing 4:1 nearest/bilinear jump.
+function resampleHQ(g,im,r,tw,th,m){
+ const sx=(im.naturalWidth||im.width)/FIXTURE_ATLAS_META.width,sy=(im.naturalHeight||im.height)/FIXTURE_ATLAS_META.height;
+ let cur=document.createElement('canvas');cur.width=Math.max(1,Math.round(r[2]*sx));cur.height=Math.max(1,Math.round(r[3]*sy));
+ const cg=cur.getContext('2d',{willReadFrequently:!!m.matte});cg.imageSmoothingEnabled=false;cg.drawImage(im,r[0]*sx,r[1]*sy,r[2]*sx,r[3]*sy,0,0,cur.width,cur.height);
+ if(m.matte&&!matteEdgeWhite(cur,232))console.warn('[FTS ARCADE] matte skipped (tainted canvas / file://): '+m.name+' keeps its backdrop');
+ while(cur.width>=tw*2&&cur.height>=th*2){const nx=document.createElement('canvas');nx.width=cur.width>>1;nx.height=cur.height>>1;const ng=nx.getContext('2d');ng.imageSmoothingEnabled=true;ng.imageSmoothingQuality='high';ng.drawImage(cur,0,0,nx.width,nx.height);cur=nx;}
+ g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(cur,0,0,cur.width,cur.height,0,0,tw,th);
+}
+function cropCanvas(im,r,sheet,m){const tw=(m&&m.tw)||64,th=(m&&m.th)||64,cv=document.createElement('canvas');cv.width=tw;cv.height=th;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;if(sheet==='solid'){g.fillStyle=(m&&m.color)||'#03050a';g.fillRect(0,0,tw,th);}else if(im&&r&&m&&m.hq)resampleHQ(g,im,r,tw,th,m);else if(im&&r)g.drawImage(im,r[0],r[1],r[2],r[3],0,0,tw,th);else{g.fillStyle='#222833';g.fillRect(0,0,tw,th);g.strokeStyle='#ff4a98';g.strokeRect(2,2,tw-4,th-4);}return cv;}
 function shadeStrip(src,level){const cv=document.createElement('canvas');cv.width=64;cv.height=TILE_H;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;for(let y=0;y<TILE_H;y+=64)g.drawImage(src,0,y,64,64);const k=level/(SHADES-1);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(2,4,8,'+(k*.9)+')';g.fillRect(0,0,64,TILE_H);return cv;}
-function shadeTile(src,level){const cv=document.createElement('canvas');cv.width=cv.height=64;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(src,0,0);const k=level/(SHADES-1);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(2,4,8,'+(k*.9)+')';g.fillRect(0,0,64,64);return cv;}
-function buildTextures(){baseBank=new Array(MATERIALS.length);texBank=new Array(MATERIALS.length);flatBank=new Array(MATERIALS.length);shadeTileBank=new Array(MATERIALS.length);planePixelBank=new Array(MATERIALS.length);IMG.ready=IMG.errors.length===0&&!!(IMG.world&&IMG.cab1&&IMG.cab2&&IMG.cab3&&IMG.cab4&&IMG.screen&&IMG.fixture&&IMG.cabinetRef)&&PACKAGE_ASSET_KEYS.every(k=>!!IMG[k]);}
+function shadeTile(src,level){const cv=document.createElement('canvas');cv.width=src.width;cv.height=src.height;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(src,0,0);const k=level/(SHADES-1);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(2,4,8,'+(k*.9)+')';g.fillRect(0,0,cv.width,cv.height);return cv;}
+function buildTextures(){baseBank=new Array(MATERIALS.length);texBank=new Array(MATERIALS.length);flatBank=new Array(MATERIALS.length);shadeTileBank=new Array(MATERIALS.length);planePixelBank=new Array(MATERIALS.length);mipBank=new Array(MATERIALS.length);mipSrcBank=new Array(MATERIALS.length);IMG.ready=IMG.errors.length===0&&!!(IMG.world&&IMG.cab1&&IMG.cab2&&IMG.cab3&&IMG.cab4&&IMG.screen&&IMG.fixture&&IMG.cabinetRef)&&PACKAGE_ASSET_KEYS.every(k=>!!IMG[k]);}
 function baseTile(i){
- if(baseBank[i])return baseBank[i];const m=MATERIALS[i];return baseBank[i]=cropCanvas(IMG[m.sheet],m.rect,m.sheet);
+ if(baseBank[i])return baseBank[i];const m=MATERIALS[i];return baseBank[i]=cropCanvas(IMG[m.sheet],m.rect,m.sheet,m);
 }
 function shadedTile(i,level){let row=shadeTileBank[i];if(!row)row=shadeTileBank[i]=new Array(SHADES);return row[level]||(row[level]=shadeTile(baseTile(i),level));}
-function wallTexture(i,level){let row=texBank[i];if(!row)row=texBank[i]=new Array(SHADES);if(row[level])return row[level];const m=MATERIALS[i];return row[level]=m.stretch?shadedTile(i,level):shadeStrip(baseTile(i),level);}
+// Mip chain for hi-res stretch art: level k is the base tile halved k times. wall() picks k from the
+// texel:pixel ratio so distant posters are box-filtered instead of nearest-sampled (no shimmer).
+function mipSource(i,k){const a=mipSrcBank[i]||(mipSrcBank[i]=[]);if(a[k])return a[k];const prev=k>1?mipSource(i,k-1):baseTile(i),c=document.createElement('canvas');c.width=Math.max(8,prev.width>>1);c.height=Math.max(8,prev.height>>1);const g=c.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(prev,0,0,c.width,c.height);return a[k]=c;}
+function shadedMip(i,level,k){const a=mipBank[i]||(mipBank[i]=[]),row=a[k]||(a[k]=new Array(SHADES));return row[level]||(row[level]=shadeTile(mipSource(i,k),level));}
+function wallTexture(i,level,k){const m=MATERIALS[i];if(k>0&&m.mips)return shadedMip(i,level,Math.min(k,m.mips));let row=texBank[i];if(!row)row=texBank[i]=new Array(SHADES);if(row[level])return row[level];return row[level]=m.stretch?shadedTile(i,level):shadeStrip(baseTile(i),level);}
 function flatPattern(i,level){let row=flatBank[i];if(!row)row=flatBank[i]=new Array(SHADES);return row[level]||(row[level]=ctx.createPattern(shadedTile(i,level),'repeat'));}
 function planePixels(i,level){let row=planePixelBank[i];if(!row)row=planePixelBank[i]=new Array(SHADES);if(row[level])return row[level];const tile=shadedTile(i,level),g=tile.getContext('2d',{willReadFrequently:true}),img=g.getImageData(0,0,64,64);return row[level]=new Uint32Array(img.data.buffer.slice(0));}
 function bakeBaseTilesAndRelease(){
@@ -986,16 +1061,16 @@ function drawAffineTri(tex,s0,s1,s2,d0,d1,d2){
  const den=u0*(v1-v2)+u1*(v2-v0)+u2*(v0-v1);if(Math.abs(den)<1e-6)return;
  const a=(x0*(v1-v2)+x1*(v2-v0)+x2*(v0-v1))/den,c=(x0*(u2-u1)+x1*(u0-u2)+x2*(u1-u0))/den,e=(x0*(u1*v2-u2*v1)+x1*(u2*v0-u0*v2)+x2*(u0*v1-u1*v0))/den;
  const b=(y0*(v1-v2)+y1*(v2-v0)+y2*(v0-v1))/den,d=(y0*(u2-u1)+y1*(u0-u2)+y2*(u1-u0))/den,f=(y0*(u1*v2-u2*v1)+y1*(u2*v0-u0*v2)+y2*(u0*v1-u1*v0))/den;
- ctx.save();ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.lineTo(x2,y2);ctx.closePath();ctx.clip();ctx.setTransform(a,b,c,d,e,f);ctx.drawImage(tex,0,0,64,64,0,0,64,64);ctx.restore();
+ ctx.save();ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.lineTo(x2,y2);ctx.closePath();ctx.clip();ctx.setTransform(a,b,c,d,e,f);ctx.drawImage(tex,0,0,tex.width,tex.height,0,0,tex.width,tex.height);ctx.restore();
 }
-function paintHorizontalFace(hf,shadeOf){const tex=wallTexture(hf.tex,shadeOf(hf.dist,hf.light));if(!tex)return;const p=hf.p;drawAffineTri(tex,[0,0],[64,0],[64,64],p[0],p[1],p[2]);drawAffineTri(tex,[0,0],[64,64],[0,64],p[0],p[2],p[3]);}
+function paintHorizontalFace(hf,shadeOf){const tex=wallTexture(hf.tex,shadeOf(hf.dist,hf.light),0);if(!tex)return;const p=hf.p,tw=tex.width,th=tex.height;drawAffineTri(tex,[0,0],[tw,0],[tw,th],p[0],p[1],p[2]);drawAffineTri(tex,[0,0],[tw,th],[0,th],p[0],p[2],p[3]);}
 
 // Plane backend split is deliberate: software path must never touch CanvasPattern.setTransform().
 function paint(sim,d){const v=d.view,w=v.w,h=v.h;ctx.fillStyle='#03050a';ctx.fillRect(0,0,w,h);ctx.imageSmoothingEnabled=false;const zbuf=d.pixelDepth;zbuf.fill(Infinity);const shadeOf=(dist,light)=>Math.min(SHADES-1,Math.max(0,((Math.min(1,dist/RENDER.fogFar+(1-light)*.7))*(SHADES-1))|0));
  PLANE_STATS.patternTransforms=PLANE_STATS.softwareSpans=PLANE_STATS.softwarePixels=0;
  const planePattern=i=>{const y=d.sY[i],x0=d.sX0[i],x1=d.sX1[i],dist=d.sDist[i];if(y<0||y>=h||x1<x0)return;const p=flatPattern(d.sFlat[i],shadeOf(dist,d.sLight[i]));if(!p)return;const sec=sim.map.sectors[d.sSec[i]],frame=Geom.planeMaterialFrame(sec,PLANE_MAPPING.mode,sim.ang);const m=Geom.planePatternTransform(sim.x,sim.y,v.cosA,v.sinA,v.halfW,v.projDist,y,dist,frame.ang,frame.ox,frame.oy);if(m&&p.setTransform){PLANE_STATS.patternTransforms++;const pm=typeof DOMMatrix==='function'?new DOMMatrix([m.a,m.b,m.c,m.d,m.e,m.f]):m;p.setTransform(pm);}ctx.fillStyle=p;ctx.fillRect(x0,y,x1-x0+1,1);const off=y*w;for(let x=Math.max(0,x0);x<=Math.min(w-1,x1);x++)if(dist<zbuf[off+x])zbuf[off+x]=dist;};
  const planeSoftware=i=>{let y=d.sY[i],x0=Math.max(0,d.sX0[i]),x1=Math.min(w-1,d.sX1[i]),dist=d.sDist[i];if(y<0||y>=h||x1<x0||!Number.isFinite(dist)||dist<=0)return;const shade=shadeOf(dist,d.sLight[i]),pix=planePixels(d.sFlat[i],shade);if(!pix)return;const sec=sim.map.sectors[d.sSec[i]],frame=Geom.planeMaterialFrame(sec,PLANE_MAPPING.mode,sim.ang),mc=Math.cos(frame.ang),ms=Math.sin(frame.ang),step=dist/v.projDist,tx0=(x0+.5-v.halfW)*step,wx0=sim.x+v.cosA*dist+v.sinA*tx0,wy0=sim.y+v.sinA*dist-v.cosA*tx0,dwx=v.sinA*step,dwy=-v.cosA*step,dx=wx0-frame.ox,dy=wy0-frame.oy;let u=wrap64(mc*dx+ms*dy),vv=wrap64(-ms*dx+mc*dy),du=mc*dwx+ms*dwy,dv=-ms*dwx+mc*dwy;const frame32=PLANE_SOFT.u32,off=y*w;PLANE_STATS.softwareSpans++;for(let x=x0;x<=x1;x++){if(dist<zbuf[off+x]){frame32[off+x]=pix[((vv|0)<<6)+(u|0)];zbuf[off+x]=dist;PLANE_STATS.softwarePixels++;}u+=du;vv+=dv;if(u>=64||u<0)u=wrap64(u);if(vv>=64||vv<0)vv=wrap64(vv);}};
- const wall=i=>{const tex=wallTexture(d.wTex[i],shadeOf(d.wDist[i],d.wLight[i]));if(!tex)return;let u=d.wU[i]%1;if(u<0)u+=1;const sx=Math.min(63,(u*64)|0),y0=d.wY0[i],y1=d.wY1[i],span=d.wF1[i]-d.wF0[i];if(span<=.001||y1<=y0)return;let sy0,sy1;if(d.wStretch[i]){sy0=Math.max(0,Math.min(64,((y0-d.wF0[i])/span)*64));sy1=Math.max(sy0,Math.min(64,((y1-d.wF0[i])/span)*64));}else{const wh=Math.max(1,Math.min(TILE_H,Math.abs(d.wTop[i]-d.wBot[i])));sy0=Math.max(0,Math.min(TILE_H,((y0-d.wF0[i])/span)*wh));sy1=Math.max(sy0,Math.min(TILE_H,((y1-d.wF0[i])/span)*wh));}ctx.drawImage(tex,sx,sy0,1,Math.max(.05,sy1-sy0),d.wX[i],y0,1,Math.max(1,y1-y0));const x=d.wX[i],ya=Math.max(0,Math.floor(y0)),yb=Math.min(h,Math.ceil(y1));if(x>=0&&x<w)for(let y=ya;y<yb;y++)if(d.wDist[i]<zbuf[y*w+x])zbuf[y*w+x]=d.wDist[i];};
+ const wall=i=>{const mi=d.wTex[i],M=MATERIALS[mi],y0=d.wY0[i],y1=d.wY1[i],span=d.wF1[i]-d.wF0[i];if(span<=.001||y1<=y0)return;let mk=0;if(M.mips&&d.wStretch[i]){const q=M.th/span;mk=q>=6?3:q>=3?2:q>=1.5?1:0;if(mk>M.mips)mk=M.mips;}const tex=wallTexture(mi,shadeOf(d.wDist[i],d.wLight[i]),mk);if(!tex)return;const TW=tex.width,TH=tex.height;let u=d.wU[i]%1;if(u<0)u+=1;const sx=Math.min(TW-1,(u*TW)|0);let sy0,sy1;if(d.wStretch[i]){sy0=Math.max(0,Math.min(TH,((y0-d.wF0[i])/span)*TH));sy1=Math.max(sy0,Math.min(TH,((y1-d.wF0[i])/span)*TH));}else{const wh=Math.max(1,Math.min(TILE_H,Math.abs(d.wTop[i]-d.wBot[i])));sy0=Math.max(0,Math.min(TILE_H,((y0-d.wF0[i])/span)*wh));sy1=Math.max(sy0,Math.min(TILE_H,((y1-d.wF0[i])/span)*wh));}ctx.drawImage(tex,sx,sy0,1,Math.max(.05,sy1-sy0),d.wX[i],y0,1,Math.max(1,y1-y0));const x=d.wX[i],ya=Math.max(0,Math.floor(y0)),yb=Math.min(h,Math.ceil(y1));if(x>=0&&x<w)for(let y=ya;y<yb;y++)if(d.wDist[i]<zbuf[y*w+x])zbuf[y*w+x]=d.wDist[i];};
  if(PLANE_BACKEND.active==='software'){
   ensureSoftwareFrame(w,h);PLANE_SOFT.u32.fill(0);for(let i=0;i<d.sN;i++)planeSoftware(i);PLANE_SOFT.ctx.putImageData(PLANE_SOFT.image,0,0);ctx.drawImage(PLANE_SOFT.canvas,0,0);
   PAINT_ORDER.length=d.wN+d.hFaces.length;let on=0;for(let i=0;i<d.wN;i++)PAINT_ORDER[on++]=0x1000000|i;for(let i=0;i<d.hFaces.length;i++)PAINT_ORDER[on++]=0x2000000|i;PAINT_ORDER.sort((a,b)=>{const ak=a>>>24,bk=b>>>24,ai=a&0xffffff,bi=b&0xffffff,ad=ak===1?d.wDist[ai]:d.hFaces[ai].dist,bd=bk===1?d.wDist[bi]:d.hFaces[bi].dist;return bd-ad||ak-bk;});for(const code of PAINT_ORDER){const k=code>>>24,i=code&0xffffff;if(k===1)wall(i);else paintHorizontalFace(d.hFaces[i],shadeOf);}
@@ -1142,7 +1217,6 @@ const REF_TESTS={
  cabinetRefSurgical:()=>map.cabinets.every(c=>{const refs=c.parts.filter(p=>p.front===MAT.CAB_REF_COIN_DOOR||p.front===MAT.CAB_REF_KICK_PLATE);return refs.length===2&&refs.some(p=>p.role==='coin-door')&&refs.some(p=>p.role==='kick-plate')&&!c.parts.some(p=>p.role==='control'&&(p.front===MAT.CAB_REF_COIN_DOOR||p.front===MAT.CAB_REF_KICK_PLATE||p.top===MAT.CAB_REF_COIN_DOOR||p.top===MAT.CAB_REF_KICK_PLATE));}),
  cabinetOfficeClearance:()=>AUTHORING.officeClearance>=8&&map.cabinets.every(c=>cabinetClearOfOffice(c,AUTHORING.officeClearance)),
  westTrioNoOverlap:()=>{const j=map.cabinets.find(c=>c.letter==='J'),k=map.cabinets.find(c=>c.letter==='K'),l=map.cabinets.find(c=>c.letter==='L');return !!(j&&k&&l&&!solidsOverlap(j,k)&&!solidsOverlap(j,l)&&!solidsOverlap(k,l));},
- stageSweptCCW:()=>{const sb=map.solids.find(s=>s.id==='STAGE_BACK'),dj=map.solids.find(s=>s.id==='DJ_BOOTH');return AUTHORING.stageRotateDeg>0&&!!(sb&&dj&&sb.x<-80&&dj.x<40&&sb.ang>-Math.PI/2);},
  officeEntryFlanked:()=>{const d=AUTHORING.officeEntry.find(x=>x.id==='OFFICE_DOOR'),w=AUTHORING.officeEntry.find(x=>x.id==='WHITEBOARD'),b=AUTHORING.officeEntry.find(x=>x.id==='BULLETIN');return !!(d&&w&&b&&w.x<d.x&&b.x>d.x&&w.y===d.y&&b.y===d.y);},
  tightCabinetPacking:()=>AUTHORING.packing.sideGap<=.5&&AUTHORING.packing.backGap<=.5,
  wallDressingsInteractive:()=>map.fixtures.filter(f=>f.kind==='dressing').length>=AUTHORING.posters.length+AUTHORING.wallPortals.length+2&&map.fixtures.filter(f=>f.kind==='dressing').every(f=>f.url&&f.cta),
@@ -1159,9 +1233,25 @@ const REF_TESTS={
  // "Don't rearrange the cabinets tonight" as an executable assertion.
  cabinetLayoutFrozen:()=>cabinetLayoutSignature({cabinets:map.cabinets.filter(c=>c.letter.length===1)})===CABINET_LAYOUT_SNAPSHOT,
  // Wall dressing must still touch the wall after the ring grew.
- perimeterRidesWall:()=>{const inset=s=>RING.outer-Math.hypot(s.x,s.y);return map.ads.every(a=>inset(a)>=0&&inset(a)<24)&&map.exits.every(e=>inset(e)>=0&&inset(e)<24)&&map.fixtures.filter(f=>/^POSTER_/.test(f.id)).every(p=>inset(p)>=0&&inset(p)<24);},
- stageRidesWall:()=>{const sb=map.solids.find(s=>s.id==='STAGE_BACK');return !!sb&&RING.outer-Math.hypot(sb.x,sb.y)<90;},
- vendingRidesWall:()=>['VEND_DRINK','VEND_SNACK','TOKEN_VEND'].every(id=>{const f=map.fixtures.find(x=>x.id===id);return f&&RING.outer-Math.hypot(f.x,f.y)<170;}),
+ // 1.1.0: exits keep the radial-shift contract; everything else is mounted flush from facet geometry.
+ perimeterRidesWall:()=>map.exits.length===3&&map.exits.every(e=>{const inset=RING.outer-Math.hypot(e.x,e.y);return inset>=0&&inset<24;}),
+ // Flush + facing: back face within .5 in of the wall plane, front face pointing into the room.
+ wallMountsFlush:()=>{const apo=RING.outer*Math.cos(Math.PI/RING.sides),step=TAU/RING.sides,outer=map.solids.filter(s=>s.mount==='outer'),core=map.solids.filter(s=>s.mount==='core');
+  const okOuter=outer.length>0&&outer.every(s=>{let a=Math.atan2(s.y,s.x);if(a<0)a+=TAU;const am=(Math.floor(a/step)+.5)*step,gap=apo-(s.x*Math.cos(am)+s.y*Math.sin(am))-s.d/2;return gap>=-.01&&gap<=.5&&-(s.x*Math.cos(s.ang)+s.y*Math.sin(s.ang))>0;});
+  const okCore=core.length>0&&core.every(s=>{const gap=Math.max(Math.abs(s.x),Math.abs(s.y))-RING.inner-s.d/2;return Math.abs(gap)<=.01&&(s.x*Math.cos(s.ang)+s.y*Math.sin(s.ang))>0;});
+  return okOuter&&okCore;},
+ // Stage, DJ booth, speakers and their two signs are gone; nothing else references them.
+ stageRemoved:()=>!map.solids.some(s=>/^(STAGE_|DJ_|SPEAKER_)/.test(s.id))&&!map.fixtures.some(f=>/^(STAGE_SIGN|DJ_SIGN)$/.test(f.id))&&AUTHORING.stageRotateDeg===undefined&&!/addStageBox|rotatePose/.test(String(buildLevel)),
+ // Wall dressing, amenities, exits and cabinets never occupy the same footprint.
+ wallItemsDisjoint:()=>{const items=map.solids.filter(s=>s.mount||s.kind==='exit'||s.kind==='cabinet');for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++)if(solidsOverlap(items[i],items[j]))return false;return items.length===map.cabinets.length+map.ads.length+AUTHORING.posters.length+AUTHORING.officeEntry.length+AUTHORING.amenities.length+map.exits.length;},
+ // Every provided art piece is placed at least once, and no face is stretched off its source aspect.
+ atlasFullyPlaced:()=>{const placed=new Set(map.solids.filter(s=>s.art).map(s=>s.art));AUTHORING.officeEntry.forEach(d=>placed.add(d.mat.replace(/^FIX_/,'')));return Object.keys(FIXTURE_ART).length===17&&Object.keys(FIXTURE_ART).every(k=>placed.has(k));},
+ fixtureArtAspect:()=>{const a=map.solids.filter(s=>s.art);return a.length===AUTHORING.amenities.length+AUTHORING.posters.length+AUTHORING.adFacets.length&&a.every(s=>{const r=FIXTURE_ART[s.art].rect,p=s.parts[0];return Math.abs(s.w/(p.z1-p.z0)-r[2]/r[3])<.01;})&&AUTHORING.officeEntry.every(d=>{const r=FIXTURE_ART[d.mat.replace(/^FIX_/,'')].rect;return Math.abs(d.w/(d.z1-d.z0)-r[2]/r[3])<.01;});},
+ // Snack machine ships on a white backdrop: the edge-flood matte must have keyed the corners clear.
+ snackMatteKeyed:()=>{try{const t=baseTile(MAT.FIX_VEND_SNACK),d=t.getContext('2d').getImageData(0,0,1,1).data;return d[3]===0&&t.width>=128;}catch(e){return false;}},
+ // Amenity carcasses: still solid (collision), still tagged, token link untouched, capped so they don't read hollow.
+ // Amenities are thin wall panels now: still fixtures, ids/kinds/token link intact, floor-to-art-height, non-colliding.
+ amenitiesAreWallPanels:()=>AUTHORING.amenities.length===4&&AUTHORING.amenities.every(a=>{const f=map.fixtures.find(x=>x.id===a.id),p=f&&f.parts[0];return f&&f.collision===false&&f.d===2&&f.mount==='outer'&&f.parts.length===1&&p.z0===0&&Math.abs(p.z1-artSize(a.art).h)<.01&&f.kind===(a.kind||'fixture');})&&map.fixtures.find(x=>x.id==='TOKEN_VEND').kind==='token'&&map.fixtures.find(x=>x.id==='TOKEN_VEND').url===PORTALS.tokens&&map.targets.some(t=>t.id==='TOKEN_VEND'),
  // Nothing on the perimeter may have been pushed outside the wall.
  perimeterInsideRing:()=>map.solids.every(s=>Math.hypot(s.x,s.y)<=RING.outer+1),
  renderRangesTrackRing:()=>RENDER.solidCull>=2*RING.outer&&RENDER.fogFar>RING.outer&&!/\b860\b|\bdist\/780\b/.test(String(RenderCore._solids)),
@@ -1213,7 +1303,7 @@ const REF_TESTS={
  sameDirectoryAssets:()=>Object.values(ASSET_FILES).every(v=>(Array.isArray(v)?v:[v]).every(s=>!/^https?:/i.test(s))),
  packageAssets:()=>PACKAGE_ASSET_KEYS.every(k=>ASSET_FILES[k]&&/package\.png$/.test(ASSET_FILES[k])),
  packageAtlasContract:()=>Object.values(PACKAGE_ATLAS_RECTS).every(r=>r[0]>=0&&r[1]>=0&&r[0]+r[2]<=1024&&r[1]+r[3]<=1024),
- assetDimensions:()=>{const m=IMG.meta;return m.world&&m.world[0]===1024&&m.world[1]===1024&&['cab1','cab2','cab3','cab4'].every(k=>m[k]&&m[k][0]===1254&&m[k][1]===1254)&&m.screen&&m.screen[0]===2048&&m.screen[1]===1433&&m.fixture&&m.fixture[0]===1024&&m.fixture[1]===256&&m.cabinetRef&&m.cabinetRef[0]===767&&m.cabinetRef[1]===1432&&PACKAGE_ASSET_KEYS.every(k=>m[k]&&m[k][0]===1024&&m[k][1]===1024);},
+ assetDimensions:()=>{const m=IMG.meta;return m.world&&m.world[0]===1024&&m.world[1]===1024&&['cab1','cab2','cab3','cab4'].every(k=>m[k]&&m[k][0]===1254&&m[k][1]===1254)&&m.screen&&m.screen[0]===2048&&m.screen[1]===1433&&m.fixture&&Math.abs(m.fixture[0]/m.fixture[1]-FIXTURE_ATLAS_META.width/FIXTURE_ATLAS_META.height)<.002&&m.fixture[0]>=1024&&m.cabinetRef&&m.cabinetRef[0]===767&&m.cabinetRef[1]===1432&&PACKAGE_ASSET_KEYS.every(k=>m[k]&&m[k][0]===1024&&m[k][1]===1024);},
  assetsReady:()=>IMG.ready&&IMG.errors.length===0,
  sourceAtlasesReleased:()=>!IMG.artBaked||IMG.sourcesReleased,
  staticRenderGeometry:()=>map.solids.every(s=>s._render&&s._render.faces.length>0&&Number.isFinite(s._render.radius)),
@@ -1231,7 +1321,7 @@ function runRefTests(){
  }
  return{version:VERSION,pass:failures.length===0,passed:Object.values(results).filter(v=>v===true).length,total:Object.keys(REF_TESTS).length,failures,results,mapErrors:MAP_ERRORS.slice(),assetErrors:IMG.errors.slice(),runtimeErrors:RUNTIME_ERRORS.slice(),screenAtlas:SCREEN_ATLAS_META};
 }
-window.__FTS_ARCADE__={VERSION,map,sim,MapBuilder,Geom,RenderCore,DrawLists,MATERIALS,MAP_ERRORS,CABINET_ROSTER,CABINET_DIM,AISLE,PORTALS,ASSET_NAMES,CABINET_PART_RECTS,CABINET_REF_RECTS,PACKAGE_CABINETS,PACKAGE_ATLAS_META,PACKAGE_ATLAS_RECTS,PACKAGE_ASSET_KEYS,SCREEN_ATLAS_META,SCREEN_RECTS,screenRect,AUTHORING,KINETIC,JUMP,RENDER,PERF,RING,CABINET_LAYOUT_SNAPSHOT,cabinetLayoutSignature:()=>cabinetLayoutSignature(map),PLATFORM,PLANE_BACKEND,PLANE_STATS,setPlaneBackend,togglePlaneBackend,PLANE_MAPPING,setPlaneMappingMode,togglePlaneMapping,MOUSE_LOOK_SENS,TOUCH_LOOK_SENS,SpatialCrowd,CROWD_AUDIO_URL,CROWD_QUADRANTS,CROWD_OPPOSITE,CROWD_ZONE_POSES,crowdQuadrantAt,crowdDesiredFor,CELESTIAL_KOI,CELESTIAL_KOI_MAP,CELESTIAL_KOI_SAMPLES,CELESTIAL_KOI_STATS,celestialKoiPoint,projectWorldPoint,getDrawList:()=>dl,setCelestialKoi,toggleCelestialKoi,paintCelestialKoi,solidAabb,cabinetClearOfOffice,exportAuthoring:()=>JSON.stringify(AUTHORING,null,2),tests:REF_TESTS,runTests:runRefTests};
+window.__FTS_ARCADE__={VERSION,map,sim,MapBuilder,Geom,RenderCore,DrawLists,MATERIALS,MAP_ERRORS,CABINET_ROSTER,CABINET_DIM,AISLE,PORTALS,ASSET_NAMES,CABINET_PART_RECTS,CABINET_REF_RECTS,PACKAGE_CABINETS,PACKAGE_ATLAS_META,PACKAGE_ATLAS_RECTS,PACKAGE_ASSET_KEYS,SCREEN_ATLAS_META,SCREEN_RECTS,screenRect,AUTHORING,FIXTURE_ART,FIXTURE_TEX,artSize,KINETIC,JUMP,RENDER,PERF,RING,CABINET_LAYOUT_SNAPSHOT,cabinetLayoutSignature:()=>cabinetLayoutSignature(map),PLATFORM,PLANE_BACKEND,PLANE_STATS,setPlaneBackend,togglePlaneBackend,PLANE_MAPPING,setPlaneMappingMode,togglePlaneMapping,MOUSE_LOOK_SENS,TOUCH_LOOK_SENS,SpatialCrowd,CROWD_AUDIO_URL,CROWD_QUADRANTS,CROWD_OPPOSITE,CROWD_ZONE_POSES,crowdQuadrantAt,crowdDesiredFor,CELESTIAL_KOI,CELESTIAL_KOI_MAP,CELESTIAL_KOI_SAMPLES,CELESTIAL_KOI_STATS,celestialKoiPoint,projectWorldPoint,getDrawList:()=>dl,setCelestialKoi,toggleCelestialKoi,paintCelestialKoi,solidAabb,cabinetClearOfOffice,exportAuthoring:()=>JSON.stringify(AUTHORING,null,2),tests:REF_TESTS,runTests:runRefTests};
 const qs=new URLSearchParams(location.search);
 setPlaneBackend(qs.get('planeBackend')||qs.get('backend')||'auto');
 setPlaneMappingMode(qs.get('planes')||qs.get('plane')||'world');
