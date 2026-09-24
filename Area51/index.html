@@ -29,7 +29,7 @@
 <link rel="preload" as="image" href="fts-arcade-fixture-atlas.png">
 <link rel="preload" as="image" href="the-Cabinet.png">
 <link rel="preload" as="audio" href="crowd.mp3" type="audio/mpeg">
-<title>FTS Arcade Floor 1.1.1 Fixture Facelift</title>
+<title>AREA 51 ARCADE - Binary Ranch</title>
 <!-- 0.5.2 art fit: external world/fixture/screen atlases + Cabinets01-Cabinets04, exact per-CRT crops. -->
 <!-- 0.7.0 feel pass: outer ring 430->510, ceiling 132->192, jump 132->156. Sprint stays 22 mph. Cabinet layout frozen. -->
 <!-- 0.8.1 movement pass: threshold-based Apex-inspired slide, landing-slide buffer, momentum-preserving slide jumps and air steering. -->
@@ -40,8 +40,8 @@
 <!-- 0.9.2 flush-koi pass: schools now lie ON the ceiling plane and span the whole annulus (square core hole respected). No more centroid-frame collapse. -->
 
 <!-- ── FA3D Meta ─────────────────────────────────────────── -->
-<meta name="description" content="FTS Arcade - a first-person 2.5D cabinet portal hub.">
-<meta property="og:title" content="FTS Arcade">
+<meta name="description" content="AREA 51 Arcade - a first-person 2.5D cabinet portal hub.">
+<meta property="og:title" content="AREA 51 Arcade">
 <meta property="og:description" content="Walk the arcade. Mingle with the crowd. Play a game. Explore beyond.">
 <meta property="og:type" content="website">
 
@@ -109,11 +109,11 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;image-renderi
 <body>
 <canvas id="c"></canvas>
 <div id="telemetry">BOOTING...</div>
-<div id="brand"><b>FTS ARCADE</b>CIRCULAR FLOOR / A-AE CABINET PORTAL HUB</div>
+<div id="brand"><b>AREA 51 ARCADE</b>CIRCULAR FLOOR / A-AE CABINET PORTAL HUB</div>
 <div id="prompt"></div>
 <div id="toolbar"><button id="mapBtn">MAP: OFF</button><button id="audioBtn">AUDIO: OFF</button></div>
-<div id="lock"><div><b>FTS ARCADE</b><br><span class="pink">THE RING</span><br><br>WASD MOVE / MOUSE LOOK / SHIFT RUN<br>SPACE JUMP / CTRL OR C CROUCH + SLIDE<br>E OR CLICK INTERACT / M MAP / N SPATIAL AUDIO<br><span style="opacity:.55">DEV: K KALEIDO / P PLANE BACKEND / O KOI</span><br><br>CLICK TO WALK IN</div></div>
-<div id="modal"><div id="modalCard"><div id="modalEyebrow">LEAVE FTS ARCADE?</div><div id="modalTitle"></div><div id="modalCopy"></div><div id="modalActions"><button id="cancelBtn">STAY HERE</button><button id="confirmBtn">LEAVE ARCADE</button></div></div></div>
+<div id="lock"><div><b>AREA 51 ARCADE</b><br><span class="pink">THE RING</span><br><br>WASD MOVE / MOUSE LOOK / SHIFT RUN<br>SPACE JUMP / CTRL OR C CROUCH + SLIDE<br>E OR CLICK INTERACT / M MAP / N SPATIAL AUDIO<br><span style="opacity:.55">DEV: K KALEIDO / P PLANE BACKEND / O KOI</span><br><br>CLICK TO WALK IN</div></div>
+<div id="modal"><div id="modalCard"><div id="modalEyebrow">LEAVE AREA 51 ARCADE?</div><div id="modalTitle"></div><div id="modalCopy"></div><div id="modalActions"><button id="cancelBtn">STAY HERE</button><button id="confirmBtn">LEAVE ARCADE</button></div></div></div>
 <div id="touchMove"><div id="touchKnob"></div></div><button id="touchCrouch">SLIDE</button><button id="touchAct">ENTER</button>
 <script>
 'use strict';
@@ -646,7 +646,7 @@ const AUTHORING={
   {id:'VEND_DRINK',label:'DRINK VENDING',art:'VEND_DRINK',facet:17,off:0},
   {id:'VEND_SNACK',label:'SNACK VENDING',art:'VEND_SNACK',facet:30,off:0},
   {id:'JUKEBOX',label:'JUKEBOX',art:'JUKEBOX',facet:8,off:0},
-  {id:'TOKEN_VEND',label:'FTS TOKEN VENDING',art:'TOKEN',facet:22,off:0,kind:'token',url:PORTALS.tokens,cta:'BUY TOKENS'}
+  {id:'TOKEN_VEND',label:'AREA 51 TOKEN VENDING',art:'TOKEN',facet:22,off:0,kind:'token',url:PORTALS.tokens,cta:'BUY TOKENS'}
  ],
  // Eight programmatic ad units (FTS-RING-01..08, ascending angle). Skinned as food service windows.
  adFacets:[1,5,10,14,18,21,25,29],
@@ -1093,7 +1093,7 @@ function findTarget(){const ca=Math.cos(sim.ang),sa=Math.sin(sim.ang),all=map.ta
 function targetKind(t){return t.kind==='cabinet'?'CABINET '+t.letter:t.kind==='exit'?'EXIT':t.kind==='token'?'TOKEN VENDING':t.kind==='ad'?'AD INVENTORY':'WALL PORTAL';}
 let promptTargetKey='';
 function updatePrompt(){activeTarget=findTarget();const key=activeTarget?(activeTarget.id||activeTarget.letter||activeTarget.label):'';if(key===promptTargetKey)return;promptTargetKey=key;if(!activeTarget){promptEl.classList.remove('show');promptEl.textContent='';return;}const name=activeTarget.kind==='cabinet'?activeTarget.title:activeTarget.label,verb=activeTarget.cta||(activeTarget.kind==='cabinet'?'ENTER GAME':'OPEN');promptEl.innerHTML='<span class="kind">'+targetKind(activeTarget)+'</span> '+name+' &nbsp; <span class="key">[E / CLICK]</span> '+verb;promptEl.classList.add('show');}
-function openConfirm(t){if(!t||!t.url)return;modalTarget=t;if(document.pointerLockElement===canvas)document.exitPointerLock();const name=t.kind==='cabinet'?(t.letter+' / '+t.title):t.label;modalTitle.textContent=name;if(t.kind==='cabinet'){modalEyebrow.textContent='LEAVE FTS ARCADE?';modalCopy.textContent='Enter cabinet '+t.letter+' and navigate to '+t.title+'? Your browser will load '+t.url+'.';confirmBtn.textContent='ENTER CABINET';}else if(t.kind==='token'){modalEyebrow.textContent='TOKEN PURCHASE';modalCopy.textContent='Open the FTS token purchase portal? This leaves the arcade floor and loads '+t.url+'.';confirmBtn.textContent='BUY TOKENS';}else if(t.kind==='ad'){modalEyebrow.textContent='PROGRAMMATIC INVENTORY';modalCopy.textContent='Open the deal form for '+t.inventory+'? This leaves the arcade floor.';confirmBtn.textContent=t.cta||'OPEN DEAL FORM';}else if(t.kind==='dressing'){modalEyebrow.textContent='WALL PORTAL';modalCopy.textContent=(t.cta||'Open this link')+' — '+t.label+'.';confirmBtn.textContent=t.cta||'OPEN';}else{modalEyebrow.textContent='LEAVE FTS ARCADE?';modalCopy.textContent='Use this exit for '+name+'? This destination is off the arcade floor.';confirmBtn.textContent=t.cta||'LEAVE ARCADE';}modal.classList.add('show');}
+function openConfirm(t){if(!t||!t.url)return;modalTarget=t;if(document.pointerLockElement===canvas)document.exitPointerLock();const name=t.kind==='cabinet'?(t.letter+' / '+t.title):t.label;modalTitle.textContent=name;if(t.kind==='cabinet'){modalEyebrow.textContent='LEAVE AREA 51 ARCADE?';modalCopy.textContent='Enter cabinet '+t.letter+' and navigate to '+t.title+'? Your browser will load '+t.url+'.';confirmBtn.textContent='ENTER CABINET';}else if(t.kind==='token'){modalEyebrow.textContent='TOKEN PURCHASE';modalCopy.textContent='Open the AREA 51 token purchase portal? This leaves the arcade floor and loads '+t.url+'.';confirmBtn.textContent='BUY TOKENS';}else if(t.kind==='ad'){modalEyebrow.textContent='PROGRAMMATIC INVENTORY';modalCopy.textContent='Open the deal form for '+t.inventory+'? This leaves the arcade floor.';confirmBtn.textContent=t.cta||'OPEN DEAL FORM';}else if(t.kind==='dressing'){modalEyebrow.textContent='WALL PORTAL';modalCopy.textContent=(t.cta||'Open this link')+' — '+t.label+'.';confirmBtn.textContent=t.cta||'OPEN';}else{modalEyebrow.textContent='LEAVE AREA 51 ARCADE?';modalCopy.textContent='Use this exit for '+name+'? This destination is off the arcade floor.';confirmBtn.textContent=t.cta||'LEAVE ARCADE';}modal.classList.add('show');}
 function closeConfirm(relock){modal.classList.remove('show');modalTarget=null;if(relock&&!coarse())setTimeout(()=>canvas.requestPointerLock&&canvas.requestPointerLock(),60);}
 function leaveArcade(){if(!modalTarget)return;const t=modalTarget;try{sessionStorage.setItem('fts.arcade.return',JSON.stringify({x:sim.x,y:sim.y,ang:sim.ang,t:Date.now()}));}catch(e){}window.open(t.url, t.target || '_blank');closeConfirm(true);}
 confirmBtn.addEventListener('click',leaveArcade);cancelBtn.addEventListener('click',()=>closeConfirm(true));
