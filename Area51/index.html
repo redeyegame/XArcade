@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <!-- REF 0.4.1: analytics only on hosted HTTP(S); file:// stays console-clean. -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8BGPSGZX1"></script>
     <script>
-    if (/^https?:$/.test(location.protocol)) {
       window.dataLayer = window.dataLayer || [];
-      window.gtag = function(){ dataLayer.push(arguments); };
-      gtag('js', new Date()); gtag('config', 'G-M9CD6TWFZE');
-      const ga=document.createElement('script'); ga.async=true;
-      ga.src='https://www.googletagmanager.com/gtag/js?id=G-M9CD6TWFZE';
-      document.head.appendChild(ga);
-    }
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-Z8BGPSGZX1');
     </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
