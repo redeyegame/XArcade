@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Brazen Rally / Presidio Electric</title>
-<meta name="description" content="Active-suspension electric rally cart: rear-biased AWD, finite capacitor boost, real rollovers, measured Presidio terrain and an offline proving ground.">
+<title>Presidio Golf Course · measured-terrain cart lab</title>
+<meta name="description" content="Free-drive an unmanned six-seat lifted golf cart on registered Presidio Golf Course terrain, with a Hole 10 regression route and built-in handling checks.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231b1d1f'/%3E%3Cpath d='M22 10v46' stroke='%23ece8de' stroke-width='4'/%3E%3Cpath d='M24 11l22 8-22 8z' fill='%23c8323a'/%3E%3C/svg%3E">
-
-
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --fog:#cdd5d3; --ink:#ece8de; --ink-dim:rgba(236,232,222,.6); --panel:rgba(27,29,31,.74);
@@ -108,59 +108,18 @@
   #helpBtn{position:fixed;z-index:6;top:calc(12px + env(safe-area-inset-top,0px));right:156px;width:34px;height:34px;border-radius:10px;font-size:16px;font-weight:700}
   @media (max-width:720px){ #helpBtn{right:12px} }
   @media (prefers-reduced-motion:reduce){ #panel,#toast{transition:none} }
-
-  /* RALLY 1 / controls are live while the scene remains visually quiet. */
-  :root{--ui:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-  button{touch-action:none}button:disabled{opacity:.45;cursor:not-allowed}
-  .eyebrow{font-size:11px;letter-spacing:.18em;margin-bottom:20px;color:var(--sage);font-weight:700}
-  #intro .introControls{font-size:13px;color:var(--ink-dim);line-height:1.7}
-  #intro .inner{max-width:34em}#intro .no{font-size:clamp(88px,14vw,168px)}
-  #introNote{font-size:11px}#holeCard{max-width:420px}#holeCard .no{font-size:34px}#holeCard .t1{font-size:14px}#holeCard .t2{font-size:10px;margin-top:4px}
-  #holeCard .gate{font-size:11px;gap:20px}#hint{font-size:10px;bottom:12px;padding:7px 10px}
-  #rig{left:50%;transform:translateX(-50%);bottom:55px;width:268px;padding:12px 14px;pointer-events:auto}
-  .rigControls{display:flex;gap:8px}.rigControls button{flex:1;border:1px solid var(--line);border-radius:6px;font-size:11px;letter-spacing:.1em;padding:9px 8px;background:rgba(236,232,222,.08);color:var(--ink);font-weight:700}
-  #modeBtn[data-mode="sport"]{color:#edc29a}#modeBtn[data-mode="eco"]{color:#accca3}#activeBtn[aria-pressed="true"]{color:#accca3}
-  #driveSpec{font-size:10px;color:var(--ink-dim);margin:8px 0 12px}
-  .energyLabels,.rigNumbers{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;letter-spacing:.04em}
-  .energyLabels{color:var(--ink-dim)}.energyLabels strong{color:var(--ink)}
-  #capTrack{height:4px;background:rgba(236,232,222,.12);margin:7px 0 10px;overflow:hidden;border-radius:2px}#capFill{height:100%;width:100%;background:var(--sage)}
-  #rig.boosting #capFill{background:#e9aa6c}#rig.boosting{border-color:rgba(233,170,108,.65)}
-  .rigNumbers span{color:var(--ink-dim)}.rigNumbers b{font-weight:400;color:var(--ink)}#powerLabel{font-size:12px}
-  #rideLabel{margin-top:9px;font-size:9px;letter-spacing:.08em;color:var(--ink-dim)}
-  #loadBtn{position:fixed;right:156px;top:calc(56px + env(safe-area-inset-top,0px));z-index:6;width:44px;height:34px;font-size:9px;font-weight:700;border-radius:8px}
-  body:not(.touch).load-closed #load{display:none}#load{max-width:184px}#load .keys{font-size:9px;max-width:164px;text-align:center;line-height:1.5}
-  .worldButtons{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}.worldButtons .btn,#runnerBtn{font-size:12px;padding:9px 12px}
-  #panel{border-radius:0}#panel p{margin:8px 0}#panel .smallNote{font-size:11px}#panel h4{letter-spacing:.04em}
-  #speedo{max-width:300px}#tel{font-size:10px;max-width:264px;line-height:1.4}
-  #toast{z-index:17;max-width:min(500px,90vw);text-align:center;font-size:12px;pointer-events:none}
-  .pedal.held{outline:2px solid var(--ink);filter:brightness(1.15)}
-  body.touch #load{display:none;right:12px;top:calc(90px + env(safe-area-inset-top,0px));bottom:auto;z-index:10;transform:none;background:rgba(27,29,31,.95)}
-  body.touch.load-open #load{display:flex}body.touch #loadBtn{display:block}
-  body.touch #rig{left:12px;right:auto;top:calc(100px + env(safe-area-inset-top,0px));bottom:auto;transform:none;width:190px;padding:10px 12px}
-  body.touch #rig .rigControls button{font-size:9px;padding:9px 4px}body.touch #driveSpec{margin-bottom:9px;font-size:9px}
-  body.touch #speedo{left:12px;bottom:calc(205px + env(safe-area-inset-bottom,0px));max-width:180px;padding:8px 12px}
-  body.touch #spd{font-size:34px}body.touch #surf{font-size:11px}body.touch #grade{font-size:10px}
-  body.touch #steerPad{left:12px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:154px;height:72px}
-  body.touch #miniBtns{left:12px;bottom:calc(112px + env(safe-area-inset-bottom,0px));gap:10px}
-  body.touch #goBtn{right:14px;bottom:calc(26px + env(safe-area-inset-bottom,0px));width:84px;height:92px}
-  body.touch #stopBtn{right:110px;bottom:calc(26px + env(safe-area-inset-bottom,0px));width:74px;height:64px}
-  body.touch #boostBtn{right:14px;bottom:calc(132px + env(safe-area-inset-bottom,0px));width:84px;height:48px;background:rgba(184,116,52,.87);font-size:11px;color:var(--ink)}
-  body.touch #driftBtn{right:110px;bottom:calc(106px + env(safe-area-inset-bottom,0px));width:74px;height:48px;background:rgba(27,29,31,.84);font-size:11px}
-  @media(max-width:720px){#holeCard{max-width:calc(100vw - 78px);padding:10px}#holeCard .t1{font-size:11px}#holeCard .t2{font-size:9px}#holeCard .gate{font-size:9px;gap:8px}#helpBtn,#loadBtn{right:12px}#loadBtn{top:55px;width:34px}#intro{padding:26px;background:linear-gradient(90deg,rgba(27,29,31,.90),rgba(27,29,31,.45))}#intro h1{font-size:32px}#intro .sub{font-size:12px}#intro p{font-size:14px}#intro .row{margin-top:16px;gap:12px}}
-  @media(max-height:500px) and (pointer:coarse){body.touch #holeCard .gate{display:none}body.touch #holeCard{max-width:310px}body.touch #rig{left:auto;right:14px;top:12px;width:220px}body.touch #driveSpec,body.touch #rideLabel{display:none}body.touch #rig .energyLabels{margin-top:8px}body.touch #speedo{left:182px;bottom:16px;max-width:170px}body.touch #speedo #grade{display:none}body.touch #helpBtn{right:250px}body.touch #loadBtn{right:250px}body.touch #intro .no{display:none}body.touch #intro .inner{max-width:620px}body.touch #intro p{margin-top:8px}body.touch .eyebrow{margin-bottom:8px}body.touch #introNote{margin-top:8px}body.touch #intro .row{margin-top:10px}}
 </style>
 </head>
 <body>
 <canvas id="gl" tabindex="0" aria-label="3D view of the cart on Hole 10"></canvas>
 
 <div class="hud card" id="holeCard">
-  <div class="no">R1</div>
-  <div><div class="t1" id="worldTitle">Presidio Golf Course</div><div class="t2" id="worldSub">Terrain loading</div></div>
+  <div class="no">10</div>
+  <div><div class="t1">Par 5 · 486 yd from the whites</div><div class="t2">Presidio Golf Course, San Francisco</div></div>
   <div class="gate"><span id="gateName">—</span><span id="timer">0.0 s</span></div>
 </div>
 <div class="hud card" id="map"><canvas id="mapC"></canvas></div>
 <button class="card" id="helpBtn" aria-label="Open the handbook">?</button>
-<button class="card" id="loadBtn" aria-label="Toggle payload panel">LOAD</button>
 
 <div class="hud card" id="speedo">
   <div class="big"><span id="spd">0</span><span class="unit">mph</span><span id="gear">P</span></div>
@@ -169,41 +128,30 @@
   <div id="tel"></div>
 </div>
 
-<section class="hud card" id="rig" aria-label="Powertrain and suspension">
-  <div class="rigControls"><button id="modeBtn" aria-label="Toggle Sport or Eco mode">SPORT</button><button id="activeBtn" aria-label="Toggle active suspension" aria-pressed="true">ACTIVE</button></div>
-  <div id="driveSpec">Dual-motor AWD</div>
-  <div class="energyLabels"><span>CAPACITOR</span><strong id="capLabel">100%</strong></div>
-  <div id="capTrack"><div id="capFill"></div></div>
-  <div class="rigNumbers"><span>BAT <b id="batteryLabel">100%</b></span><strong id="powerLabel">0 kW</strong></div>
-  <div id="rideLabel">ACTIVE</div>
-</section>
 <div class="hud card" id="load">
   <h3>Load <span>tap a seat</span></h3>
   <canvas id="plate" aria-label="Top-down load plate: seats, wheel loads, centre of mass"></canvas>
   <div id="mass"></div>
-  <div class="keys">0 empty / 1 driver / 2 balanced / 3 rear-right / 4 full</div>
+  <div class="keys">1 driver · 2 balanced · 3 rear-right · 4 full</div>
 </div>
 
 <div class="hud card" id="toast"></div>
-<div class="hud" id="hint">W/S pedals &nbsp; A/D steer &nbsp; Shift boost &nbsp; Space drift &nbsp; E mode &nbsp; C camera &nbsp; R recover &nbsp; L record<span id="logDot"></span> · H handbook</div>
+<div class="hud" id="hint">W/S drive and brake · A/D steer · Space handbrake · R right the cart · C camera · F probes · L record<span id="logDot"></span> · H handbook</div>
 
 <div id="touch">
   <div class="card" id="steerPad" aria-label="Steering: drag left or right"><div id="steerKnob"></div></div>
-  <button class="pedal" id="goBtn">GO</button>
-  <button class="pedal" id="stopBtn">BRAKE</button>
-  <button class="pedal" id="boostBtn">BOOST</button><button class="pedal" id="driftBtn">DRIFT</button>
+  <button class="pedal" id="goBtn">Go</button>
+  <button class="pedal" id="stopBtn">Brake</button>
   <div id="miniBtns"><button class="card" id="rightBtn" aria-label="Right the cart">⟲</button><button class="card" id="camBtn" aria-label="Change camera">◎</button></div>
 </div>
 
 <div id="intro">
   <div class="inner">
-    <div class="eyebrow">BRAZEN PERFORMANCE / RALLY 1</div>
-    <div class="no">R1</div>
-    <h1>Presidio Electric</h1>
-    <div class="sub">Six seats. Four active corners. Two motors.</div>
-    <p>Calm over the rough. Eager in the corners. Still allowed to cartwheel.</p>
-    <p class="introControls">Hold Shift for boost. E switches Eco / Sport. C changes seats.<br>On touch, use GO + BOOST. Open ? for the proving ground.</p>
-    <div class="row"><button id="go" disabled>Drive</button><span id="status">Preparing the rally cart...</span></div>
+    <div class="no">10</div>
+    <h1>Presidio Golf Course</h1>
+    <div class="sub">San Francisco · par 5 · back up the hill</div>
+    <p>Remote-drive the unmanned cart on registered Presidio terrain. Hole 10 remains the regression route; the measured world extends across the course.</p>
+    <div class="row"><button id="go" disabled>Drive</button><span id="status">Loading Presidio…</span></div>
     <div id="introNote">World: <span id="terrainNote"></span></div>
   </div>
 </div>
@@ -212,36 +160,25 @@
   <h2>Handbook <button id="closePanel">Close</button></h2>
   <h4>Driving</h4>
   <table>
-    <tr><td>W / ↑ · Go pedal</td><td>Throttle. Lift-off regeneration; automatic parking near a standstill. Eco has stronger lift-off braking.</td></tr>
+    <tr><td>W / ↑ · Go pedal</td><td>Throttle. Releasing it regens to a stop and sets the park brake.</td></tr>
     <tr><td>S / ↓ · Brake pedal</td><td>Brake. Hold at a standstill to shift into reverse.</td></tr>
     <tr><td>A D / ← →</td><td>Steer. Lock shrinks with speed.</td></tr>
-    <tr><td>Space</td><td>Rear handbrake: interrupts rear drive, locks the rear wheel visuals, and reduces rear lateral grip. Front drive remains available.</td></tr>
-    <tr><td>Shift / BOOST</td><td>Hold with throttle for finite capacitor boost in Sport. No boost in Eco or reverse.</td></tr>
-    <tr><td>E / SPORT button</td><td>Toggle Eco (7 kW, 23 mph governor) and Sport (10 kW, 35 mph governor; 18 kW boost peak).</td></tr>
-    <tr><td>V / ACTIVE button</td><td>Toggle active suspension for a direct active/passive comparison.</td></tr>
-    <tr><td>R / recover</td><td>Right the cart where it lies; keep remaining battery and capacitor charge.</td></tr>
-    <tr><td>T</td><td>Fresh run at the route start; reset timer and energy stores.</td></tr>
-    <tr><td>C · ◎ · drag</td><td>Camera: chase, low chase, front seat, rear passenger, wheel side. Drag to look around.</td></tr>
+    <tr><td>Space</td><td>Rear handbrake: locks the rears, halves their side grip.</td></tr>
+    <tr><td>R · ⟲</td><td>Right the cart where it lies</td></tr>
+    <tr><td>T</td><td>Back to the tee path, restart the route timer</td></tr>
+    <tr><td>C · ◎ · drag</td><td>Camera: chase, low chase, driver seat, wheel side. Drag to look around.</td></tr>
     <tr><td>F</td><td>Show suspension probes, wheel loads and centre of mass</td></tr>
     <tr><td>L</td><td>Start telemetry, then press again to save the trace as JSON</td></tr>
-    <tr><td>Gamepad</td><td>Left stick steer, RT go, LT brake, A handbrake, LB boost, X mode, Y recover, RB camera.</td></tr>
+    <tr><td>Gamepad</td><td>Left stick steers, RT go, LT brake, A handbrake, Y right the cart, RB camera</td></tr>
   </table>
   <h4>Load</h4>
-  <p>Tap a seat or bag to change the payload. Keys 0 / 1 / 2 / 3 / 4 select empty / driver / balanced / rear-heavy / full. The rendered cart remains unmanned. The red crosshair is the centre of mass; the bar under the cart is left/right load transfer (full width means two wheels are carrying the cart).</p>
-  <h4>Choose a world</h4>
-  <div class="worldButtons"><button class="btn" id="padBtn">Rally proving ground</button><button class="btn" id="fallbackBtn">Authored Presidio route</button><button class="btn" id="measuredBtn" disabled>Loading measured Presidio...</button></div>
-  <p>Proving ground: follow the BUMP LANE and JUMP signs. There is a bank at the far end and a narrow trip curb just left of the straight. These are authored test features, not real Presidio landmarks. World changes start a fresh run.</p>
-  <h4>Handling model / RALLY 1</h4>
-  <p>Four contact probes, compliant springs, digressive damping, bump stops, and terrain-relative active roll / pitch / ride control. Actuators are limited to 2.2 kN per corner and 1.8 kW combined. No ground contact means no suspension force or steering torque.</p>
-  <p>Rear-biased AWD: 4 + 6 kW continuous, 8 + 10 kW short peak. The simulated 7.2 kWh battery and 25 Wh capacitor have finite charge. Regeneration recovers accepted braking work; low-throttle top-up spends battery energy. These are fictional game-tuning values, not ratings for a Bose, BMW, MINI, or production golf cart. There is no infinite-range claim.</p>
-  <p>Forces move the body; body angles are never rewritten to keep it level. Strong impacts and awkward landings can overturn it. Tires use a combined-force grip limit; wheel rotation is visual, not an unsprung-mass or tire-carcass simulation. Tree contacts retain the lightweight yaw-box approximation.</p>
+  <p>Tap a seat or bag on the load plate to fill or empty it. Keys 1–4 load regression payloads into the physics model; the rendered cart remains unmanned. The red crosshair is the centre of mass; the bar under the cart is left/right load transfer (full width means two wheels are carrying the cart).</p>
   <h4>Terrain</h4>
-  <p id="terrainNote2">Measured Presidio loads separately from USGS elevation and mapped course vectors. You can drive the authored fallback immediately after the cart loads. A measured course never replaces the terrain during a drive; select it here when ready. Offline fallback is explicitly labeled. An imported ESRI ASCII grid remains supported.</p>
+  <p id="terrainNote2">Primary world: live registered USGS 3DEP bare-earth elevation plus mapped golf-course vectors. If either network source is unavailable, the app falls back to the deterministic authored Hole 10 world. You can still override terrain with an ESRI ASCII grid.</p>
   <p style="margin-top:8px"><label class="btn">Load a DEM (.asc)<input type="file" id="demFile" accept=".asc,.txt"></label></p>
   <h4>Regression checks</h4>
   <p>The same suite runs here and in Node (see the <code>regression-suite</code> block in this file). Warn means it ran on proxy evidence; skip marks a stub the team owns.</p>
-  <p style="margin-top:8px"><button class="btn" id="runChecks">Run checks</button> <button class="btn" id="runnerBtn">Save Node runner</button></p>
-  <p class="smallNote">Tests pause driving. Numerical checks do not replace a target-phone run or human handling review. L saves telemetry; replay import is not implemented.</p>
+  <p style="margin-top:8px"><button class="btn" id="runChecks">Run checks</button></p>
   <div id="checks"></div>
 </aside>
 
@@ -3889,7 +3826,6 @@
 </script>
 <script id="sim-core">
 
-
 'use strict';
 /* =============================================================================
    SIM CORE — Hole 10 cart. Pure JS: no DOM, no THREE. Runs in browser + node.
@@ -3945,53 +3881,21 @@ var SIM = (function () {
      TUNE — every handling knob in one place. Values are ASSUMED (no shop
      manual). Replace from spec sheet without changing model structure.
   ========================================================================= */
-  // RALLY/1: fictional handling tune, NOT a Bose/BMW hardware specification.
-  // Power is total mechanical drive power at the tire-force model, NOT per motor.
-  const BUILD = 'brazen-rally-1.0.0';
   const TUNE = {
-    DT: 1 / 120, MAX_STEPS: 30,
+    DT: 1 / 120, MAX_STEPS: 30,          // fixed step; 30 steps = 0.25 s max catch-up
     CART_MASS: 560, CART_COM: [0, -0.50, -0.20], CART_BOX: [1.3, 1.3, 3.6],
-    WHEEL_R: 0.36, WHEELBASE: 2.64, TRACK: 1.46, AXLE_F: 1.36, AXLE_R: -1.28,
-    ANCHOR_Y: -0.55, SUSP_LEN: 0.30, SUSP_TRAVEL: 0.22,
-    K_SPRING: 28000, C_BUMP: 1450, C_REBOUND: 2100, K_BUMPSTOP: 180000,
-    K_ANTIROLL_F: 2800, K_ANTIROLL_R: 1800,
-    ACTIVE_F: 2200, ACTIVE_SLEW: 24000, ACTIVE_POWER: 1800, ACTIVE_EFF: 0.82,
-    ACTIVE_ROLL_K: 32000, ACTIVE_PITCH_K: 44000, ACTIVE_ROLL_C: 2400,
-    ACTIVE_PITCH_C: 3400, ACTIVE_HEAVE_C: 1000, ACTIVE_GROUND_TAU: 0.10, ACTIVE_RIDE_GAIN: 0.72, ACTIVE_RIDE_TAU: 0.16,
-    // 10 kW continuous (4 front + 6 rear); 18 kW short peak (8 + 10).
-    MOTOR_F: 3400, MOTOR_P: 10000, BOOST_P: 8000, BOOST_F: 1700,
-    FRONT_P: 4000, REAR_P: 6000, FRONT_PEAK_P: 8000, REAR_PEAK_P: 10000,
-    FRONT_F: 1800, REAR_F: 2400, FRONT_PEAK_F: 2500, REAR_PEAK_F: 3200,
-    V_MAX: 15.6, V_REV: 4.5, BRAKE_F: 6500, BRAKE_FRONT: 0.60,
-    REGEN_P: 4500, REGEN_F: 1600, DRIVE_EFF: 0.90, REGEN_EFF: 0.72,
-    TBR: 2.5, DIFF_PRELOAD: 80,
-    BATTERY_J: 72 * 100 * 3600, BATTERY_MAX_W: 14000, BATTERY_CHARGE_W: 3000,
-    CAP_J: 90000, CAP_MAX_W: 10000, CAP_CHARGE_W: 4500,
-    CAP_EFF: 0.96, CAP_TOPUP_W: 650, AUX_W: 65, COPPER_W: 220,
-    STEER_MAX: 0.60, STEER_MIN: 0.09, STEER_RATE: 2.8, STEER_RETURN: 3.8,
+    WHEEL_R: 0.36, WHEELBASE: 2.64, TRACK: 1.32, AXLE_F: 1.36, AXLE_R: -1.28,
+    ANCHOR_Y: -0.55, SUSP_LEN: 0.30, SUSP_TRAVEL: 0.20,
+    K_SPRING: 34000, C_BUMP: 1800, C_REBOUND: 2500, K_BUMPSTOP: 180000, K_ANTIROLL_F: 5000, K_ANTIROLL_R: 3000,
+    MOTOR_F: 2900, MOTOR_P: 11000, V_MAX: 11.18, V_REV: 4.5, REGEN_COAST: 320, REGEN_BRAKE: 450,
+    BRAKE_F: 5200, BRAKE_FRONT: 0.55, TBR: 2.0,              // torque-bias ratio: 1 = open diff
+    STEER_MAX: 0.60, STEER_MIN: 0.16, STEER_RATE: 2.4, STEER_RETURN: 3.6,
     CDA: 1.4, RHO: 1.2, LOAD_SENS: 0.10, FZ_NOM: 1800,
-    TIRE_B: 7.8, TIRE_C: 1.35, HANDBRAKE_LAT: 0.48,
+    TIRE_B: 7.0, TIRE_C: 1.35, HANDBRAKE_LAT: 0.5,
     HULL_K: 250000, HULL_C: 7000, HULL_MU: 0.55,
     TREE_K: 300000, TREE_C: 9000, TREE_MU: 0.25,
     PERSON_KG: 82, BAG_KG: 16, BASKET_KG: 14,
   };
-  const MODES = Object.freeze({
-    sport: Object.freeze({ name: 'SPORT', power: 1, force: 1, vmax: 15.6,
-      front: 0.34, coast: 95, throttleRate: 5.0, steer: 1, active: 1, lean: 0.0035 }),
-    eco: Object.freeze({ name: 'ECO', power: 0.70, force: 0.72, vmax: 10.5,
-      front: 0.44, coast: 270, throttleRate: 2.8, steer: 0.95, active: 0.80, lean: 0.0045 }),
-  });
-  const finite = (v, fallback = 0) => Number.isFinite(v) ? v : fallback;
-  const approach = (v, target, maxDelta) => v + clamp(target - v, -maxDelta, maxDelta);
-  function setMode(cart, mode) { if (MODES[mode]) cart.mode = mode; }
-  function setActive(cart, enabled) { cart.activeEnabled = !!enabled; }
-  function emit(cart, event) {
-    // Fixed-size event history: an afternoon of driving cannot grow this forever.
-    const e = { t: cart.t, seq: ++cart.eventSeq, ...event };
-    if (cart.events.length >= 256) cart.events.shift();
-    cart.events.push(e);
-  }
-
 
   /* Seat + cargo anchors, body frame (m) relative to the mesh-centre reference. */
   const ANCHORS = {
@@ -4127,25 +4031,6 @@ var SIM = (function () {
     if (opts.dem) applyDEM(w, opts.dem);
     return w;
   }
-  // Optional authored proving ground. Every visible ramp is physical terrain.
-  // No launch impulses, scripted flips, or special suspension overrides here.
-  function createHandlingWorld() {
-    const w = createWorld({ flat: true });
-    const band = (a,b,c,d,x) => sstep(a,b,x) * (1-sstep(c,d,x));
-    w.meta = { source: 'handling-pad', measured: false, registered: false, note: 'Authored handling pad: bump lane at X=-28; jump at X=+28; bank beyond Z=130.' };
-    w.bounds = [-90,90,-50,220];
-    w.height = (x,z) => {
-      const bumps = Math.exp(-(((x+28)/6)**4)) * band(15,23,76,86,z) * (0.065*Math.sin(z*Math.PI/2.2)+0.025*Math.sin(z*Math.PI/1.15));
-      const ramp = Math.exp(-(((x-28)/6)**8)) * (1.6*sstep(28,46,z) * (1-sstep(46,50,z)));
-      const bank = band(120,138,176,194,z) * (5.5 * sstep(-35,35,x));
-      const curb = 0.32*band(4.0,4.18,4.45,4.63,x)*band(22,23,73,74,z);
-      return bumps+ramp+bank+curb;
-    };
-    w.surface = (x,z) => Math.abs(x)<9 || (Math.abs(x-28)<7 && z<110) ? 'path' : Math.abs(x+28)<7 && z<100 ? 'rough' : 'fairway';
-    w.markers = [ {p:[-28,10],label:'BUMP LANE'}, {p:[28,15],label:'JUMP / COMMIT'}, {p:[0,112],label:'BANKED TURN'}, {p:[7,20],label:'TRIP CURB'} ];
-    return w;
-  }
-
   function gridSample(g, x, z) {
     const dx = g.dx || g.cell, dz = g.dz || g.cell;
     let fx = (x - g.x0) / dx, fz = (z - g.z0) / dz;
@@ -4254,21 +4139,13 @@ var SIM = (function () {
     const yaw = spawn.yaw ?? 0, x = spawn.x ?? (onPlane ? 0 : HOLE.gates[0].p[0]), z = spawn.z ?? (onPlane ? 0 : HOLE.gates[0].p[1]);
     const cart = {
       q: qyaw(yaw), v: [0, 0, 0], w: [0, 0, 0], t: 0, steps: 0,
-      mode: MODES[spawn.mode] ? spawn.mode : 'sport', activeEnabled: spawn.active !== false,
-      throttle: 0, brake: 0, batteryJ: clamp(finite(spawn.batteryJ, T.BATTERY_J), 0, T.BATTERY_J),
-      capJ: clamp(finite(spawn.capJ, T.CAP_J), 0, T.CAP_J), capLocked: false,
-      groundN: terrainNormal(world, x, z, 1), accel: [0, 0, 0], aLat: 0, aLong: 0,
-      activePower: 0, activeUtil: 0, activeSaturated: false, boost: false,
-      motorPower: 0, regenPower: 0, batteryPower: 0, capPower: 0, axleForce: [0, 0],
-      energyUsed: 0, energyRecovered: 0, activeEnergy: 0, distance: 0,
-      lastImpact: 0, peakAir: 0, eventSeq: 0,
       steer: 0, reverse: false, revTimer: 0, payload: { ...(spawn.payload || PRESETS.driver) },
-      wheels: wheelDefs().map(d => ({ ...d, comp: 0, compPrev: 0, compRate: 0, activeF: 0, activeCmd: 0, passiveF: 0, Fz: 0, Fx: 0, Fy: 0, driveFx: 0, regenFx: 0, contact: false, slip: 0, surf: 'path', spin: 0, spinRate: 0, steerAngle: 0, center: [0, 0, 0] })),
+      wheels: wheelDefs().map(d => ({ ...d, comp: 0, compPrev: 0, Fz: 0, contact: false, slip: 0, surf: 'path', spin: 0, spinRate: 0, steerAngle: 0, center: [0, 0, 0] })),
       events: [], hullHits: 0, treeHits: 0, airT: 0, maxPen: 0, onGreen: false, ltr: 0, slipMax: 0, sumFz: 0, drive: 0, parked: true,
     };
     Object.assign(cart, massProps(cart.payload));
     // place reference origin so wheels sit near static sag, then COM p = ref + R*com
-    const h = world.height(x, z), ref = [x, h + (T.SUSP_LEN + T.WHEEL_R - clamp(cart.M * G / (4 * T.K_SPRING), 0.025, 0.16)) - T.ANCHOR_Y, z];
+    const h = world.height(x, z), ref = [x, h + (T.SUSP_LEN + T.WHEEL_R - 0.09) - T.ANCHOR_Y, z];
     cart.p = V.add(ref, qrot(cart.q, cart.com));
     return cart;
   }
@@ -4280,219 +4157,103 @@ var SIM = (function () {
   }
   const bodyToWorld = (c, b) => V.add(refOrigin(c), qrot(c.q, b));
 
-  /* Wheel probes are unilateral: no ground behind the ray, no negative ray
-     lengths, no upside-down suspension, no contact beyond full droop.
-     Bracketed secant solves the SAME height function used by the render mesh. */
+  /* raycast along body-down from anchor into heightfield (fixed-point) */
   function probe(world, A, d, maxT) {
-    if (d[1] > -0.12) return Infinity;
-    const gap = t => A[1] + d[1] * t - world.height(A[0] + d[0] * t, A[2] + d[2] * t);
-    let lo = 0, hi = maxT, gl = gap(0), gh = gap(hi);
-    if (!Number.isFinite(gl) || !Number.isFinite(gh) || gl < -0.04 || gh > 0) return Infinity;
-    if (gl <= 0) return 0;
-    let t = hi;
-    for (let i = 0; i < 7; i++) {
-      t = clamp(lo + gl / Math.max(1e-9, gl - gh) * (hi - lo), lo, hi);
-      const g = gap(t); if (Math.abs(g) < 0.00001) return t;
-      if (g > 0) { lo = t; gl = g; } else { hi = t; gh = g; }
+    if (A[1] - world.height(A[0], A[2]) < 0) return 0;
+    let t = 0;
+    for (let i = 0; i < 6; i++) {
+      const x = A[0] + d[0] * t, z = A[2] + d[2] * t, h = world.height(x, z);
+      const tn = (A[1] - h) / -d[1]; if (Math.abs(tn - t) < 1e-4) { t = tn; break; } t = tn; if (t > maxT * 1.5) break;
     }
     return t;
   }
 
-  // Equal axle demand with a limited-slip, load-limited redistribution.
-  // A tire with no support always has ZERO tractive capacity, including preload.
-  function axleSplit(demand, left, right) {
-    const lo = Math.min(left, right), cap = lo * TUNE.TBR + TUNE.DIFF_PRELOAD;
-    const a = Math.min(left, cap), b = Math.min(right, cap);
-    let l = Math.min(demand * 0.5, a), r = Math.min(demand * 0.5, b);
-    let spare = Math.max(0, demand - l - r);
-    const la = Math.min(spare, Math.max(0, a - l)); l += la; spare -= la;
-    r += Math.min(spare, Math.max(0, b - r));
-    return [l, r];
-  }
-
-  /* Force-domain raycast vehicle, not an unsprung-mass / tire-carcass solver.
-     Active suspension is an energy-limited external-force approximation of
-     wheel-ground reactions. No pose writes; no airborne self-righting torque.
-     Damping uses contact VELOCITY, not a landing discontinuity in ray length. */
-  function step(world, cart, input = {}, dt = TUNE.DT) {
-    const T = TUNE, M = cart.M, q = cart.q, mode = MODES[cart.mode] || MODES.sport;
-    dt = clamp(finite(dt, T.DT), 0, T.DT); if (!dt) return;
-    const up = qrot(q, [0, 1, 0]), fwd = qrot(q, [0, 0, 1]), left = qrot(q, [1, 0, 0]), down = V.mul(up, -1);
-    const vLong = V.dot(cart.v, fwd), spd = Math.abs(vLong), qInv = [-q[0], -q[1], -q[2], q[3]];
+  /* ================================================================ STEP */
+  // input: { throttle 0..1, brake 0..1, steer -1..1 (+left), handbrake bool }
+  function step(world, cart, input, dt = TUNE.DT) {
+    const T = TUNE, M = cart.M, q = cart.q;
+    const up = qrot(q, [0, 1, 0]), fwd = qrot(q, [0, 0, 1]), down = V.mul(up, -1);
+    const vLong = V.dot(cart.v, fwd), spd = Math.abs(vLong);
     let F = [0, -G * M, 0], Tq = [0, 0, 0];
     const push = (f, at) => { F = V.add(F, f); Tq = V.add(Tq, V.cross(V.sub(at, cart.p), f)); };
-    const battStart = cart.batteryJ, capStart = cart.capJ;
-    cart.lastImpact *= Math.exp(-dt * 5);
-    const aBlend = 1 - Math.exp(-dt / 0.12);
-    cart.aLat += (clamp(V.dot(cart.accel, left), -12, 12) - cart.aLat) * aBlend;
-    cart.aLong += (clamp(V.dot(cart.accel, fwd), -12, 12) - cart.aLong) * aBlend;
 
-    // Every input device supplies intent. Smoothing happens at the fixed tick,
-    // never at display frequency. Service brake overrides simultaneous throttle.
-    const thr = clamp(finite(input.throttle), 0, 1), brk = clamp(finite(input.brake), 0, 1);
-    const nearlyStopped = Math.hypot(cart.v[0], cart.v[2]) < 0.30;
-    if (!cart.reverse) {
-      if (brk > 0.1 && thr < 0.05 && nearlyStopped) { cart.revTimer += dt; if (cart.revTimer > 0.35) cart.reverse = true; }
-      else cart.revTimer = 0;
-    } else if (thr > 0.1 && nearlyStopped) { cart.reverse = false; cart.revTimer = 0; }
-    const wantedDrive = cart.reverse ? brk : thr, wantedBrake = cart.reverse ? thr : brk;
-    cart.brake = approach(cart.brake, wantedBrake, dt * 10);
-    cart.throttle = approach(cart.throttle, wantedDrive * (1 - wantedBrake), dt * (wantedDrive > cart.throttle ? mode.throttleRate : 10));
-    const drive = cart.throttle, service = cart.brake, dir = cart.reverse ? -1 : 1;
-    if (drive > 0.025) cart.parked = false; else if (spd < 0.30 && Math.hypot(cart.v[0], cart.v[2]) < 0.4) cart.parked = true;
-    const holding = cart.parked;
+    // ---- drive mode: arcade reverse (hold brake at standstill)
+    let thr = clamp(input.throttle || 0, 0, 1), brk = clamp(input.brake || 0, 0, 1);
+    if (!cart.reverse) { if (brk > 0.1 && thr < 0.05 && spd < 0.3) { cart.revTimer += dt; if (cart.revTimer > 0.35) cart.reverse = true; } else cart.revTimer = 0; }
+    else if (thr > 0.1 && spd < 0.3) { cart.reverse = false; cart.revTimer = 0; }
+    let drive = cart.reverse ? brk : thr, service = cart.reverse ? thr : brk;
+    const dir = cart.reverse ? -1 : 1;
 
-    const speedU = clamp(spd / mode.vmax, 0, 1);
-    const lim = lerp(T.STEER_MAX, T.STEER_MIN, speedU) * mode.steer;
-    const target = clamp(finite(input.steer), -1, 1) * lim;
-    cart.steer = approach(cart.steer, target, (Math.abs(target) < Math.abs(cart.steer) ? T.STEER_RETURN : T.STEER_RATE) * dt);
-    const d0 = cart.steer, WB = T.WHEELBASE;
-    let dL = d0, dR = d0;
-    if (Math.abs(d0) > 1e-4) { const R = WB / Math.tan(d0); dL = Math.atan(WB / (R - T.TRACK / 2)); dR = Math.atan(WB / (R + T.TRACK / 2)); }
+    // ---- steering: speed-sensitive limit, rate-limited, self-centring
+    const lim = lerp(T.STEER_MAX, T.STEER_MIN, clamp(spd / T.V_MAX, 0, 1));
+    const target = clamp(input.steer || 0, -1, 1) * lim;
+    const rate = (Math.abs(target) < Math.abs(cart.steer) ? T.STEER_RETURN : T.STEER_RATE) * dt;
+    cart.steer += clamp(target - cart.steer, -rate, rate);
+    const d0 = cart.steer, WB = T.WHEELBASE, tw = T.TRACK;
+    let dL = d0, dR = d0; // Ackermann
+    if (Math.abs(d0) > 1e-4) { const R = WB / Math.tan(d0); dL = Math.atan(WB / (R - tw / 2)); dR = Math.atan(WB / (R + tw / 2)); }
 
-    // Probe all four corners before allocating control forces or axle torque.
+    // ---- motor → reduction → diff (force domain)
+    let Fmotor = 0;
+    const vmax = cart.reverse ? T.V_REV : T.V_MAX;
+    if (drive > 0) {
+      const gov = clamp((vmax - (vLong * dir)) / 0.8, 0, 1);
+      Fmotor = dir * Math.min(drive * T.MOTOR_F, T.MOTOR_P / Math.max(spd, 1.0)) * gov;
+    } else if (spd > 0.5) Fmotor = -Math.sign(vLong) * (T.REGEN_COAST + service * T.REGEN_BRAKE) * clamp(spd / 2, 0, 1);
+
+    // ---- suspension + tires
     const maxT = T.SUSP_LEN + T.WHEEL_R, W = cart.wheels;
-    let contacts = 0, ground = [0, 0, 0];
     for (const wh of W) {
-      const A = bodyToWorld(cart, wh.a), t = probe(world, A, down, maxT);
-      wh.compPrev = wh.comp; wh.contact = Number.isFinite(t) && t >= 0 && t <= maxT;
-      wh.comp = wh.contact ? Math.max(0, maxT - t) : 0;
-      wh.contactPt = V.add(A, V.mul(down, wh.contact ? t : maxT));
+      const A = bodyToWorld(cart, wh.a);
+      const t = probe(world, A, down, maxT);
+      wh.compPrev = wh.comp;
+      wh.contact = t <= maxT;
+      wh.comp = wh.contact ? maxT - t : 0;
+      wh.contactPt = V.add(A, V.mul(down, Math.min(t, maxT)));
       wh.steerAngle = wh.front ? (wh.left ? dL : dR) : 0;
       wh.center = V.add(A, V.mul(down, T.SUSP_LEN - Math.min(wh.comp, T.SUSP_TRAVEL)));
-      wh.Fx = wh.Fy = wh.driveFx = wh.regenFx = 0;
-      wh.normal = wh.contact ? terrainNormal(world, wh.contactPt[0], wh.contactPt[2]) : [0, 1, 0];
-      if (wh.contact && V.dot(up, wh.normal) <= 0.15) wh.contact = false;
-      if (!wh.contact) { wh.compRate = wh.Fz = wh.Fmax = wh.activeF = wh.activeCmd = wh.passiveF = 0; wh.stick = null; wh.vl = wh.vs = 0; continue; }
-      contacts++; ground = V.add(ground, wh.normal);
-      const vc = V.add(cart.v, V.cross(cart.w, V.sub(wh.contactPt, cart.p)));
-      const fw0 = qrot(q, [Math.sin(wh.steerAngle), 0, Math.cos(wh.steerAngle)]);
-      wh.fw = V.norm(V.sub(fw0, V.mul(wh.normal, V.dot(wh.normal, fw0))));
-      wh.sw = V.norm(V.cross(wh.normal, wh.fw)); wh.vl = V.dot(vc, wh.fw); wh.vs = V.dot(vc, wh.sw);
-      wh.compRate = clamp(-V.dot(vc, wh.normal) / Math.max(0.25, V.dot(up, wh.normal)), -12, 12);
-      const sf = surfaceAt(world, wh.contactPt[0], wh.contactPt[2]); wh.surf = sf.id; wh.mu = sf.mu; wh.crr = sf.crr;
     }
-    if (contacts) {
-      const measured = V.norm(ground), blend = 1 - Math.exp(-dt / T.ACTIVE_GROUND_TAU);
-      cart.groundN = V.norm(V.add(V.mul(cart.groundN, 1 - blend), V.mul(measured, blend)));
-    }
-    const relativeUp = V.dot(up, cart.groundN), nb = qrot(qInv, cart.groundN), wb = qrot(qInv, cart.w);
-    const authority = cart.activeEnabled && cart.batteryJ > 1 ?
-      sstep(0.35, 0.85, relativeUp) * (contacts >= 3 ? 1 : contacts === 2 ? 0.3 : 0) : 0;
-    // Modest readable outward lean and acceleration squat are deliberate targets.
-    const rollError = nb[0] - clamp(cart.aLat * mode.lean, -0.07, 0.07);
-    const pitchError = nb[2] - clamp(cart.aLong * 0.0025, -0.04, 0.04);
-    const rollMoment = (-T.ACTIVE_ROLL_K * rollError - T.ACTIVE_ROLL_C * wb[2]) * authority * mode.active;
-    const pitchMoment = (T.ACTIVE_PITCH_K * pitchError - T.ACTIVE_PITCH_C * wb[0]) * authority * mode.active;
-    const heave = -T.ACTIVE_HEAVE_C * V.dot(cart.v, cart.groundN) * authority;
-    const xSq = W.reduce((v, w) => v + (w.a[0] - cart.com[0]) ** 2, 0);
-    const zSq = W.reduce((v, w) => v + (w.a[2] - cart.com[2]) ** 2, 0);
-    for (const wh of W) wh.ar = 0;
-    for (const [i, j, k] of [[0, 1, T.K_ANTIROLL_F], [2, 3, T.K_ANTIROLL_R]]) {
-      const d = W[i].comp - W[j].comp; W[i].ar = k * d; W[j].ar = -k * d;
-    }
-    let activeRequestW = 0, activeUtil = 0, saturated = false;
+    for (const [i, j, k] of [[0, 1, T.K_ANTIROLL_F], [2, 3, T.K_ANTIROLL_R]]) { const d = W[i].comp - W[j].comp; W[i].ar = k * d; W[j].ar = -k * d; }
+    const fzAvail = [];
     for (const wh of W) {
-      if (!wh.contact) continue;
-      const cv = wh.compRate;
-      // Digressive high-speed compression: compliant over chatter, firm in roll.
-      const damper = cv > 0 ? T.C_BUMP / (1 + Math.max(0, cv - 0.35) * 0.5) : T.C_REBOUND;
-      const bump = Math.max(0, wh.comp - T.SUSP_TRAVEL * 0.78);
-      wh.passiveF = Math.max(0, T.K_SPRING * wh.comp + damper * cv + wh.ar +
-        T.K_BUMPSTOP * bump * bump / T.SUSP_TRAVEL + T.K_BUMPSTOP * Math.max(0, wh.comp - T.SUSP_TRAVEL));
-      // High-pass cancellation of road-induced spring/damper force. The low-pass
-      // component retains static support, sustained load transfer and readable lean.
-      const rideBase = T.K_SPRING * wh.comp + damper * cv;
-      if (!Number.isFinite(wh.rideLP)) wh.rideLP = rideBase;
-      wh.rideLP += (rideBase - wh.rideLP) * (1 - Math.exp(-dt / T.ACTIVE_RIDE_TAU));
-      const roadCancel = -(rideBase - wh.rideLP) * T.ACTIVE_RIDE_GAIN * authority * sstep(1, 4, spd);
-      const request = roadCancel + rollMoment * (wh.a[0] - cart.com[0]) / xSq - pitchMoment * (wh.a[2] - cart.com[2]) / zSq + heave / 4;
-      const limit = authority > 0 ? T.ACTIVE_F * authority : 0;
-      wh.activeCmd = clamp(request, -Math.min(limit, wh.passiveF), limit);
-      wh.activeF = authority > 0 ? approach(wh.activeF, wh.activeCmd, T.ACTIVE_SLEW * dt) : 0;
-      wh.activeF = Math.max(-wh.passiveF, wh.activeF);
-      activeUtil = Math.max(activeUtil, Math.abs(wh.activeF) / T.ACTIVE_F);
-      if (Math.abs(request) > limit + 1) saturated = true;
-      // Conservative actuator budget: absolute mechanical work + holding loss.
-      // No claim of active-suspension regeneration in this simplified model.
-      activeRequestW += Math.abs(wh.activeF) * (Math.abs(cv) / T.ACTIVE_EFF + 0.045);
-    }
-    const auxW = Math.min(T.AUX_W, cart.batteryJ / dt);
-    const activeLimitW = Math.min(T.ACTIVE_POWER, Math.max(0, cart.batteryJ / dt - auxW));
-    const powerScale = activeRequestW > 0 ? Math.min(1, activeLimitW / activeRequestW) : 1;
-    cart.activePower = activeRequestW * powerScale; cart.activeUtil = activeUtil * powerScale;
-    cart.activeSaturated = saturated || powerScale < 0.999;
-    const available = [];
-    for (const wh of W) {
-      if (!wh.contact) { available.push(0); continue; }
-      wh.activeF *= powerScale;
-      wh.Fz = Math.max(0, wh.passiveF + wh.activeF);
+      if (!wh.contact) { wh.Fz = 0; fzAvail.push(0); continue; }
+      const cv = (wh.comp - wh.compPrev) / dt;
+      let fz = T.K_SPRING * wh.comp + (cv > 0 ? T.C_BUMP : T.C_REBOUND) * cv + wh.ar;
+      if (wh.comp > T.SUSP_TRAVEL) fz += T.K_BUMPSTOP * (wh.comp - T.SUSP_TRAVEL);
+      wh.Fz = Math.max(0, fz);
+      const s = surfaceAt(world, wh.contactPt[0], wh.contactPt[2]); wh.surf = s.id; wh.mu = s.mu; wh.crr = s.crr;
       const ls = clamp(1 - T.LOAD_SENS * (wh.Fz / T.FZ_NOM - 1), 0.75, 1.1);
-      wh.Fmax = Math.max(0, wh.mu * ls * wh.Fz); available.push(wh.Fmax);
+      wh.Fmax = s.mu * ls * wh.Fz; fzAvail.push(wh.Fmax);
     }
+    // limited diff: high side ≤ TBR × low side availability
+    const lo = Math.min(fzAvail[2], fzAvail[3]), cap = Math.max(lo * T.TBR, 0);
+    const driveEach = [0, 0, clamp(Fmotor / 2, -Math.min(cap, fzAvail[2]), Math.min(cap, fzAvail[2])), clamp(Fmotor / 2, -Math.min(cap, fzAvail[3]), Math.min(cap, fzAvail[3]))];
+    if (drive > 0.02) cart.parked = false; else if (spd < 0.35) cart.parked = true;   // auto park brake (latched)
+    const holding = cart.parked;
 
-    // Finite capacitor hysteresis prevents 0%-boost flicker. Recovery cannot refill it.
-    if (cart.capJ < 100) cart.capLocked = true;
-    if (cart.capLocked && cart.capJ > T.CAP_J * 0.15) cart.capLocked = false;
-    const boostWanted = !!input.boost && cart.mode === 'sport' && !cart.reverse && drive > 0.15 && !cart.capLocked && service < 0.1 && contacts > 0;
-    const copperW = Math.min(T.COPPER_W * drive * drive, Math.max(0, cart.batteryJ / dt - auxW - cart.activePower));
-    const battDriveW = Math.min(T.BATTERY_MAX_W - auxW - cart.activePower - copperW,
-      Math.max(0, cart.batteryJ / dt - auxW - cart.activePower - copperW));
-    const continuousP = Math.min(T.MOTOR_P * mode.power, Math.max(0, battDriveW) * T.DRIVE_EFF);
-    const boostP = boostWanted ? Math.min(T.BOOST_P, T.CAP_MAX_W * T.CAP_EFF * T.DRIVE_EFF,
-      cart.capJ / dt * T.CAP_EFF * T.DRIVE_EFF) : 0;
-    const boostFraction = boostP / T.BOOST_P;
-    const vmax = cart.reverse ? T.V_REV : mode.vmax;
-    const governor = clamp((vmax - vLong * dir) / 0.85, 0, 1);
-    const totalP = continuousP + boostP;
-    let driveDemand = totalP > 0 ? Math.min(drive * (T.MOTOR_F * mode.force + T.BOOST_F * boostFraction), totalP / Math.max(spd, 1)) * governor : 0;
-    let frontDemand = driveDemand * mode.front, rearDemand = driveDemand - frontDemand;
-    const frontSpeed = Math.max(1, Math.abs(W[0].vl), Math.abs(W[1].vl));
-    const rearSpeed = Math.max(1, Math.abs(W[2].vl), Math.abs(W[3].vl));
-    const frontMax = Math.min(T.FRONT_F + (T.FRONT_PEAK_F - T.FRONT_F) * boostFraction,
-      (T.FRONT_P + (T.FRONT_PEAK_P - T.FRONT_P) * boostFraction) / frontSpeed);
-    const rearMax = Math.min(T.REAR_F + (T.REAR_PEAK_F - T.REAR_F) * boostFraction,
-      (T.REAR_P + (T.REAR_PEAK_P - T.REAR_P) * boostFraction) / rearSpeed);
-    // Shift only demand lost to an axle's traction/power ceiling, not free yaw torque.
-    const fc = Math.min(frontMax, available[0] + available[1]);
-    const rc = input.handbrake ? 0 : Math.min(rearMax, available[2] + available[3]);
-    frontDemand = Math.min(frontDemand, fc); rearDemand = Math.min(rearDemand, rc);
-    let spare = Math.max(0, driveDemand - frontDemand - rearDemand);
-    const toRear = Math.min(spare, Math.max(0, rc - rearDemand)); rearDemand += toRear; spare -= toRear;
-    frontDemand += Math.min(spare, Math.max(0, fc - frontDemand));
-    const fd = axleSplit(frontDemand, available[0], available[1]), rd = axleSplit(rearDemand, available[2], available[3]);
-    const driveEach = [fd[0] * dir, fd[1] * dir, rd[0] * dir, rd[1] * dir];
-
-    const requestedWork = driveEach.reduce((sum, f, i) => sum + Math.max(0, f * W[i].vl), 0);
-    if (requestedWork > totalP && requestedWork > 0) for (let i = 0; i < 4; i++) driveEach[i] *= totalP / requestedWork;
-
-    // Regen accepted by storage, then friction fills the remainder of brake demand.
-    const coast = (drive < 0.03 ? mode.coast * clamp(spd / 0.8, 0, 1) : 0);
-    const brakeDemand = service * T.BRAKE_F + coast;
-    const chargeRoomW = Math.min(T.CAP_CHARGE_W, Math.max(0, T.CAP_J - cart.capJ) / dt) +
-      Math.min(T.BATTERY_CHARGE_W, Math.max(0, T.BATTERY_J - cart.batteryJ) / dt);
-    const regenForce = drive < 0.03 && !holding ? Math.min(brakeDemand, T.REGEN_F,
-      T.REGEN_P / Math.max(spd, 1), chargeRoomW / T.REGEN_EFF / Math.max(spd, 1)) * clamp(spd / 1.5, 0, 1) : 0;
-    let slipMax = 0, driveWorkW = 0, regenWorkW = 0;
-    cart.axleForce[0] = cart.axleForce[1] = 0;
+    let slipMax = 0;
     for (let i = 0; i < 4; i++) {
       const wh = W[i];
-      if (!wh.contact || wh.Fz <= 0) { wh.slip = 0; wh.spinRate *= Math.exp(-0.5 * dt); continue; }
-      const n = wh.normal, fw = wh.fw, sw = wh.sw, vl = wh.vl, vs = wh.vs, mc = wh.Fz / G;
-      const Fmax = wh.Fmax, hb = !!input.handbrake && !wh.front;
+      if (!wh.contact || wh.Fz <= 0) { wh.slip = 0; wh.spinRate = lerp(wh.spinRate, 0, 0.01); continue; }
+      const n = terrainNormal(world, wh.contactPt[0], wh.contactPt[2]);
+      const fw0 = qrot(q, [Math.sin(wh.steerAngle), 0, Math.cos(wh.steerAngle)]);
+      const fw = V.norm(V.sub(fw0, V.mul(n, V.dot(n, fw0)))), sw = V.norm(V.cross(n, fw));
+      const rc = V.sub(wh.contactPt, cart.p), vc = V.add(cart.v, V.cross(cart.w, rc));
+      const vl = V.dot(vc, fw), vs = V.dot(vc, sw), mc = wh.Fz / G;
+      let Fmax = wh.Fmax; const hb = input.handbrake && !wh.front;
       const latMax = Fmax * (hb ? T.HANDBRAKE_LAT : 1);
       const alpha = Math.atan2(vs, Math.abs(vl) + 0.8);
       const fyHi = -latMax * Math.sin(T.TIRE_C * Math.atan(T.TIRE_B * alpha));
       const fyLo = clamp(-vs * mc / dt * 0.25, -latMax, latMax);
       let Fy = lerp(fyLo, fyHi, clamp(Math.abs(vl) / 3, 0, 1));
-      const brakeShare = (wh.front ? T.BRAKE_FRONT : 1 - T.BRAKE_FRONT) / 2;
-      let rg = Math.min(regenForce * brakeShare, Fmax, Math.min(T.REGEN_P, chargeRoomW / T.REGEN_EFF) * brakeShare / Math.max(0.1, Math.abs(vl))) * (hb ? 0 : 1);
-      const brakeTarget = brakeDemand * brakeShare;
-      let friction = Math.max(0, brakeTarget - rg);
-      if (hb) { rg = 0; friction = Math.max(friction, Fmax); }
-      if (holding) { rg = 0; friction = Math.max(friction, 0.8 * Fmax); }
-      const braking = Math.abs(vl) < 0.25 ? clamp(-vl * mc / dt * 0.5, -(friction + rg), friction + rg) : -Math.sign(vl) * (friction + rg);
-      let Fx = driveEach[i] + braking - wh.crr * wh.Fz * Math.tanh(vl / 0.2);
+      // longitudinal
+      let Fx = driveEach[i];
+      let Fb = service * T.BRAKE_F * (wh.front ? T.BRAKE_FRONT : 1 - T.BRAKE_FRONT) / 2 * (hb ? 0 : 1);
+      if (hb) Fb += 0.6 * Fmax;
+      if (holding) Fb = Math.max(Fb, 0.8 * Fmax);
+      if (Fb > 0) Fx += Math.abs(vl) < 0.25 ? clamp(-vl * mc / dt * 0.5, -Fb, Fb) : -Math.sign(vl) * Fb;
+      Fx += -wh.crr * wh.Fz * Math.tanh(vl / 0.2);
+      // Hill hold / parked: static-friction anchor (spring-damper to a stuck point) — no creep.
       if (holding && Math.abs(vs) < 0.35 && Math.abs(vl) < 0.35) {
         if (!wh.stick) wh.stick = wh.contactPt.slice();
         const e = V.sub(wh.contactPt, wh.stick), k = mc * 900, cdmp = 2 * 0.9 * Math.sqrt(k * mc);
@@ -4500,46 +4261,17 @@ var SIM = (function () {
         const m = Math.hypot(fx, fy); if (m > 0.9 * Fmax) { wh.stick = null; fx *= 0.9 * Fmax / m; fy *= 0.9 * Fmax / m; }
         Fx = fx; Fy = fy;
       } else wh.stick = null;
-      const tot = Math.hypot(Fx, Fy), tireScale = tot > Fmax && tot > 0 ? Fmax / tot : 1;
-      Fx *= tireScale; Fy *= tireScale;
-      wh.Fx = Fx; wh.Fy = Fy; wh.driveFx = holding ? 0 : driveEach[i] * tireScale;
-      wh.regenFx = holding ? 0 : Math.min(rg, Math.abs(braking)) * tireScale;
-      // Wheel spin is visual only in this force-domain model. It adds no energy.
-      const surplus = Math.abs(driveEach[i]) > Fmax * 0.98 && drive > 0.5 ? dir * 6 : 0;
-      wh.spinRate = hb ? 0 : vl / T.WHEEL_R + surplus;
-      const saturation = tot > Fmax && Fmax > 0 ? tot / Fmax - 1 : 0;
-      wh.slip = Math.max(saturation, Math.min(1, Math.abs(alpha) * 3) * clamp(Math.abs(vl) / 3, 0, 1));
+      const tot = Math.hypot(Fx, Fy); let sl = 0;
+      if (tot > Fmax) { sl = tot / Fmax - 1; Fx *= Fmax / tot; Fy *= Fmax / tot; }
+      wh.slip = Math.max(sl, Math.min(1, Math.abs(alpha) * 3) * clamp(Math.abs(vl) / 3, 0, 1));
       slipMax = Math.max(slipMax, wh.slip);
-      driveWorkW += Math.max(0, wh.driveFx * vl);
-      regenWorkW += wh.regenFx * Math.abs(vl);
-      cart.axleForce[wh.front ? 0 : 1] += wh.driveFx;
       push(V.add(V.mul(fw, Fx), V.mul(sw, Fy)), wh.contactPt);
-      push(V.mul(n, wh.Fz), wh.contactPt);
+      push(V.mul(up, wh.Fz), wh.contactPt);
+      // visual spin rate: rolls with ground; drive surplus shows as wheelspin
+      const surplus = (!wh.front && Math.abs(driveEach[i]) >= Fmax * 0.98 && drive > 0.5) ? dir * 6 : 0;
+      wh.spinRate = vl / T.WHEEL_R + (hb && Math.abs(vl) > 0.5 ? -vl / T.WHEEL_R : 0) + surplus;
     }
     for (const wh of W) wh.spin += wh.spinRate * dt;
-    // Actual work, not requested motor power, is charged to storage. Boost shares
-    // work in proportion to its configured power so low-speed launches also cost.
-    const capShare = totalP > 0 ? boostP / totalP : 0;
-    const capOut = Math.min(cart.capJ, driveWorkW * capShare / (T.DRIVE_EFF * T.CAP_EFF) * dt);
-    const batteryOut = (driveWorkW * (1 - capShare) / T.DRIVE_EFF + auxW + copperW + cart.activePower) * dt;
-    cart.capJ -= capOut; cart.batteryJ = Math.max(0, cart.batteryJ - batteryOut);
-    cart.activeEnergy += cart.activePower * dt;
-    let recovered = regenWorkW * T.REGEN_EFF * dt;
-    const capIn = Math.min(recovered, T.CAP_CHARGE_W * dt, T.CAP_J - cart.capJ);
-    cart.capJ += capIn; recovered -= capIn;
-    const batteryIn = Math.min(recovered, T.BATTERY_CHARGE_W * dt, T.BATTERY_J - cart.batteryJ);
-    cart.batteryJ += batteryIn;
-    // Battery-to-cap top-up is a transfer with loss, never regeneration at rest.
-    let transferLoss = 0;
-    if (!boostWanted && regenWorkW < 1 && drive < 0.5 && cart.batteryJ > T.BATTERY_J * 0.08) {
-      const transfer = Math.min(T.CAP_TOPUP_W * dt, Math.max(0, T.CAP_J - cart.capJ) / T.CAP_EFF, cart.batteryJ);
-      cart.batteryJ -= transfer; cart.capJ += transfer * T.CAP_EFF; transferLoss = transfer * (1 - T.CAP_EFF);
-    }
-    cart.capJ = clamp(cart.capJ, 0, T.CAP_J); cart.batteryJ = clamp(cart.batteryJ, 0, T.BATTERY_J);
-    cart.motorPower = driveWorkW; cart.regenPower = (capIn + batteryIn) / dt;
-    cart.batteryPower = (battStart - cart.batteryJ) / dt; cart.capPower = (capStart - cart.capJ) / dt;
-    cart.energyUsed += batteryOut + capOut + transferLoss; cart.energyRecovered += capIn + batteryIn;
-    cart.boost = capOut > 0.01; const Fmotor = cart.axleForce[0] + cart.axleForce[1];
 
     // ---- hull vs ground (rollovers, high-centre)
     for (const b of HULL) {
@@ -4550,7 +4282,6 @@ var SIM = (function () {
       const vn = V.dot(vc, n), N = Math.max(0, T.HULL_K * pen - T.HULL_C * vn);
       const vt = V.sub(vc, V.mul(n, vn)), vtl = V.len(vt);
       push(V.mul(n, N), P);
-      if (vn < -0.5) cart.lastImpact = Math.max(cart.lastImpact, Math.min(1, -vn / 7));
       if (vtl > 1e-4) push(V.mul(vt, -Math.min(T.HULL_MU * N, vtl * M / dt * 0.1) / vtl), P);
     }
     // ---- trees + soft bounds (penalty, speed-independent: no low-speed tunnelling)
@@ -4564,13 +4295,13 @@ var SIM = (function () {
       if (d > 1e-6) { pen = r - d; ex /= d; ez /= d; } else { pen = r + Math.min(HX - Math.abs(lx), HZ - Math.abs(lz)); if (HX - Math.abs(lx) < HZ - Math.abs(lz)) { ex = Math.sign(lx) || 1; ez = 0; } else { ex = 0; ez = Math.sign(lz) || 1; } }
       if (pen <= 0) return;
       const nwx = -(ex * cy + ez * syw), nwz = -(-ex * syw + ez * cy);   // normal pointing from tree toward cart
-      const cpx = ref[0] + px * cy + pz * syw, cpz = ref[2] - px * syw + pz * cy, P = [cpx, ref[1] - 0.55, cpz];
+      const cpx = ref[0] + px * cy + pz * syw, cpz = ref[2] - px * syw + pz * cy, P = [cpx, cart.p[1], cpz];
       const rc = V.sub(P, cart.p), vc = V.add(cart.v, V.cross(cart.w, rc)), n = [nwx, 0, nwz];
       const vn = V.dot(vc, n), N = Math.max(0, T.TREE_K * pen - T.TREE_C * vn);
       push(V.mul(n, N), P);
       const vt = V.sub(vc, V.mul(n, vn)), vtl = V.len(vt); if (vtl > 1e-4) push(V.mul(vt, -Math.min(T.TREE_MU * N, vtl * M / dt * 0.1) / vtl), P);
       cart.treeHits++; cart.maxPen = Math.max(cart.maxPen, pen);
-      if (N > 2000 && !cart._treeEvt) { emit(cart, { e: 'tree', vn }); cart.lastImpact = Math.max(cart.lastImpact, Math.min(1, Math.abs(vn) / 7)); cart._treeEvt = 0.4; }
+      if (N > 2000 && !cart._treeEvt) { cart.events.push({ t: cart.t, e: 'tree', vn }); cart._treeEvt = 0.4; }
     };
     for (const tr of world.trees) if (Math.abs(tr.z - ref[2]) < 3.5 && Math.abs(tr.x - ref[0]) < 3.5) hitCircle(tr.x, tr.z, tr.r);
     if (cart._treeEvt) cart._treeEvt = Math.max(0, cart._treeEvt - dt) || 0;
@@ -4584,51 +4315,35 @@ var SIM = (function () {
     const vl2 = V.len(cart.v); if (vl2 > 0.01) push(V.mul(cart.v, -0.5 * T.RHO * T.CDA * vl2), cart.p);
 
     // ---- integrate (semi-implicit Euler)
-    cart.accel = V.mul(F, 1 / M);
-    cart.distance += Math.hypot(cart.v[0], cart.v[2]) * dt;
     cart.v = V.add(cart.v, V.mul(F, dt / M));
     cart.p = V.add(cart.p, V.mul(cart.v, dt));
     // world inverse inertia: R Ib^-1 R^T
     const ex = qrot(q, [1, 0, 0]), ey = up, ez = fwd, Ib = cart.Iinv;
-    const tb = [V.dot(Tq, ex), V.dot(Tq, ey), V.dot(Tq, ez)];
-    const omegaBody = [V.dot(cart.w, ex), V.dot(cart.w, ey), V.dot(cart.w, ez)];
-    const gyro = V.cross(omegaBody, m3v(cart.I, omegaBody));
-    const ab = m3v(Ib, V.sub(tb, gyro));
+    const tb = [V.dot(Tq, ex), V.dot(Tq, ey), V.dot(Tq, ez)], ab = m3v(Ib, tb);
     const alpha = V.add(V.add(V.mul(ex, ab[0]), V.mul(ey, ab[1])), V.mul(ez, ab[2]));
     cart.w = V.mul(V.add(cart.w, V.mul(alpha, dt)), 1 - 0.05 * dt);
     const wq = [cart.w[0], cart.w[1], cart.w[2], 0], dq = qmul(wq, cart.q);
     cart.q = qnorm([cart.q[0] + 0.5 * dt * dq[0], cart.q[1] + 0.5 * dt * dq[1], cart.q[2] + 0.5 * dt * dq[2], cart.q[3] + 0.5 * dt * dq[3]]);
 
     // ---- state + events
-    const air = W.every(w => !w.contact || w.Fz < 1);
-    if (!air && cart.airT > 0.12) { emit(cart, { e: 'land', airtime: cart.airT }); cart.lastImpact = Math.max(cart.lastImpact, Math.min(1, cart.airT * 0.6)); }
-    cart.airT = air ? cart.airT + dt : 0; cart.peakAir = Math.max(cart.peakAir, cart.airT);
+    const air = W.every(w => !w.contact); cart.airT = air ? cart.airT + dt : 0;
     const sumFz = W.reduce((s, w) => s + w.Fz, 0);
     cart.ltr = sumFz > 1 ? ((W[0].Fz + W[2].Fz) - (W[1].Fz + W[3].Fz)) / sumFz : 0;
-    const onGreen = W.some(w => w.contact && w.surf === 'green'); if (onGreen && !cart.onGreen) emit(cart, { e: 'on-green' }); cart.onGreen = onGreen;
-    const upY = qrot(cart.q, [0, 1, 0])[1]; if (upY < 0.2 && !cart.flipped) { cart.flipped = true; emit(cart, { e: 'rollover' }); } if (upY > 0.8) cart.flipped = false;
+    const onGreen = W.some(w => w.contact && w.surf === 'green'); if (onGreen && !cart.onGreen) cart.events.push({ t: cart.t, e: 'on-green' }); cart.onGreen = onGreen;
+    const upY = qrot(cart.q, [0, 1, 0])[1]; if (upY < 0.2 && !cart.flipped) { cart.flipped = true; cart.events.push({ t: cart.t, e: 'rollover' }); } if (upY > 0.8) cart.flipped = false;
     cart.slipMax = slipMax; cart.sumFz = sumFz; cart.drive = Fmotor; cart.t += dt; cart.steps++;
   }
 
-  /* Explicit recovery only. Conserves energy stores, mode, payload, elapsed
-     time and accumulated telemetry; cannot refill boost by mashing R. */
-  function recover(world, cart) {
-    const f = qrot(cart.q, [0, 0, 1]), r = refOrigin(cart);
-    const preserve = {};
-    for (const k of ['batteryJ','capJ','capLocked','mode','activeEnabled','t','steps','events','eventSeq','energyUsed','energyRecovered','activeEnergy','distance','peakAir']) preserve[k] = cart[k];
-    Object.assign(cart, createCart(world, { x: r[0], z: r[2], yaw: Math.atan2(f[0], f[2]), payload: cart.payload }), preserve);
-    emit(cart, { e: 'recover' });
-  }
+  /* Upright at current spot, keep heading. */
+  function recover(world, cart) { const f = qrot(cart.q, [0, 0, 1]); const r = refOrigin(cart); const c = createCart(world, { x: r[0], z: r[2], yaw: Math.atan2(f[0], f[2]), payload: cart.payload }); Object.assign(cart, c, { t: cart.t, steps: cart.steps, events: cart.events }); cart.events.push({ t: cart.t, e: 'recover' }); }
 
-  /* Seconds accumulator: no rounded 8333-us clock drift at 120 Hz.
-     A stalled tab drops excess time instead of launching a catch-up spiral. */
-  function makeClock() { return { acc: 0, alpha: 0, dropped: 0 }; }
+  /* Fixed-step driver: frame time in, n steps out. Integer microsecond accumulator
+     keeps sim time == wall time independent of frame rate (B1). */
+  function makeClock() { return { accUs: 0, stepUs: Math.round(TUNE.DT * 1e6), dropped: 0 }; }
   function advance(clock, frameDt, fn) {
-    const elapsed = Math.max(0, finite(frameDt)), budget = TUNE.DT * TUNE.MAX_STEPS;
-    clock.acc += Math.min(elapsed, budget); clock.dropped += Math.max(0, elapsed - budget);
-    let n = 0;
-    while (clock.acc + 1e-10 >= TUNE.DT && n < TUNE.MAX_STEPS) { clock.acc = Math.max(0, clock.acc - TUNE.DT); fn(TUNE.DT); n++; }
-    clock.alpha = clamp(clock.acc / TUNE.DT, 0, 1);
+    clock.accUs += Math.round(Math.min(frameDt, TUNE.DT * TUNE.MAX_STEPS) * 1e6);
+    if (frameDt > TUNE.DT * TUNE.MAX_STEPS) clock.dropped += frameDt - TUNE.DT * TUNE.MAX_STEPS;
+    let n = 0; while (clock.accUs >= clock.stepUs) { clock.accUs -= clock.stepUs; fn(TUNE.DT); n++; }
     return n;
   }
 
@@ -4644,12 +4359,6 @@ var SIM = (function () {
       yawRate: V.dot(cart.w, u), yaw: e.yaw, pitch: e.pitch, roll: e.roll, steer: cart.steer,
       comp: cart.wheels.map(w => w.comp), Fz: cart.wheels.map(w => w.Fz), slip: cart.wheels.map(w => w.slip), surf: cart.wheels.map(w => w.surf),
       air: cart.airT > 0, ltr: cart.ltr, M: cart.M, reverse: cart.reverse,
-      mode: cart.mode, activeEnabled: cart.activeEnabled, activeF: cart.wheels.map(w => w.activeF),
-      activePower: cart.activePower, activeUtil: cart.activeUtil, saturated: cart.activeSaturated,
-      motorPower: cart.motorPower, regenPower: cart.regenPower, axleForce: cart.axleForce.slice(),
-      batteryJ: cart.batteryJ, capJ: cart.capJ, boost: cart.boost, distance: cart.distance,
-      batteryPower: cart.batteryPower, capPower: cart.capPower,
-      energyUsed: cart.energyUsed, energyRecovered: cart.energyRecovered, activeEnergy: cart.activeEnergy,
     };
   }
 
@@ -4677,16 +4386,14 @@ var SIM = (function () {
     return { done: st.i >= HOLE.gates.length, t: cart.t, split: st.split, maxLTR, maxW, air, events: cart.events, cart, trace };
   }
 
-  return { BUILD, MODES, setMode, setActive, probe, axleSplit, V, qrot, TUNE, ANCHORS, PRESETS, HOLE, SURF, clX, pathQuery, ellRho, macroHeight, createWorld, createHandlingWorld, terrainHeight, terrainNormal, surfaceAt, gridSample, parseASC, applyDEM, applyGeoGrid,
+  return { V, qrot, TUNE, ANCHORS, PRESETS, HOLE, SURF, clX, pathQuery, ellRho, macroHeight, createWorld, terrainHeight, terrainNormal, surfaceAt, gridSample, parseASC, applyDEM, applyGeoGrid,
     createCart, setPayload, massProps, step, recover, refOrigin, bodyToWorld, makeClock, advance, sample, euler, autopilot, runRoute, qyaw, PATHSEG };
 })();
 if (typeof module !== 'undefined') module.exports = SIM;
 
 
-
 </script>
 <script id="sim-tests">
-
 
 'use strict';
 /* =============================================================================
@@ -4729,15 +4436,15 @@ var SIM_TESTS = (function () {
       const rms = Math.sqrt(se / n);
       return R('A3', 'Mesh ≈ physics', mx < 0.25, `rms ${(rms * 100).toFixed(1)} cm · max ${(mx * 100).toFixed(1)} cm outside path/bunkers (max < 25 cm, v0)`, { rms, mx });
     }],
-    ['A4', 'Payload math / round-trip within floating-point tolerance', () => {
-      const mp=S.massProps({driver:82,rearR:95}),A=S.ANCHORS,M=T.CART_MASS+177;
-      const cz=(T.CART_MASS*T.CART_COM[2]+82*A.driver.p[2]+95*A.rearR.p[2])/M;
-      const w=flat(),c=settle(w,S.createCart(w,{}));run(w,c,1,{throttle:.6,steer:.3});
-      const before=[S.refOrigin(c),c.q.slice(),c.v.slice(),c.w.slice()].flat();
-      S.setPayload(c,S.PRESETS.max);S.setPayload(c,S.PRESETS.driver);
-      const after=[S.refOrigin(c),c.q,c.v,c.w].flat(),delta=Math.max(...before.map((v,i)=>Math.abs(v-after[i]))),I0=S.massProps(S.PRESETS.driver).I;
-      const ok=Math.abs(mp.M-M)<1e-9&&Math.abs(mp.com[2]-cz)<1e-12&&delta<1e-12&&I0.every((v,i)=>Math.abs(v-c.I[i])<1e-9);
-      return R('A4','Payload math',ok,`M ${mp.M} kg / max state round-trip error ${delta.toExponential(2)} (< 1e-12)`,{delta});
+    ['A4', 'Payload math: M, COM; add→remove restores exactly', () => {
+      const mp = S.massProps({ driver: 82, rearR: 95 }), A = S.ANCHORS;
+      const M = T.CART_MASS + 177, cz = (T.CART_MASS * T.CART_COM[2] + 82 * A.driver.p[2] + 95 * A.rearR.p[2]) / M;
+      const w = flat(), c = settle(w, S.createCart(w, {})); run(w, c, 1, { throttle: 0.6, steer: 0.3 });
+      const snap = JSON.stringify([S.refOrigin(c), c.q, c.v, c.w]);
+      S.setPayload(c, S.PRESETS.max); S.setPayload(c, S.PRESETS.driver);
+      const snap2 = JSON.stringify([S.refOrigin(c), c.q, c.v, c.w]), I0 = S.massProps(S.PRESETS.driver).I;
+      const ok = Math.abs(mp.M - M) < 1e-9 && Math.abs(mp.com[2] - cz) < 1e-12 && snap === snap2 && I0.every((v, i) => Math.abs(v - c.I[i]) < 1e-9);
+      return R('A4', 'Payload math', ok, `M ${mp.M} kg · COMz ${mp.com[2].toFixed(4)} · round-trip identical: ${snap === snap2}`, {});
     }],
     ['A5', 'Static settle: ΣFz = Mg; one-sided load rolls toward load', () => {
       const w = flat(), a = settle(w, S.createCart(w, { payload: S.PRESETS.max }), 4), b = settle(w, S.createCart(w, { payload: S.PRESETS.rearHeavyRight }), 4);
@@ -4809,12 +4516,12 @@ var SIM_TESTS = (function () {
       run(w, c, 3, { throttle: 0.4 }); const tail = Math.abs(S.sample(c).yawRate);
       return R('C4', 'Slalom stability', mw < 2.2 && tail < 0.05, `max |yaw rate| ${mw.toFixed(2)} rad/s · settles to ${tail.toFixed(3)}`, { mw, tail });
     }],
-    ['C5', 'Steady surface ladder / controlled independent runs', () => {
-      // Old test sampled consecutive surfaces while the cart was accelerating.
-      // Isolate the surface and allow each identical input to approach equilibrium.
-      const v={};for(const id of ['path','fairway','rough','sand']){const w=flat({surface:()=>id}),c=S.createCart(w,{});run(w,c,45,{throttle:.7});v[id]=S.sample(c).vLong;}
-      return R('C5','Steady surface ordering',v.path>v.fairway&&v.fairway>v.rough&&v.rough>v.sand,
-        Object.entries(v).map(([k,x])=>`${k} ${x.toFixed(2)}`).join(' / ')+' m/s at 45 s',v);
+    ['C5', 'Surface ladder: path → fairway → rough → sand', () => {
+      const lad = z => z < 40 ? 'path' : z < 80 ? 'fairway' : z < 120 ? 'rough' : 'sand';
+      const w = flat({ surface: (x, z) => lad(z) }), c = S.createCart(w, {}); const vAt = {};
+      run(w, c, 40, { throttle: 0.7 }, c => { vAt[lad(S.refOrigin(c)[2])] = S.sample(c).vLong; });
+      const ok = vAt.path >= vAt.fairway && vAt.fairway >= vAt.rough && vAt.rough >= vAt.sand - 0.01;
+      return R('C5', 'Surface ordering', ok, Object.entries(vAt).map(([k, v]) => `${k} ${v.toFixed(2)}`).join(' · ') + ' m/s at exit', vAt);
     }],
     ['C6', 'Curb strike at 5 m/s settles (hole curb)', () => {
       const w = hole(), s = 200, seg = S.PATHSEG.find(g => s >= g.s0 && s < g.s0 + g.L), t = (s - seg.s0) / seg.L;
@@ -4846,11 +4553,9 @@ var SIM_TESTS = (function () {
     ['D2', 'Ordinals: more load → slower climb, longer stop', () => {
       const r = SIM_TESTS._route || {}; if (!r.max) return { id: 'D2', name: 'Ordinals', status: 'skip', detail: 'needs D1' };
       const climb = k => { const s = r[k].split, a = s.find(x => x.gate === 'Swale · cross-slope'), b = s.find(x => x.gate === 'Fairway climb'); return b.t - a.t; };
-      // Equal 11.18 m/s entry speed, not unequal speeds after equal launch TIME.
-      const stop=k=>{const w=flat(),c=settle(w,S.createCart(w,{payload:S.PRESETS[k]}));c.v=[0,0,11.18];c.parked=false;
-        const z=S.refOrigin(c)[2];let zm=z;run(w,c,6,{brake:1},c=>zm=Math.max(zm,S.refOrigin(c)[2]));return zm-z;};
+      const stop = k => { const w = flat(), c = S.createCart(w, { payload: S.PRESETS[k] }); run(w, c, 8, { throttle: 1 }); const z = S.refOrigin(c)[2]; let zm = z; run(w, c, 6, { brake: 1 }, c => zm = Math.max(zm, S.refOrigin(c)[2])); return zm - z; };
       const cd = climb('driver'), cm = climb('max'), sd = stop('driver'), sm = stop('max');
-      return R('D2', 'Payload / equal-speed brake', cm > cd && sm > sd, `climb ${cd.toFixed(1)} → ${cm.toFixed(1)} s · stop ${sd.toFixed(1)} → ${sm.toFixed(1)} m`, { cd, cm, sd, sm });
+      return R('D2', 'Payload ordinals', cm > cd && sm > sd, `climb ${cd.toFixed(1)} → ${cm.toFixed(1)} s · stop ${sd.toFixed(1)} → ${sm.toFixed(1)} m`, { cd, cm, sd, sm });
     }],
     /* ------------------------------------------------------ E · TERRAIN FIDELITY */
     ['E1', 'Terrain provenance: measured + registered', () => {
@@ -4879,122 +4584,6 @@ var SIM_TESTS = (function () {
     }],
     ['F2', 'Recycled-Android device run', () => ({ id: 'F2', name: 'Low-end device', status: 'skip', detail: 'STUB: run this page on the target phone and paste the F1 number into the baseline.' })],
     ['G1', 'Feel gate (humans)', () => ({ id: 'G1', name: 'Feel gate', status: 'skip', detail: 'Blind drives; rate response / predictability / recoverability / fun; tie every note to a route gate.' })],
-    /* RALLY / provisional game-tune gates, not vehicle safety certification. */
-    ['H1','Active ride / speed-controlled rough-road A-B',()=>{
-      const measure=active=>{const w=flat();w.height=(x,z)=>z<15?0:.022*Math.sin((z-15)*Math.PI/1.1)+.014*Math.sin((z-15)*Math.PI/2.8+x*1.2);
-        const c=settle(w,S.createCart(w,{active}));let a=0,v=0,n=0;
-        run(w,c,20,c=>({throttle:Math.max(0,Math.min(1,(7-S.sample(c).vLong)*.8))}),c=>{if(c.t<7)return;a+=c.accel[1]**2;v+=S.sample(c).vLong;n++;});
-        return {rms:Math.sqrt(a/n),speed:v/n};};
-      const passive=measure(false),active=measure(true),ratio=active.rms/passive.rms;
-      return R('H1','Active rough-road isolation',ratio<.8&&Math.abs(active.speed-passive.speed)<.2,
-        `vertical acceleration RMS ${passive.rms.toFixed(3)} -> ${active.rms.toFixed(3)} m/s2 / ${((1-ratio)*100).toFixed(1)}% lower / speeds ${passive.speed.toFixed(2)}, ${active.speed.toFixed(2)} m/s`,{passive,active,ratio});
-    }],
-    ['H2','Active body control / speed-controlled slalom A-B',()=>{
-      const measure=active=>{const w=flat(),c=settle(w,S.createCart(w,{active}));run(w,c,4,{throttle:.65});let r=0,n=0;
-        run(w,c,12,(c,t)=>({throttle:Math.max(0,Math.min(1,(8-S.sample(c).vLong)*.6)),steer:Math.sin(t*2)*.65}),c=>{r+=S.euler(c).roll**2;n++;});return Math.sqrt(r/n)*D;};
-      const passive=measure(false),active=measure(true);return R('H2','Active roll control',active<passive*.95,
-        `roll RMS ${passive.toFixed(3)} -> ${active.toFixed(3)} degrees / prescribed slalom`,{passive,active});
-    }],
-    ['H3','Actuator force / power / tire friction limits',()=>{
-      const w=S.createHandlingWorld(),c=settle(w,S.createCart(w,{x:-28,z:0,payload:S.PRESETS.max}));let f=0,p=0,friction=0,minLoad=Infinity,ok=true;
-      run(w,c,15,(c,t)=>({throttle:1,boost:true,steer:t>8?Math.sin(t)*.5:0}),c=>{
-        p=Math.max(p,c.activePower);for(const wh of c.wheels){f=Math.max(f,Math.abs(wh.activeF));minLoad=Math.min(minLoad,wh.Fz);
-          if(wh.Fz>0&&wh.Fmax>0)friction=Math.max(friction,Math.hypot(wh.Fx,wh.Fy)/wh.Fmax);
-          if(!wh.contact&&(wh.Fz!==0||wh.activeF!==0||wh.driveFx!==0))ok=false;}
-        if(![...c.p,...c.q,...c.v,...c.w].every(Number.isFinite))ok=false;});
-      return R('H3','Finite actuation / traction',ok&&f<=T.ACTIVE_F+1e-8&&p<=T.ACTIVE_POWER+1e-8&&minLoad>=0&&friction<=1.000001,
-        `corner ${f.toFixed(0)}/${T.ACTIVE_F} N / power ${p.toFixed(0)}/${T.ACTIVE_POWER} W / friction utilization ${friction.toFixed(6)}`,{f,p,friction,minLoad});
-    }],
-    ['H4','Airborne controls cannot create support or self-right',()=>{
-      const w=flat(),a=settle(w,S.createCart(w,{}));a.p[1]+=25;a.w=[.4,.1,1.1];a.parked=false;
-      const b=JSON.parse(JSON.stringify(a));S.setActive(b,false);let clean=true;
-      run(w,a,.6,{throttle:1,boost:true,steer:1},c=>{if(c.wheels.some(x=>x.contact||x.Fz!==0||x.activeF!==0||x.driveFx!==0)||c.motorPower>1e-9)clean=false;});
-      run(w,b,.6,{steer:-1});const dp=V.len(V.sub(a.p,b.p)),dq=Math.max(...a.q.map((v,i)=>Math.abs(v-b.q[i])));
-      return R('H4','No airborne magic',clean&&dp<1e-10&&dq<1e-10,`controls vs passive ballistic motion: dp ${dp.toExponential(1)} / dq ${dq.toExponential(1)}`,{dp,dq});
-    }],
-    ['H5','10 kW continuous / finite 18 kW boost launch',()=>{
-      const measure=boost=>{const w=flat(),c=settle(w,S.createCart(w,{}));let t20=null,pmax=0;const start=c.t,energy=c.capJ;
-        run(w,c,12,{throttle:1,boost},c=>{if(t20===null&&S.sample(c).vLong>=8.94)t20=c.t-start;pmax=Math.max(pmax,c.motorPower);});
-        return {t20,pmax,capUsed:energy-c.capJ};};const normal=measure(false),boost=measure(true);
-      return R('H5','Launch / real boost expenditure',normal.t20>0&&boost.t20<normal.t20*.8&&normal.pmax<=T.MOTOR_P+1e-5&&boost.pmax<=T.MOTOR_P+T.BOOST_P+1e-5&&boost.capUsed>10000,
-        `0-20 mph ${normal.t20.toFixed(2)} -> ${boost.t20.toFixed(2)} s / peak ${(normal.pmax/1000).toFixed(2)}, ${(boost.pmax/1000).toFixed(2)} kW / capacitor ${(boost.capUsed/1000).toFixed(1)} kJ used`,{normal,boost});
-    }],
-    ['H6','Empty stores / cap exhaustion / recovery preserves energy',()=>{
-      const w=flat(),dead=S.createCart(w,{batteryJ:0,capJ:0});let p=0;
-      run(w,dead,4,{throttle:1,boost:true},c=>p=Math.max(p,c.motorPower));
-      const c=settle(w,S.createCart(w,{capJ:900}));run(w,c,5,{throttle:1,boost:true});
-      const exhausted=c.capLocked&&!c.boost,bat=c.batteryJ,cap=c.capJ;S.recover(w,c);
-      return R('H6','No free propulsion / no R recharge',p===0&&exhausted&&bat===c.batteryJ&&cap===c.capJ&&c.batteryJ>=0&&c.capJ>=0,
-        `dead-store power ${p} W / boost exhausted ${exhausted} / recovery preserves both stores`,{p,exhausted,cap});
-    }],
-    ['H7','Regeneration / full-storage friction fallback',()=>{
-      const braking=full=>{const w=flat(),c=settle(w,S.createCart(w,{capJ:full?T.CAP_J:0}));c.capJ=full?T.CAP_J:0;c.batteryJ=T.BATTERY_J;c.v=[0,0,10];c.parked=false;
-        const z=S.refOrigin(c)[2],b=c.batteryJ+c.capJ;let zmax=z,rg=0;
-        run(w,c,2,{brake:1},c=>{zmax=Math.max(zmax,S.refOrigin(c)[2]);rg=Math.max(rg,c.regenPower);});
-        return {stop:zmax-z,gain:c.batteryJ+c.capJ-b,recovered:c.energyRecovered,peakRegen:rg,M:c.M};};
-      const room=braking(false),full=braking(true),ke=.5*room.M*100;
-      return R('H7','Regen cannot exceed kinetic energy',room.recovered>100&&room.recovered<ke*T.REGEN_EFF&&room.gain<ke&&Math.abs(full.stop-room.stop)<.2,
-        `recovered ${(room.recovered/1000).toFixed(2)} kJ / initial KE ${(ke/1000).toFixed(2)} kJ / braking ${room.stop.toFixed(2)} vs full stores ${full.stop.toFixed(2)} m`,{room,full,ke});
-    }],
-    ['H8','Parked capacitor top-up transfers battery energy with loss',()=>{
-      const w=flat(),c=settle(w,S.createCart(w,{capJ:0})),b=c.batteryJ,k=c.capJ;run(w,c,4,{});
-      const gain=c.capJ-k,loss=b-c.batteryJ;return R('H8','No parked energy creation',gain>0&&loss>gain&&c.energyRecovered===0,
-        `battery ${loss.toFixed(0)} J spent / capacitor ${gain.toFixed(0)} J gained / regen ${c.energyRecovered} J`,{gain,loss});
-    }],
-    ['H9','Both axles driven / lifted tires cannot drive',()=>{
-      const w=flat(),c=settle(w,S.createCart(w,{}));run(w,c,1,{throttle:1});const ax=c.axleForce.slice();
-      const split=S.axleSplit(2000,0,4000);const rearOff=S.createCart(w,{});run(w,rearOff,2,{throttle:1,handbrake:true});
-      return R('H9','AWD / no phantom traction',ax[0]>100&&ax[1]>ax[0]&&split[0]===0&&rearOff.axleForce[1]===0,
-        `front ${ax[0].toFixed(0)} / rear ${ax[1].toFixed(0)} N / unloaded wheel ${split[0]} N / handbrake disconnects rear drive`,{ax,split});
-    }],
-    ['H10','Real jump / landing, no scripted impulse',()=>{
-      const w=S.createHandlingWorld(),c=settle(w,S.createCart(w,{x:28,z:5}));let finite=true;
-      run(w,c,10,{throttle:1,boost:true},c=>{if(![...c.p,...c.q,...c.v,...c.w].every(Number.isFinite))finite=false;});
-      const landed=c.events.some(e=>e.e==='land');return R('H10','Ramp flight / landing',finite&&c.peakAir>.15&&landed,
-        `peak flight ${c.peakAir.toFixed(3)} s / landing event ${landed}`,{peakAir:c.peakAir,landed});
-    }],
-    ['H11','Sideways trip curb MUST allow a natural rollover',()=>{
-      const w=flat();w.height=(x,z)=>x<2?0:x<2.2?.32*(x-2)/.2:.32;
-      const c=settle(w,S.createCart(w,{payload:S.PRESETS.max}));c.v=[9,0,9];c.w=[0,0,0];c.parked=false;
-      let minUp=1,finite=true;run(w,c,8,{},c=>{minUp=Math.min(minUp,S.qrot(c.q,[0,1,0])[1]);if(![...c.p,...c.q,...c.v,...c.w].every(Number.isFinite))finite=false;});
-      const rolled=c.events.some(e=>e.e==='rollover');return R('H11','Physical rollover is permitted',finite&&rolled&&minUp<-.5,
-        `32 cm curb / initial sideslip 9 m/s / minimum upY ${minUp.toFixed(3)} / rollover ${rolled} / no initial angular kick`,{minUp,rolled});
-    }],
-    ['H12','Bounded catch-up and deterministic tick input',()=>{
-      const clk=S.makeClock();let count=0;S.advance(clk,5,()=>count++);
-      const trial=()=>{const w=flat(),c=S.createCart(w,{});for(let i=0;i<2400;i++){if(i===400)S.setMode(c,'eco');if(i===900)S.setMode(c,'sport');if(i===1300)S.setActive(c,false);
-        S.step(w,c,{throttle:i<1600?.8:0,brake:i>1900?.2:0,steer:Math.sin(i*.012)*.4,boost:i<300});}return S.sample(c);};
-      const same=JSON.stringify(trial())===JSON.stringify(trial());return R('H12','Tick determinism / stall budget',same&&count===T.MAX_STEPS&&clk.dropped>4,
-        `identical scripted runs ${same} / ${count} max catch-up steps / discarded ${clk.dropped.toFixed(2)} s`,{same,count,dropped:clk.dropped});
-    }],
-    ['H13','ECO caps boost and rejects nonfinite control values',()=>{
-      const w=flat(),c=S.createCart(w,{mode:'eco'});let power=0,boost=false;
-      run(w,c,15,{throttle:1,boost:true},c=>{power=Math.max(power,c.motorPower);boost=boost||c.boost;});
-      const speed=S.sample(c).vLong;run(w,c,2,{throttle:NaN,brake:Infinity,steer:NaN});
-      return R('H13','ECO / input sanitation',power<=7000.00001&&!boost&&speed<=S.MODES.eco.vmax+.05&&[...c.p,...c.q,...c.v,...c.w].every(Number.isFinite),
-        `ECO peak ${(power/1000).toFixed(2)} kW / ${speed.toFixed(2)} m/s / boost ${boost} / nonfinite input rejected`,{power,speed,boost});
-    }],
-
-    ['H14','Energy ledger includes capacitor-transfer losses',()=>{
-      const w=flat(),c=settle(w,S.createCart(w,{capJ:20000}));c.energyUsed=c.energyRecovered=0;
-      const initial=c.batteryJ+c.capJ;
-      run(w,c,30,(c,t)=>({throttle:t<10?1:t<18?0:.2,brake:t>=10&&t<13?.5:0,boost:t<8,steer:t>20?.25:0}));
-      const spent=initial-c.batteryJ-c.capJ,ledger=c.energyUsed-c.energyRecovered,error=Math.abs(spent-ledger);
-      return R('H14','Closed electrical energy ledger',error<.01,`net store change ${spent.toFixed(2)} J / ledger ${ledger.toFixed(2)} J / error ${error.toExponential(2)}`,{spent,ledger,error});
-    }],
-    ['H15','Payload x mode stress / bounded finite state',()=>{
-      let ok=true,peakSpeed=0,peakOmega=0,runs=0;
-      for(const payload of Object.values(S.PRESETS))for(const mode of ['eco','sport']){
-        const w=S.createHandlingWorld(),c=settle(w,S.createCart(w,{x:-28,z:0,payload,mode}));runs++;
-        run(w,c,24,(c,t)=>({throttle:t<16?1:0,boost:true,steer:t<7?0:Math.sin(t*.9)*.8,brake:t>20?.4:0,handbrake:t>10&&t<10.8}),c=>{
-          peakSpeed=Math.max(peakSpeed,V.len(c.v));peakOmega=Math.max(peakOmega,V.len(c.w));
-          if(![...c.p,...c.v,...c.q,...c.w,c.batteryJ,c.capJ].every(Number.isFinite)||c.batteryJ<0||c.capJ<0||c.capJ>T.CAP_J+1e-8)ok=false;
-        });
-      }
-      return R('H15','Multi-payload stress',ok&&peakSpeed<35&&peakOmega<20,
-        `${runs} runs / max speed ${peakSpeed.toFixed(2)} m/s / max angular rate ${peakOmega.toFixed(2)} rad/s / finite state ${ok}`,{runs,peakSpeed,peakOmega});
-    }],
-
   ];
 
   function runAll(filter, context) {
@@ -5009,12 +4598,10 @@ var SIM_TESTS = (function () {
 if (typeof module !== 'undefined') module.exports = SIM_TESTS;
 
 
-
 </script>
 <script id="regression-suite" type="text/plain">
-
 // Presidio / Hole 10 regression runner.
-// Run: node rally-regression.cjs index.html [--only=A,B,E,H] [--json=report.json]
+// Run: node hole10-regression.cjs index.html [--only=A,B,E]
 // Browser-only evidence (live 3DEP + course vectors) is checked in-page; Node
 // verifies the deterministic handling kernel plus deployment/asset contracts.
 const fs = require('node:fs');
@@ -5052,11 +4639,10 @@ function glbInfo(p) {
 const extra = [];
 if (want('A0')) {
   try {
-    const urls=new Function(pick('assets')+';return ASSET_URLS;')();
-    const locate=key=>{const list=Array.isArray(urls[key])?urls[key]:[urls[key]];
-      for(const u of list){if(typeof u!=='string'||!u.startsWith('./')||u.includes('..'))continue;const p=path.join(base,u.slice(2));if(fs.existsSync(p))return p;}
-      throw new Error('Missing sibling '+key+' GLB');};
-    const bp=locate('body'),wp=locate('wheel');
+    const a = pick('assets'), mb = a.match(/body:\s*['"]([^'"]+)['"]/), mw = a.match(/wheel:\s*['"]([^'"]+)['"]/);
+    if (!mb || !mw) throw new Error('ASSET_URLS body/wheel missing');
+    const clean = u => u.replace(/^\.\//, '');
+    const bp = path.join(base, clean(mb[1])), wp = path.join(base, clean(mw[1]));
     const body = glbInfo(bp), wheel = glbInfo(wp), main = pick('main');
     const bs = +(main.match(/BODY_SCALE:\s*([0-9.]+)/) || [])[1], wr = +(main.match(/WHEEL_MESH_R:\s*([0-9.]+)/) || [])[1];
     const bodyL = body.ext[0] * bs, bodyH = body.ext[1] * bs, bodyW = body.ext[2] * bs;
@@ -5084,23 +4670,18 @@ const icon = { pass: 'PASS', fail: 'FAIL', warn: 'WARN', skip: 'skip' };
 for (const r of res) console.log(`${icon[r.status] || r.status}  ${r.id.padEnd(3)} ${r.name.padEnd(32)} ${r.detail}`);
 const n = s => res.filter(r => r.status === s).length;
 console.log(`\n${n('pass')} pass · ${n('fail')} fail · ${n('warn')} warn · ${n('skip')} skip`);
-const jsonArg=args.find(a=>a.startsWith('--json='));
-if(jsonArg)fs.writeFileSync(jsonArg.slice(7),JSON.stringify({build:SIM.BUILD,environment:{node:process.version,platform:process.platform,arch:process.arch},counts:{pass:n('pass'),fail:n('fail'),warn:n('warn'),skip:n('skip')},results:res},null,2));
-process.exitCode = n('fail') ? 1 : 0;
-
+process.exitCode = n('fail');
 
 </script>
 <script id="assets">
-
-// Exact uploaded filenames first. Relative URLs also work under a repository subpath.
-const ASSET_URLS=Object.freeze({
-  body:Object.freeze(['./sovthog(5).glb','./sovthog.glb']),
-  wheel:Object.freeze(['./wheel(5).glb','./wheel.glb'])
+/* Canonical sibling assets for GitHub Pages. Aliases make prior Meshy export
+   filenames survivable, but the bundle always ships the canonical names first. */
+const ASSET_URLS = Object.freeze({
+  body: Object.freeze(['./sovthog.glb', './sovthog(2).glb', './sovthog(1).glb']),
+  wheel: Object.freeze(['./wheel.glb', './wheel(2).glb', './wheel(1).glb'])
 });
-
 </script>
 <script id="main">
-
 
 'use strict';
 /* =============================================================================
@@ -5111,11 +4692,7 @@ const ASSET_URLS=Object.freeze({
    they report what the four probes did.
 ============================================================================= */
 (function () {
-  const S = SIM, T = S.TUNE, H = JSON.parse(JSON.stringify(S.HOLE));
-  // Runtime course registration must not mutate the authored regression world.
-  const authoredHole = JSON.parse(JSON.stringify(S.HOLE));
-  const QUERY = new URLSearchParams(location.search);
-  const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S = SIM, T = S.TUNE, H = S.HOLE;
   const TOUCH = (navigator.maxTouchPoints || 0) > 0;
   const $ = id => document.getElementById(id);
 
@@ -5159,9 +4736,7 @@ const ASSET_URLS=Object.freeze({
 
   /* ------------------------------------------------------------ renderer */
   const canvas = $('gl');
-  let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: !TOUCH, powerPreference: 'high-performance' }); }
-  catch (err) { $('status').textContent = 'WebGL could not start on this browser. ' + err.message; return; }
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !TOUCH, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, TOUCH ? 1.25 : 1.75));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.shadowMap.enabled = !TOUCH; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -5174,22 +4749,13 @@ const ASSET_URLS=Object.freeze({
   scene.add(sun, sun.target);
 
   /* -------------------------------------------------------- measured world */
-  async function boundedFetch(url, options = {}, timeout = 10000) {
-    const controller = new AbortController(), id = setTimeout(() => controller.abort(), timeout);
-    try { return await fetch(url, { ...options, signal: controller.signal }); }
-    finally { clearTimeout(id); }
-  }
-  function withDeadline(promise, ms, label) {
-    let id; const deadline = new Promise((_, reject) => { id = setTimeout(() => reject(new Error(label + ' timed out')), ms); });
-    return Promise.race([promise, deadline]).finally(() => clearTimeout(id));
-  }
   async function load3DEPGrid() {
     const [w, s, e, n] = GEO_CFG.bbox, q = new URLSearchParams({
       bbox: [w, s, e, n].join(','), bboxSR: '4326', imageSR: '4326',
       size: `${GEO_CFG.rasterSize},${GEO_CFG.rasterSize}`, format: 'tiff', pixelType: 'F32',
       interpolation: 'RSP_BilinearInterpolation', noData: '-9999', f: 'image'
     });
-    const r = await boundedFetch(`${GEO_CFG.usgs}?${q}`, { mode: 'cors', cache: 'force-cache' });
+    const r = await fetch(`${GEO_CFG.usgs}?${q}`, { mode: 'cors', cache: 'force-cache' });
     if (!r.ok) throw new Error(`3DEP HTTP ${r.status}`);
     const mod = await import(GEO_CFG.geotiffModule), tiff = await mod.fromArrayBuffer(await r.arrayBuffer()), image = await tiff.getImage();
     const nx = image.getWidth(), nz = image.getHeight(), bbox = image.getBoundingBox(), raw = await image.readRasters({ samples: [0], interleave: true });
@@ -5229,11 +4795,11 @@ const ASSET_URLS=Object.freeze({
     return out;
   }
   async function loadCourseVectors() {
-    try { const r = await boundedFetch(GEO_CFG.vectors, { mode: 'cors', cache: 'force-cache' }); if (!r.ok) throw new Error(`vector HTTP ${r.status}`); const f = normalizeGeoJSON(await r.json(), 'mapped GeoJSON'); if (f.length) return f; }
+    try { const r = await fetch(GEO_CFG.vectors, { mode: 'cors', cache: 'force-cache' }); if (!r.ok) throw new Error(`vector HTTP ${r.status}`); const f = normalizeGeoJSON(await r.json(), 'mapped GeoJSON'); if (f.length) return f; }
     catch (e) { console.warn('Mapped GeoJSON unavailable; trying Overpass', e); }
     const [w,s,e,n] = GEO_CFG.bbox, box = `${s},${w},${n},${e}`;
     const query = `[out:json][timeout:25];(way["golf"](${box});relation["golf"](${box}););out tags geom;`;
-    const r = await boundedFetch(`${GEO_CFG.overpass}?data=${encodeURIComponent(query)}`, { mode: 'cors', cache: 'no-store' });
+    const r = await fetch(`${GEO_CFG.overpass}?data=${encodeURIComponent(query)}`, { mode: 'cors', cache: 'no-store' });
     if (!r.ok) throw new Error(`Overpass HTTP ${r.status}`); const f = normalizeOverpass(await r.json()); if (!f.length) throw new Error('No mapped golf features returned'); return f;
   }
   function paintPath(ctx, pts, x0, z0, sx, sz) { if (!pts || pts.length < 2) return; ctx.beginPath(); pts.forEach((p,i) => { const x=(p[0]-x0)*sx, y=ctx.canvas.height-(p[1]-z0)*sz; i ? ctx.lineTo(x,y) : ctx.moveTo(x,y); }); }
@@ -5249,57 +4815,45 @@ const ASSET_URLS=Object.freeze({
     w.surfaceGrid={pix,nx,nz,x0,z0,spanX,spanZ};
     w.surface=(x,z)=>{ const u=Math.max(0,Math.min(nx-1,Math.floor((x-x0)/spanX*nx))), v=Math.max(0,Math.min(nz-1,Math.floor((z1-z)/spanZ*nz))), id=idAt(pix[(v*nx+u)*4]); return {...S.SURF[id],id}; };
     w.courseFeatures={all:features,polygons:polys,lines}; w.meta.courseFeatures=features.length; w.meta.vectorSource=features[0]&&features[0].source;
-    const courseHole = JSON.parse(JSON.stringify(authoredHole));
     const h10=lines.find(f=>f.kind==='hole'&&f.ref==='10');
     if(h10&&h10.points.length>1){ const P=h10.points, at=t=>{ let L=0,seg=[]; for(let i=1;i<P.length;i++){const d=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);seg.push(d);L+=d;} let s=t*L; for(let i=0;i<seg.length;i++){if(s<=seg[i]){const u=s/seg[i];return[P[i][0]+(P[i+1][0]-P[i][0])*u,P[i][1]+(P[i+1][1]-P[i][1])*u];}s-=seg[i];}return P[P.length - 1].slice();};
-      courseHole.tees.white=P[0].slice(); courseHole.green.c=P[P.length - 1].slice(); courseHole.centerline=P.map(p=>p.slice()); courseHole.gates=Array.from({length:10},(_,i)=>({p:at(i/9),name:i===0?'Hole 10 tee':i===9?'Hole 10 green':`Hole 10 · ${i}/9`,v:i===9?3:7,r:i===0||i===9?7:10})); w.meta.hole10Registered=true; }
+      H.tees.white=P[0].slice(); H.green.c=P[P.length - 1].slice(); H.centerline=P.map(p=>p.slice()); H.gates=Array.from({length:10},(_,i)=>({p:at(i/9),name:i===0?'Hole 10 tee':i===9?'Hole 10 green':`Hole 10 · ${i}/9`,v:i===9?3:7,r:i===0||i===9?7:10})); w.meta.hole10Registered=true; }
     else w.meta.hole10Registered=false;
-    w.courseHole = courseHole;
   }
   async function loadMeasuredWorld() {
-    const w=S.createWorld({flat:true});
+    const w=S.createWorld();
     const [dem,vec]=await Promise.allSettled([load3DEPGrid(),loadCourseVectors()]);
     if(dem.status!=='fulfilled') throw dem.reason;
-    w.surface = () => 'rough';
     S.applyGeoGrid(w,dem.value,{note:'USGS 3DEP bare-earth DEM · live registered raster',absoluteDatum:dem.value.datum,absoluteRange:dem.value.absoluteRange,provider:'USGS The National Map'});
     if(vec.status==='fulfilled') installCourseVectors(w,vec.value); else { console.warn('Course vectors unavailable',vec.reason); w.meta.courseFeatures=0; w.meta.hole10Registered=false; }
     return w;
   }
 
   /* --------------------------------------------------------------- world */
-  let world = null;
+  let world = S.createWorld();
   let terrainMesh = null, pathMesh = null, curbMesh = null;
   const COL = {
     rough: new THREE.Color(0x4f6b3c), duff: new THREE.Color(0x4b5236), fairway: new THREE.Color(0x5c8a44), fairway2: new THREE.Color(0x679550),
     green: new THREE.Color(0x74a857), tee: new THREE.Color(0x6a9a4f), sand: new THREE.Color(0xd8c89e), path: new THREE.Color(0x6e6c68),
   };
-  function dispose3D(o) { if (!o) return; o.traverse && o.traverse(x=>{ if(x.geometry)x.geometry.dispose(); if(x.material){const a=Array.isArray(x.material)?x.material:[x.material]; a.forEach(m=>{if(m.map)m.map.dispose();if(m.dispose)m.dispose();});} }); scene.remove(o); }
+  function dispose3D(o) { if (!o) return; o.traverse && o.traverse(x=>{ if(x.geometry)x.geometry.dispose(); if(x.material){const a=Array.isArray(x.material)?x.material:[x.material]; a.forEach(m=>m.dispose&&m.dispose());} }); scene.remove(o); }
   function ribbonGeometry(lines, half=1.6) { const pp=[],ii=[]; let base=0; for(const pts of lines){ if(!pts||pts.length<2)continue; let prev=null; for(let i=0;i<pts.length;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(pts.length-1,i+1)],dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz)||1,nx=-dz/L,nz=dx/L,x=pts[i][0],z=pts[i][1]; pp.push(x+nx*half,world.height(x+nx*half,z+nz*half)+0.04,z+nz*half,x-nx*half,world.height(x-nx*half,z-nz*half)+0.04,z-nz*half); if(prev!==null){ii.push(prev,prev+1,base,prev+1,base+1,base);} prev=base;base+=2;} } const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pp,3));g.setIndex(ii);g.computeVertexNormals();return g; }
   function buildTerrain() {
     [terrainMesh,pathMesh,curbMesh].forEach(dispose3D); terrainMesh=pathMesh=curbMesh=null;
-    const [x0,x1,z0,z1]=world.bounds, cell=world.meta.measured?(TOUCH?10:6):world.meta.source==='handling-pad'?1:2, nx=Math.floor((x1-x0)/cell)+1, nz=Math.floor((z1-z0)/cell)+1;
+    const [x0,x1,z0,z1]=world.bounds, cell=world.meta.measured?(TOUCH?10:6):2, nx=Math.floor((x1-x0)/cell)+1, nz=Math.floor((z1-z0)/cell)+1;
     const pos=new Float32Array(nx*nz*3),col=new Float32Array(nx*nz*3),idx=[],c=new THREE.Color();
-    for(let j=0;j<nz;j++)for(let i=0;i<nx;i++){const x=x0+i*cell,z=z0+j*cell,k=(j*nx+i)*3;pos[k]=x;pos[k+1]=world.height(x,z);pos[k+2]=z;const s=S.surfaceAt(world,x,z);let id=s.id==='path'&&world.meta.source!=='handling-pad'?'rough':s.id;if(id==='fairway'&&!world.meta.measured)id=(Math.floor(z/9)&1)?'fairway':'fairway2';c.copy(COL[id]||COL.rough);const d=0.025*Math.sin(x*.037+z*.021)*Math.cos(z*.029-x*.013);c.offsetHSL(0,0,d);col[k]=c.r;col[k+1]=c.g;col[k+2]=c.b;}
+    for(let j=0;j<nz;j++)for(let i=0;i<nx;i++){const x=x0+i*cell,z=z0+j*cell,k=(j*nx+i)*3;pos[k]=x;pos[k+1]=world.height(x,z);pos[k+2]=z;const s=S.surfaceAt(world,x,z);let id=s.id==='path'?'rough':s.id;if(id==='fairway'&&!world.meta.measured)id=(Math.floor(z/9)&1)?'fairway':'fairway2';c.copy(COL[id]||COL.rough);const d=0.025*Math.sin(x*.037+z*.021)*Math.cos(z*.029-x*.013);c.offsetHSL(0,0,d);col[k]=c.r;col[k+1]=c.g;col[k+2]=c.b;}
     for(let j=0;j<nz-1;j++)for(let i=0;i<nx-1;i++){const a=j*nx+i,b=a+1,d=a+nx,e=d+1;idx.push(a,d,b,b,d,e);} const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('color',new THREE.BufferAttribute(col,3));g.setIndex(idx);g.computeVertexNormals();terrainMesh=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));terrainMesh.receiveShadow=true;scene.add(terrainMesh);
     if(world.meta.measured){const paths=(world.courseFeatures&&world.courseFeatures.lines||[]).filter(f=>f.kind==='cartpath').map(f=>f.points);if(paths.length){pathMesh=new THREE.Mesh(ribbonGeometry(paths,1.6),new THREE.MeshLambertMaterial({color:0x77736c,side:THREE.DoubleSide}));pathMesh.receiveShadow=true;scene.add(pathMesh);}}
-    else if(world.meta.source!=='handling-pad') {
+    else {
       const pp=[],pi=[],hw=H.pathHalf;let n=0;for(const seg of S.PATHSEG){const dx=(seg.b[0]-seg.a[0])/seg.L,dz=(seg.b[1]-seg.a[1])/seg.L,lx=dz,lz=-dx;for(let s=0;s<=seg.L;s+=1){const x=seg.a[0]+dx*s,z=seg.a[1]+dz*s;for(let q=-1;q<=1;q+=.5){const px=x-lx*q*hw,pz=z-lz*q*hw;pp.push(px,world.height(px,pz)+.025,pz);}if(n>0)for(let q=0;q<4;q++){const a=(n-1)*5+q,b=n*5+q;pi.push(a,a+1,b,a+1,b+1,b);}n++;}}const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.Float32BufferAttribute(pp,3));pg.setIndex(pi);pg.computeVertexNormals();pathMesh=new THREE.Mesh(pg,new THREE.MeshLambertMaterial({color:0x77736c,side:THREE.DoubleSide}));pathMesh.receiveShadow=true;scene.add(pathMesh);
-    }
-    if (world.meta.source === 'handling-pad') {
-      // The narrow trip curb would disappear in a coarse grid. Sample its real
-      // profile separately, using exactly the same physical height function.
-      const pp=[],ii=[]; const nx=9,nz=53;
-      for(let j=0;j<nz;j++) for(let i=0;i<nx;i++) {const x=4+i*.08,z=22+j;pp.push(x,world.height(x,z)+.004,z);}
-      for(let j=0;j<nz-1;j++) for(let i=0;i<nx-1;i++){const a=j*nx+i;ii.push(a,a+nx,a+1,a+1,a+nx,a+nx+1);}
-      const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pp,3));g.setIndex(ii);g.computeVertexNormals();
-      curbMesh=new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:0xc6bba3}));scene.add(curbMesh);
     }
     buildProps();
   }
 
   let props = null;
   function buildProps() {
-    if (props) dispose3D(props); props = new THREE.Group(); scene.add(props);
+    if (props) scene.remove(props); props = new THREE.Group(); scene.add(props);
     // eucalyptus: pale trunks, sparse high canopies
     const trunkG = new THREE.CylinderGeometry(0.55, 1, 1, 7); trunkG.translate(0, 0.5, 0);
     const blobG = new THREE.IcosahedronGeometry(1, 0);
@@ -5317,13 +4871,6 @@ const ASSET_URLS=Object.freeze({
       }
     });
     props.add(trunks, blobs);
-    for (const marker of world.markers || []) {
-      const cv=document.createElement('canvas');cv.width=512;cv.height=96;
-      const ctx=cv.getContext('2d');ctx.fillStyle='rgba(24,30,28,.9)';ctx.fillRect(0,0,512,96);
-      ctx.fillStyle='#ece8de';ctx.font='600 34px sans-serif';ctx.textAlign='center';ctx.fillText(marker.label,256,60);
-      const texture=new THREE.CanvasTexture(cv), tag=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthWrite:false}));
-      tag.position.set(marker.p[0],world.height(...marker.p)+3,marker.p[1]);tag.scale.set(8,1.5,1);props.add(tag);
-    }
     // green: cup, pin, flag
     const [gx, gz] = H.green.c, gy = world.height(gx, gz);
     const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 2.3, 6), new THREE.MeshLambertMaterial({ color: 0xf2f2ee })); pin.position.set(gx, gy + 1.15, gz);
@@ -5391,26 +4938,7 @@ const ASSET_URLS=Object.freeze({
     return { object: asset, raw: raw.size.toArray(), fitted: fit.size.toArray(), scale };
   }
 
-  let bareWheelMaterial=null;
-  function finishBareWheel(asset) {
-    asset.traverse(o=>{
-      if(!o.isMesh||Array.isArray(o.material)||o.material.map)return;
-      const g=o.geometry;
-      if(!g.getAttribute('normal'))g.computeVertexNormals();
-      if(!g.getAttribute('color')){
-        g.computeBoundingBox();const box=g.boundingBox,center=box.getCenter(new THREE.Vector3()),r=Math.max(box.max.x-box.min.x,box.max.y-box.min.y)*.5;
-        const pos=g.getAttribute('position'),colors=new Float32Array(pos.count*3);
-        const rubber=new THREE.Color(0x202426).convertSRGBToLinear(),alloy=new THREE.Color(0xb9c0c4).convertSRGBToLinear(),color=new THREE.Color();
-        for(let i=0;i<pos.count;i++){const radius=Math.hypot(pos.getX(i)-center.x,pos.getY(i)-center.y)/r;
-          const blend=clampN((radius-.60)/.08,0,1);color.copy(alloy).lerp(rubber,blend);colors.set([color.r,color.g,color.b],i*3);}
-        g.setAttribute('color',new THREE.BufferAttribute(colors,3));
-      }
-      if(!bareWheelMaterial)bareWheelMaterial=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.72,metalness:.18});
-      o.material=bareWheelMaterial;
-    });
-  }
   function prepareWheelVisual(asset, left) {
-    finishBareWheel(asset);
     const raw = measuredBox(asset), rawR = Math.max(raw.size.x, raw.size.y) * 0.5;
     if (!(raw.size.z < rawR * 1.05 && Math.abs(raw.center.x) < rawR * 0.08 && Math.abs(raw.center.y) < rawR * 0.08))
       throw new Error(`wheel axes/origin violate contract: raw ${raw.size.x.toFixed(4)}×${raw.size.y.toFixed(4)}×${raw.size.z.toFixed(4)} m`);
@@ -5499,115 +5027,90 @@ const ASSET_URLS=Object.freeze({
   // Debug overlay (F): anchors, probes, contact normals, COM, Fz bars
   const dbg = new THREE.Group(); dbg.visible = false; scene.add(dbg);
   const dbgLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0xffd23f, depthTest: false }));
-  dbgLines.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3 * 2 * 8), 3)); dbgLines.renderOrder = 10; dbg.add(dbgLines);
+  dbgLines.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3 * 2 * 12), 3)); dbgLines.renderOrder = 10; dbg.add(dbgLines);
   const comMark = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), new THREE.MeshBasicMaterial({ color: 0xc8323a, depthTest: false })); comMark.renderOrder = 11; dbg.add(comMark);
 
   /* ------------------------------------------------------------ sim state */
   const sim = { cart: null, clock: S.makeClock(), prev: null, route: { i: 1, split: [], t0: 0, best: null }, log: null };
   function cartState() { return sim.cart; }
   function spawn(payload) {
-    if(sim.log)toggleLog(); // A reset closes the old input tape; tick numbers cannot rewind inside a trace.
     const g0 = H.gates[0].p, g1 = H.gates[1].p;
-    const prior = sim.cart;
-    sim.cart = S.createCart(world, { mode: prior ? prior.mode : 'sport', active: prior ? prior.activeEnabled : true, x: g0[0], z: g0[1], yaw: Math.atan2(g1[0] - g0[0], g1[1] - g0[1]), payload: payload || (sim.cart ? sim.cart.payload : S.PRESETS.driver) });
-    sim.prev = snap(); sim.clock = S.makeClock(); evSeen = 0; sim.route = { i: 1, split: [], t0: sim.cart.t, best: sim.route.best };
+    sim.cart = S.createCart(world, { x: g0[0], z: g0[1], yaw: Math.atan2(g1[0] - g0[0], g1[1] - g0[1]), payload: payload || (sim.cart ? sim.cart.payload : S.PRESETS.driver) });
+    sim.prev = snap(); sim.route = { i: 1, split: [], t0: sim.cart.t, best: sim.route.best };
   }
-  const snap = () => ({ ref: S.refOrigin(sim.cart), q: sim.cart.q.slice(), wheels: sim.cart.wheels.map(w => [w.comp, w.steerAngle, w.spin]) });
+  const snap = () => ({ ref: S.refOrigin(sim.cart), q: sim.cart.q.slice() });
 
   /* ---------------------------------------------------------------- input */
-  const keys = new Set(), inp = { throttle: 0, brake: 0, steer: 0, handbrake: false, boost: false };
-  const touch = { steer: 0, go: false, stop: false, boost: false, handbrake: false };
-  const clampN = (x, a, b) => Math.max(a, Math.min(b, x));
-  const pedalOwners = {};
-  const resetInput = () => { keys.clear(); for(const k of Object.keys(touch)) touch[k]=k==='steer'?0:false;
-    inp.throttle=inp.brake=inp.steer=0;inp.handbrake=inp.boost=false;
-    $('steerKnob').style.transform=''; padId=null; dragging=false;
-    for(const id of Object.keys(pedalOwners)){pedalOwners[id]=null;$(id).classList.remove('held');} };
-  function modeChange() { if(!sim.cart)return; S.setMode(sim.cart,sim.cart.mode==='sport'?'eco':'sport');hudText();toast(S.MODES[sim.cart.mode].name); }
-  function activeChange() { if(!sim.cart)return;S.setActive(sim.cart,!sim.cart.activeEnabled);hudText();toast(sim.cart.activeEnabled?'Active suspension ON':'Passive suspension / A-B comparison'); }
-  function rightCart() { if(!sim.cart)return;S.recover(world,sim.cart);sim.prev=snap();sim.clock=S.makeClock();toast('Cart righted / energy preserved'); }
+  const keys = new Set(), inp = { throttle: 0, brake: 0, steer: 0, handbrake: false };
+  const touch = { steer: 0, go: false, stop: false };
   addEventListener('keydown', e => {
-    if (e.target && ['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
-    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
-    keys.add(e.code); if(e.repeat || !sim.cart) return;
-    const k=e.code;
-    if(k==='KeyR')rightCart();
-    if(k==='KeyT'){spawn();toast('Fresh run / full energy stores');}
-    if(k==='KeyE')modeChange(); if(k==='KeyV')activeChange();
-    if(k==='KeyF')dbg.visible=!dbg.visible; if(k==='KeyC')cycleCam();
-    if(k==='KeyH')togglePanel(); if(k==='Escape'){$('panel').classList.remove('on');resetInput();}
-    if(k==='KeyM')$('map').classList.toggle('off'); if(k==='KeyL')toggleLog();
-    const pre={Digit1:'driver',Digit2:'balanced',Digit3:'rearHeavyRight',Digit4:'max',Digit0:'empty'}[k];
-    if(pre)setLoad({...S.PRESETS[pre]},pre);
+    if (e.target && e.target.tagName === 'INPUT') return;
+    keys.add(e.code);
+    const k = e.code;
+    if (k === 'KeyR') { S.recover(world, sim.cart); sim.prev = snap(); toast('Cart righted'); }
+    if (k === 'KeyT') { spawn(); toast('Back to the tee path'); }
+    if (k === 'KeyF') dbg.visible = !dbg.visible;
+    if (k === 'KeyC') cycleCam();
+    if (k === 'KeyH') togglePanel();
+    if (k === 'KeyM') $('map').classList.toggle('off');
+    if (k === 'KeyL') toggleLog();
+    const pre = { Digit1: 'driver', Digit2: 'balanced', Digit3: 'rearHeavyRight', Digit4: 'max' }[k];
+    if (pre) setLoad({ ...S.PRESETS[pre] }, pre);
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(k)) e.preventDefault();
   });
-  addEventListener('keyup',e=>keys.delete(e.code));
-  addEventListener('blur',resetInput);
-  document.addEventListener('visibilitychange',()=>{resetInput();last=performance.now();if(sim.clock)sim.clock.acc=sim.clock.alpha=0;});
-  function readInput() {
-    if(document.hidden || $('panel').classList.contains('on'))return {throttle:0,brake:0,steer:0,handbrake:false,boost:false};
-    const kb=c=>keys.has(c);
-    inp.throttle=(kb('KeyW')||kb('ArrowUp')||touch.go)?1:0;
-    inp.brake=(kb('KeyS')||kb('ArrowDown')||touch.stop)?1:0;
-    inp.steer=touch.steer || ((kb('KeyA')||kb('ArrowLeft')?1:0)-(kb('KeyD')||kb('ArrowRight')?1:0));
-    inp.handbrake=kb('Space')||touch.handbrake;inp.boost=kb('ShiftLeft')||kb('ShiftRight')||touch.boost;
-    const gp=navigator.getGamepads?Array.from(navigator.getGamepads()).find(Boolean):null;
-    if(gp){const ax=gp.axes[0]||0;if(Math.abs(ax)>.08)inp.steer=-Math.sign(ax)*(Math.abs(ax)-.08)/.92;
-      inp.throttle=Math.max(inp.throttle,gp.buttons[7]?.value||0);inp.brake=Math.max(inp.brake,gp.buttons[6]?.value||0);
-      inp.handbrake=inp.handbrake||!!gp.buttons[0]?.pressed;inp.boost=inp.boost||!!gp.buttons[4]?.pressed;
-      for(const [i,fn] of [[3,rightCart],[5,cycleCam],[2,modeChange]]){const on=!!gp.buttons[i]?.pressed,key='_gp'+i;if(on&&!sim[key])fn();sim[key]=on;}
-    }
+  addEventListener('keyup', e => keys.delete(e.code));
+  addEventListener('blur', () => keys.clear());
+  function readInput(dt) {
+    const kb = c => keys.has(c);
+    const up = kb('KeyW') || kb('ArrowUp') || touch.go, dn = kb('KeyS') || kb('ArrowDown') || touch.stop;
+    const lt = kb('KeyA') || kb('ArrowLeft'), rt = kb('KeyD') || kb('ArrowRight');
+    const ramp = (v, on, r) => clampN(v + (on ? r : -r * 2) * dt, 0, 1);
+    inp.throttle = ramp(inp.throttle, up, 4); inp.brake = ramp(inp.brake, dn, 5);
+    let st = (lt ? 1 : 0) - (rt ? 1 : 0); if (touch.steer) st = touch.steer;
+    inp.steer = st; inp.handbrake = kb('Space');
+    const gp = navigator.getGamepads ? [...navigator.getGamepads()].find(Boolean) : null;
+    if (gp) { const ax = gp.axes[0] || 0; if (Math.abs(ax) > 0.08) inp.steer = -Math.sign(ax) * (Math.abs(ax) - 0.08) / 0.92;
+      const rtB = gp.buttons[7], ltB = gp.buttons[6]; if (rtB && rtB.value > 0.02) inp.throttle = rtB.value; if (ltB && ltB.value > 0.02) inp.brake = ltB.value;
+      if (gp.buttons[0] && gp.buttons[0].pressed) inp.handbrake = true;
+      if (gp.buttons[3] && gp.buttons[3].pressed && !sim._gpY) { S.recover(world, sim.cart); sim.prev = snap(); } sim._gpY = gp.buttons[3] && gp.buttons[3].pressed;
+      if (gp.buttons[5] && gp.buttons[5].pressed && !sim._gpRB) cycleCam(); sim._gpRB = gp.buttons[5] && gp.buttons[5].pressed; }
     return inp;
   }
-  if(TOUCH)document.body.classList.add('touch');
-  const pad=$('steerPad');let padId=null,padX=0;
-  pad.addEventListener('pointerdown',e=>{if(padId!==null)return;padId=e.pointerId;padX=e.clientX;pad.setPointerCapture(e.pointerId);e.preventDefault();});
-  pad.addEventListener('pointermove',e=>{if(e.pointerId!==padId)return;const d=clampN((e.clientX-padX)/60,-1,1);touch.steer=-d;$('steerKnob').style.transform=`translateX(${d*44}px)`;});
-  const padEnd=e=>{if(e.pointerId!==padId)return;padId=null;touch.steer=0;$('steerKnob').style.transform='';};
-  for(const ev of ['pointerup','pointercancel','lostpointercapture'])pad.addEventListener(ev,padEnd);
-  for(const [id,key] of [['goBtn','go'],['stopBtn','stop'],['boostBtn','boost'],['driftBtn','handbrake']]){
-    const el=$(id);pedalOwners[id]=null;
-    el.addEventListener('pointerdown',e=>{if(pedalOwners[id]!==null)return;pedalOwners[id]=e.pointerId;touch[key]=true;el.setPointerCapture(e.pointerId);el.classList.add('held');e.preventDefault();});
-    for(const ev of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(ev,e=>{if(e.pointerId!==pedalOwners[id])return;pedalOwners[id]=null;touch[key]=false;el.classList.remove('held');});
-  }
-  $('rightBtn').addEventListener('click',rightCart);$('camBtn').addEventListener('click',cycleCam);
-  $('helpBtn').addEventListener('click',togglePanel);$('modeBtn').addEventListener('click',modeChange);$('activeBtn').addEventListener('click',activeChange);
-  $('loadBtn').addEventListener('click',()=>document.body.classList.toggle(TOUCH?'load-open':'load-closed'));
+  const clampN = (x, a, b) => Math.max(a, Math.min(b, x));
+  // touch: left pad steers (drag), right pedals
+  if (TOUCH) document.body.classList.add('touch');
+  const pad = $('steerPad'); let padId = null, padX = 0;
+  pad.addEventListener('pointerdown', e => { padId = e.pointerId; padX = e.clientX; pad.setPointerCapture(e.pointerId); });
+  pad.addEventListener('pointermove', e => { if (e.pointerId !== padId) return; const d = clampN((e.clientX - padX) / 70, -1, 1); touch.steer = -d || 0.00001; $('steerKnob').style.transform = `translateX(${d * 42}px)`; });
+  const padEnd = e => { if (e.pointerId !== padId) return; padId = null; touch.steer = 0; $('steerKnob').style.transform = ''; };
+  pad.addEventListener('pointerup', padEnd); pad.addEventListener('pointercancel', padEnd);
+  for (const [id, key] of [['goBtn', 'go'], ['stopBtn', 'stop']]) { const b = $(id);
+    b.addEventListener('pointerdown', e => { touch[key] = true; b.setPointerCapture(e.pointerId); }); ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => b.addEventListener(ev, () => touch[key] = false)); }
+  $('rightBtn').addEventListener('click', () => { S.recover(world, sim.cart); sim.prev = snap(); });
+  $('camBtn').addEventListener('click', () => cycleCam());
+  $('helpBtn').addEventListener('click', () => togglePanel());
 
   /* --------------------------------------------------------------- camera */
-  const CAMS=['Chase','Low chase','Front seat','Rear passenger','Wheel side'];
-  let camMode=0,camYaw=0,dragging=false,lastX=0,lookPointer=null,lastHeading=0;
-  const camPos=new THREE.Vector3(),camLook=new THREE.Vector3(),rideQ=new THREE.Quaternion();
-  const cf=new THREE.Vector3(),cb=new THREE.Vector3(),cs=new THREE.Vector3(),want=new THREE.Vector3(),look=new THREE.Vector3(),cup=new THREE.Vector3();
-  function cycleCam(){camMode=(camMode+1)%CAMS.length;rideQ.copy(cartRoot.quaternion);toast(CAMS[camMode]+' camera');}
-  canvas.addEventListener('pointerdown',e=>{dragging=true;lookPointer=e.pointerId;lastX=e.clientX;canvas.setPointerCapture(e.pointerId);});
-  canvas.addEventListener('pointermove',e=>{if(dragging&&e.pointerId===lookPointer){camYaw-=(e.clientX-lastX)*.006;lastX=e.clientX;}});
-  for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,()=>{dragging=false;lookPointer=null;});
-  function updateCamera(ref,q,dt){
-    cf.set(0,0,1).applyQuaternion(q);if(Math.hypot(cf.x,cf.z)>.2)lastHeading=Math.atan2(cf.x,cf.z);
-    if(!dragging)camYaw*=Math.exp(-2.2*dt);
-    const yaw=lastHeading+camYaw,seat=camMode===2||camMode===3,c=sim.cart;
-    cb.set(Math.sin(yaw),0,Math.cos(yaw));cs.set(Math.cos(yaw),0,-Math.sin(yaw));
-    const tumbling=c.flipped||Math.abs(S.euler(c).roll)>1;
-    if(camMode===0||camMode===1){const low=camMode===1;
-      want.copy(ref).addScaledVector(cb,tumbling?-10.8:low?-5.9:-8.3);want.y+=tumbling?4.0:low?1.4:3.3;
-      look.copy(ref).addScaledVector(cb,low?3.8:2.6);look.y+=.5;
-      look.x+=clampN(c.v[0]*.12,-1.5,1.5);look.z+=clampN(c.v[2]*.12,-1.5,1.5);
-    }else if(seat){
-      rideQ.slerp(q,1-Math.exp(-dt/(REDUCED_MOTION?.18:.10)));
-      const z=camMode===2?.12:-1.15;
-      want.set(.33,.50,z).applyQuaternion(q).add(ref);
-      cf.set(Math.sin(camYaw),-.025,Math.cos(camYaw)).applyQuaternion(rideQ);
-      look.copy(want).addScaledVector(cf,6);
-    }else{want.copy(ref).addScaledVector(cs,4.8).addScaledVector(cb,.6);want.y+=.3;look.copy(ref);look.y-=.4;}
-    const k=seat?1:1-Math.exp(-dt*6);
-    camPos.lerp(want,k);camLook.lerp(look,k);
-    if(!seat)camPos.y=Math.max(camPos.y,world.height(camPos.x,camPos.z)+.45);
-    camera.position.copy(camPos);
-    if(seat){cup.set(0,1,0).applyQuaternion(rideQ).multiplyScalar(.28);cup.y+=.72;camera.up.copy(cup.normalize());}else camera.up.set(0,1,0);
-    camera.lookAt(camLook);
-    const vf=62+(REDUCED_MOTION?0:clampN(Math.hypot(c.v[0],c.v[2])/T.V_MAX,0,1)*5);
-    const fov=camera.fov+(vf-camera.fov)*(1-Math.exp(-dt*3));
-    if(Math.abs(fov-camera.fov)>.01){camera.fov=fov;camera.updateProjectionMatrix();}
+  const CAMS = ['Chase', 'Low chase', 'Driver seat', 'Wheel side'];
+  let camMode = 0, camYaw = 0, dragging = false, lastX = 0;
+  const camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
+  function cycleCam() { camMode = (camMode + 1) % CAMS.length; toast(CAMS[camMode] + ' camera'); }
+  canvas.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; });
+  addEventListener('pointerup', () => dragging = false);
+  addEventListener('pointermove', e => { if (dragging) { camYaw -= (e.clientX - lastX) * 0.006; lastX = e.clientX; } });
+  function updateCamera(ref, q, dt) {
+    const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(q), fy = Math.atan2(fwd.x, fwd.z);
+    if (!dragging) camYaw *= Math.pow(0.12, dt);
+    const yaw = fy + camYaw, back = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
+    let want, look;
+    if (camMode === 0) { want = ref.clone().addScaledVector(back, -8.2).add(new THREE.Vector3(0, 3.4, 0)); look = ref.clone().addScaledVector(back, 3).add(new THREE.Vector3(0, 0.8, 0)); }
+    else if (camMode === 1) { want = ref.clone().addScaledVector(back, -5.6).add(new THREE.Vector3(0, 1.3, 0)); look = ref.clone().addScaledVector(back, 4).add(new THREE.Vector3(0, 0.5, 0)); }
+    else if (camMode === 2) { want = new THREE.Vector3(0.33, 0.5, 0.05).applyQuaternion(q).add(ref); look = new THREE.Vector3(0.33 + Math.sin(camYaw) * 6, 0.1, 6 * Math.cos(camYaw)).applyQuaternion(q).add(ref); }
+    else { const side = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw)); want = ref.clone().addScaledVector(side, 4.6).addScaledVector(back, 0.6).add(new THREE.Vector3(0, 0.2, 0)); look = ref.clone().add(new THREE.Vector3(0, -0.5, 0)); }
+    const k = camMode === 2 ? 1 : 1 - Math.pow(0.0025, dt);
+    camPos.lerp(want, k); camLook.lerp(look, k);
+    if (camMode !== 2) camPos.y = Math.max(camPos.y, world.height(camPos.x, camPos.z) + 0.4);
+    camera.position.copy(camPos); camera.lookAt(camLook);
   }
 
   /* ------------------------------------------------------------------ HUD */
@@ -5644,22 +5147,22 @@ const ASSET_URLS=Object.freeze({
   }
   plate.addEventListener('pointerdown', e => {
     const r = plate.getBoundingClientRect(), x = (e.clientX - r.left) * PL.w / r.width, y = (e.clientY - r.top) * PL.h / r.height;
-    const hit = (plate._hits || []).find(h => Math.abs(x - h.x) < h.w / 2 + 2 && Math.abs(y - h.y) < h.h / 2 + 2); if (!hit) return;
+    const hit = (plate._hits || []).find(h => Math.abs(x - h.x) < h.w / 2 + 2 && Math.abs(y - h.y) < h.h / 2 + 2); if (!hit || hit.k === 'driver') return;
     const A = S.ANCHORS[hit.k], p = { ...sim.cart.payload }, def = A.kind === 'person' ? T.PERSON_KG : A.kind === 'bag' ? T.BAG_KG : T.BASKET_KG;
     p[hit.k] = p[hit.k] > 0 ? 0 : def; setLoad(p, null); e.stopPropagation();
   });
-  function setLoad(p, name) { S.setPayload(sim.cart, p); buildPassengers(); sim.loadName = name || 'custom'; toast(`${name ? ({ driver: 'Driver only', balanced: 'Balanced four', rearHeavyRight: 'Rear-heavy, right side', max: 'Full load', empty: 'Unmanned / empty', empty: 'Unmanned / empty', empty: 'Unmanned / empty' })[name] : 'Load changed'} · ${Math.round(sim.cart.M)} kg`); }
+  function setLoad(p, name) { S.setPayload(sim.cart, p); buildPassengers(); sim.loadName = name || 'custom'; toast(`${name ? ({ driver: 'Driver only', balanced: 'Balanced four', rearHeavyRight: 'Rear-heavy, right side', max: 'Full load' })[name] : 'Load changed'} · ${Math.round(sim.cart.M)} kg`); }
 
   // minimap
   const map = $('mapC'), mctx = map.getContext('2d'); let mapBase = null;
   const MW = 132, MH = 262; let mapView = [-80, 50, -20, 500];
-  const fitMapView = () => { if (!world.meta.measured && world.meta.source!=='handling-pad') { mapView = [-80,50,-20,500]; return; } const b=world.bounds,pad=30; let x0=b[0]+pad,x1=b[1]-pad,z0=b[2]+pad,z1=b[3]-pad; const ar=MW/MH, wr=x1-x0,hr=z1-z0; if(wr/hr>ar){const nh=wr/ar,cy=(z0+z1)/2;z0=cy-nh/2;z1=cy+nh/2;}else{const nw=hr*ar,cx=(x0+x1)/2;x0=cx-nw/2;x1=cx+nw/2;} mapView=[x0,x1,z0,z1]; };
+  const fitMapView = () => { if (!world.meta.measured) { mapView = [-80,50,-20,500]; return; } const b=world.bounds,pad=30; let x0=b[0]+pad,x1=b[1]-pad,z0=b[2]+pad,z1=b[3]-pad; const ar=MW/MH, wr=x1-x0,hr=z1-z0; if(wr/hr>ar){const nh=wr/ar,cy=(z0+z1)/2;z0=cy-nh/2;z1=cy+nh/2;}else{const nw=hr*ar,cx=(x0+x1)/2;x0=cx-nw/2;x1=cx+nw/2;} mapView=[x0,x1,z0,z1]; };
   const mX = x => (x-mapView[0])/(mapView[1]-mapView[0])*MW, mZ = z => MH-(z-mapView[2])/(mapView[3]-mapView[2])*MH;
   function drawMapBase() {
     fitMapView(); mapBase=document.createElement('canvas');mapBase.width=MW*2;mapBase.height=MH*2;const c=mapBase.getContext('2d');c.scale(2,2);c.fillStyle='#3e5431';c.fillRect(0,0,MW,MH);
     const pal={fairway:'#5f8f47',green:'#7cb35d',tee:'#6fa152',sand:'#d8c89e',duff:'#394030',path:'#8b877f',cartpath:'#8b877f',bunker:'#d8c89e',rough:'#3e5431'};
     const sx=(mapView[1]-mapView[0])/MW,sz=(mapView[3]-mapView[2])/MH;for(let py=0;py<MH;py++)for(let px=0;px<MW;px++){const x=mapView[0]+(px+.5)*sx,z=mapView[3]-(py+.5)*sz,id=S.surfaceAt(world,x,z).id;c.fillStyle=pal[id]||pal.rough;c.fillRect(px,py,1.1,1.1);}
-    c.strokeStyle='#d0ccc3';c.lineWidth=1.1;const lines=world.meta.measured?(world.courseFeatures&&world.courseFeatures.lines||[]).filter(f=>f.kind==='cartpath').map(f=>f.points):world.meta.source==='handling-pad'?[]:world.meta.source==='handling-pad'?[]:world.meta.source==='handling-pad'?[]:[H.path];for(const P of lines){c.beginPath();P.forEach(([x,z],i)=>i?c.lineTo(mX(x),mZ(z)):c.moveTo(mX(x),mZ(z)));c.stroke();}
+    c.strokeStyle='#d0ccc3';c.lineWidth=1.1;const lines=world.meta.measured?(world.courseFeatures&&world.courseFeatures.lines||[]).filter(f=>f.kind==='cartpath').map(f=>f.points):[H.path];for(const P of lines){c.beginPath();P.forEach(([x,z],i)=>i?c.lineTo(mX(x),mZ(z)):c.moveTo(mX(x),mZ(z)));c.stroke();}
     if(world.meta.hole10Registered&&H.centerline){c.strokeStyle='rgba(246,242,232,.55)';c.lineWidth=.8;c.beginPath();H.centerline.forEach(([x,z],i)=>i?c.lineTo(mX(x),mZ(z)):c.moveTo(mX(x),mZ(z)));c.stroke();}
   }
 
@@ -5682,17 +5185,6 @@ const ASSET_URLS=Object.freeze({
     $('mass').textContent = `${Math.round(c.M)} kg · COM ${(-c.com[2]).toFixed(2)} m aft, ${(Math.abs(c.com[0]) * 100).toFixed(0)} cm ${c.com[0] >= 0 ? 'left' : 'right'}`;
     $('tel').textContent = `pitch ${(s.pitch * 57.3).toFixed(1)}°  roll ${(s.roll * 57.3).toFixed(1)}°  yaw rate ${s.yawRate.toFixed(2)}  slip ${c.slipMax.toFixed(2)}  LTR ${c.ltr.toFixed(2)}`;
     $('logDot').classList.toggle('on', !!sim.log);
-    $('modeBtn').textContent=S.MODES[c.mode].name; $('modeBtn').dataset.mode=c.mode;
-    $('activeBtn').textContent=c.activeEnabled?'ACTIVE':'PASSIVE';$('activeBtn').setAttribute('aria-pressed',String(c.activeEnabled));
-    $('capFill').style.width=(c.capJ/T.CAP_J*100).toFixed(1)+'%';
-    $('capLabel').textContent=(c.capJ/T.CAP_J*100).toFixed(0)+'%';
-    $('batteryLabel').textContent=(c.batteryJ/T.BATTERY_J*100).toFixed(1)+'%';
-    $('powerLabel').textContent=c.regenPower>100?'REGEN '+(c.regenPower/1000).toFixed(1)+' kW':(c.motorPower/1000).toFixed(1)+' kW';
-    $('rideLabel').textContent=c.flipped?'ROLLED / R TO RECOVER':c.airT>.05?'AIRBORNE':!c.activeEnabled?'PASSIVE A/B':c.activeSaturated?'ACTIVE / AT LIMIT':'ACTIVE / '+(c.activePower/1000).toFixed(2)+' kW';
-    $('rig').classList.toggle('boosting',c.boost);
-    $('boostBtn').textContent=c.mode==='eco'?'ECO':c.capLocked?'CHARGING':c.boost?'BOOST!':'BOOST';
-    $('boostBtn').setAttribute('aria-label',c.mode==='eco'?'Boost is available in Sport mode':'Hold for capacitor boost');
-    $('driveSpec').textContent='AWD '+Math.round(Math.abs(c.axleForce[0])*T.WHEEL_R)+' / '+Math.round(Math.abs(c.axleForce[1])*T.WHEEL_R)+' Nm at wheels';
   }
 
   function routeUpdate() {
@@ -5700,41 +5192,36 @@ const ASSET_URLS=Object.freeze({
     const g = H.gates[sim.route.i], r = S.refOrigin(c);
     if (Math.hypot(g.p[0] - r[0], g.p[1] - r[2]) < (g.r || 5)) {
       sim.route.split.push({ gate: g.name, t: c.t - sim.route.t0 }); sim.route.i++;
-      if (sim.route.i >= H.gates.length) { sim.route.tDone = c.t; const tt = c.t - sim.route.t0; if (!sim.route.best || tt < sim.route.best) sim.route.best = tt; toast(`Driving route · ${tt.toFixed(1)} s`); }
+      if (sim.route.i >= H.gates.length) { sim.route.tDone = c.t; const tt = c.t - sim.route.t0; if (!sim.route.best || tt < sim.route.best) sim.route.best = tt; toast(`Hole 10 route · ${tt.toFixed(1)} s`); }
       else toast(g.name);
     }
   }
   let evSeen = 0;
-  function eventToasts(){for(const e of sim.cart.events){if(e.seq<=evSeen)continue;evSeen=e.seq;
-    if(e.e==='on-green')toast('Carts stay off the green');
-    if(e.e==='rollover')toast('Rolled / R or RECOVER to right the cart');
-    if(e.e==='land'&&e.airtime>.35)toast('Landing / '+e.airtime.toFixed(2)+' s airborne');}}
+  function eventToasts() { const ev = sim.cart.events; while (evSeen < ev.length) { const e = ev[evSeen++];
+    if (e.e === 'on-green') toast('Carts stay off the green'); if (e.e === 'rollover') toast('Rolled · press R (or ⟲) to right the cart'); } }
 
   /* ------------------------------------------------------------ telemetry */
   function toggleLog() {
-    if (!sim.log) { sim.log = { meta: { build: S.BUILD, tune: { ...T }, payload: { ...sim.cart.payload }, mode: sim.cart.mode, active: sim.cart.activeEnabled, batteryJ:sim.cart.batteryJ,capJ:sim.cart.capJ, terrain: world.meta, start: new Date().toISOString() }, input: [], trace: [] }; toast('Recording telemetry'); return; }
+    if (!sim.log) { sim.log = { meta: { build: 'hole10-v0', tune: { ...T }, payload: { ...sim.cart.payload }, terrain: world.meta, start: new Date().toISOString() }, input: [], trace: [] }; toast('Recording telemetry'); return; }
     const blob = new Blob([JSON.stringify(sim.log)], { type: 'application/json' }), a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = `hole10-trace-${Date.now()}.json`; a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000); sim.log = null; toast('Trace saved');
+    a.href = URL.createObjectURL(blob); a.download = `hole10-trace-${Date.now()}.json`; a.click(); sim.log = null; toast('Trace saved');
   }
 
   /* ---------------------------------------------------------------- panel */
-  function togglePanel() { resetInput(); $('panel').classList.toggle('on'); last=performance.now(); }
-  const escapeHTML=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function togglePanel() { $('panel').classList.toggle('on'); }
   $('closePanel').addEventListener('click', togglePanel);
   $('runChecks').addEventListener('click', () => {
     const out = $('checks'); out.innerHTML = `<p class="muted">Running ${SIM_TESTS.tests.length} checks on this device…</p>`;
-    resetInput();
-    setTimeout(() => { const res = SIM_TESTS.runAll(null, { world }); last=performance.now(); sim.clock=S.makeClock();
+    setTimeout(() => { const res = SIM_TESTS.runAll(null, { world });
       const vc = SIM_TESTS._visualContract, vok = !!vc && vc.body.loaded && vc.wheel.loaded && vc.wheelCount === 4;
       res.unshift({ id: 'V0', name: 'Body + four-wheel visual contract', status: vok ? 'pass' : 'warn', detail: vc ? `body ${vc.body.loaded ? 'GLB' : 'fallback'} · wheels ${vc.wheel.loaded ? 'GLB' : 'fallback'} × ${vc.wheelCount}` : 'visual contract not initialized' });
       const tally = {}; res.forEach(r => tally[r.status] = (tally[r.status] || 0) + 1);
       out.innerHTML = `<p class="tally">${['pass', 'fail', 'warn', 'skip'].map(s => `<span class="${s}">${tally[s] || 0} ${s}</span>`).join('')}</p>` +
-        res.map(r => `<div class="row ${r.status}"><b>${r.id}</b><span>${escapeHTML(r.name)}</span><em>${r.status}</em><small>${escapeHTML(r.detail)}</small></div>`).join(''); }, 30);
+        res.map(r => `<div class="row ${r.status}"><b>${r.id}</b><span>${r.name}</span><em>${r.status}</em><small>${r.detail}</small></div>`).join(''); }, 30);
   });
-  $('runnerBtn').addEventListener('click',()=>{const blob=new Blob([document.getElementById('regression-suite').textContent],{type:'text/javascript'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rally-regression.cjs';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});
   $('demFile').addEventListener('change', async e => {
     const f = e.target.files[0]; if (!f) return;
-    try { const dem = S.parseASC(await f.text()); world = S.createWorld({ dem }); Object.assign(H,JSON.parse(JSON.stringify(authoredHole))); buildTerrain(); drawMapBase(); spawn(); $('terrainNote').textContent = world.meta.note; $('terrainNote2').textContent = 'Loaded: ' + world.meta.note + ' (' + world.meta.nx + '×' + world.meta.nz + ' at ' + world.meta.cell + ' m).'; toast('DEM loaded · ' + (world.meta.registered ? 'registered' : 'unregistered')); }
+    try { const dem = S.parseASC(await f.text()); world = S.createWorld({ dem }); buildTerrain(); drawMapBase(); spawn(); $('terrainNote').textContent = world.meta.note; $('terrainNote2').textContent = 'Loaded: ' + world.meta.note + ' (' + world.meta.nx + '×' + world.meta.nz + ' at ' + world.meta.cell + ' m).'; toast('DEM loaded · ' + (world.meta.registered ? 'registered' : 'unregistered')); }
     catch (err) { $('terrainNote').textContent = 'Could not read that grid: ' + err.message + ' Export as ESRI ASCII grid (.asc), metres.'; }
   });
 
@@ -5746,25 +5233,20 @@ const ASSET_URLS=Object.freeze({
   function frame(now) {
     requestAnimationFrame(frame);
     const dt = Math.min((now - last) / 1000, 0.5); last = now;
-    if (running && !document.hidden && !$('panel').classList.contains('on')) {
+    if (running) {
       const u = readInput(dt);
       S.advance(sim.clock, dt, h => { sim.prev = snap(); S.step(world, sim.cart, u, h); routeUpdate();
-        if(sim.log){
-          sim.log.input.push([sim.cart.steps,u.throttle,u.brake,u.steer,u.handbrake?1:0,u.boost?1:0,sim.cart.mode,sim.cart.activeEnabled?1:0]);
-          if(sim.cart.steps%6===0)sim.log.trace.push(S.sample(sim.cart));
-          if(sim.log.input.length>=72000){toggleLog();toast('10-minute telemetry limit / trace saved');}
-        } });
+        if (sim.log && sim.cart.steps % 6 === 0) { sim.log.input.push([+sim.cart.t.toFixed(4), +u.throttle.toFixed(3), +u.brake.toFixed(3), +u.steer.toFixed(3), u.handbrake ? 1 : 0]); sim.log.trace.push(S.sample(sim.cart)); } });
       eventToasts();
     }
     // interpolate between last two physics states
-    const alpha = sim.clock.alpha, cur = snap();
+    const alpha = sim.clock.accUs / sim.clock.stepUs, cur = snap();
     va.fromArray(sim.prev.ref); vb.fromArray(cur.ref); va.lerp(vb, alpha);
     qa.fromArray(sim.prev.q); qb.fromArray(cur.q); qa.slerp(qb, alpha);
     cartRoot.position.copy(va); cartRoot.quaternion.copy(qa);
     const c = sim.cart;
-    c.wheels.forEach((w,i)=>{const v=wheelVis[i];if(!v)return;const a=sim.prev.wheels[i],b=cur.wheels[i];
-      const comp=a[0]+(b[0]-a[0])*alpha,steer=a[1]+(b[1]-a[1])*alpha,spin=a[2]+(b[2]-a[2])*alpha;
-      v.steerG.position.set(w.a[0],w.a[1]-(T.SUSP_LEN-Math.min(comp,T.SUSP_TRAVEL)),w.a[2]);v.steerG.rotation.y=steer;v.spinG.rotation.x=spin%(Math.PI*2);});
+    c.wheels.forEach((w, i) => { const v = wheelVis[i]; if (!v) return; const drop = T.SUSP_LEN - Math.min(w.comp, T.SUSP_TRAVEL);
+      v.steerG.position.set(w.a[0], w.a[1] - drop, w.a[2]); v.steerG.rotation.y = w.steerAngle; v.spinG.rotation.x = w.spin % (Math.PI * 2); });
     if (dbg.visible) { const P = dbgLines.geometry.attributes.position.array; let k = 0;
       for (const w of c.wheels) { const A = S.bodyToWorld(c, w.a); P.set(A, k); P.set(w.contactPt || A, k + 3); k += 6; const n = w.contactPt || A; P.set(n, k); P.set([n[0], n[1] + w.Fz / 2500, n[2]], k + 3); k += 6; }
       dbgLines.geometry.attributes.position.needsUpdate = true; comMark.position.fromArray(c.p); }
@@ -5773,49 +5255,28 @@ const ASSET_URLS=Object.freeze({
     if (props) { const b = props.userData.beacon, g = H.gates[sim.route.i]; b.visible = !!g; if (g) b.position.set(g.p[0], world.height(g.p[0], g.p[1]) + 15, g.p[1]);
       props.userData.flag.rotation.y = Math.sin(now * 0.0021) * 0.5 + 0.8; props.userData.gates.forEach((r, i) => r.material.opacity = i === sim.route.i ? 0.7 : i < sim.route.i ? 0.08 : 0.3); }
     renderer.render(scene, camera);
-    hudT+=dt;if(hudT>.08){hudT=0;hudText();if(!TOUCH||document.body.classList.contains('load-open'))drawPlate();if(innerWidth>720&&!$('map').classList.contains('off'))drawMap();}
+    drawPlate(); if (!$('map').classList.contains('off')) drawMap();
+    hudT += dt; if (hudT > 0.08) { hudT = 0; hudText(); }
   }
 
   /* ----------------------------------------------------------------- boot */
-  let measuredWorld=null,worldChoice=0;
-  function configureWorld(w) {
-    world=w;sim.route.best=null;
-    Object.assign(H,JSON.parse(JSON.stringify(w.courseHole||authoredHole)));
-    if(w.meta.source==='handling-pad'){
-      H.centerline=[[0,-25],[0,190]];H.tees.white=[0,-25];H.green.c=[0,190];
-      H.gates=[{p:[0,-25],name:'Start',v:7},{p:[0,90],name:'Straight',v:10},{p:[0,170],name:'Bank',v:7}];
-    }
-    // No vector registration = no claim that the fallback route is Hole 10.
-    if(w.meta.measured&&!w.meta.hole10Registered){H.gates=[{p:[0,0],name:'Course centre',v:5},{p:[0,100],name:'Free drive',v:5}];H.tees.white=[0,0];H.green.c=[0,100];}
-    $('worldTitle').textContent=w.meta.source==='handling-pad'?'Rally proving ground':w.meta.measured?'Presidio Golf Course':'Presidio / authored fallback';
-    $('worldSub').textContent=w.meta.source==='handling-pad'?'Bumps / jump / bank / trip curb':w.meta.measured?'Measured terrain / '+(w.meta.hole10Registered?'Hole 10 registered':'route unavailable'):'Offline handling route / not measured';
-    $('terrainNote').textContent=w.meta.note||w.meta.source;$('terrainNote2').textContent=w.meta.note||w.meta.source;
-    buildTerrain();spawn(S.PRESETS.empty);drawMapBase();buildPassengers();
-    const r=S.refOrigin(sim.cart);camPos.set(r[0]-4,r[1]+4,r[2]-9);camLook.fromArray(r);rideQ.fromArray(sim.cart.q);
+  async function boot() {
+    resize(); $('status').textContent = 'Loading USGS terrain + mapped course…';
+    try { world = await loadMeasuredWorld(); } catch (e) { console.warn('Measured Presidio world unavailable; using deterministic fallback', e); world = S.createWorld(); world.meta.note = 'Measured sources unavailable: ' + e.message + ' · using offline fallback.'; }
+    buildTerrain(); spawn(S.PRESETS.empty); drawMapBase();
+    const pr = window.devicePixelRatio || 1; plate.width = PL.w * pr; plate.height = PL.h * pr; map.width = MW * 2; map.height = MH * 2;
+    const vis = await buildCartVisual();
+    $('terrainNote').textContent = world.meta.note + (world.meta.courseFeatures ? ` · ${world.meta.courseFeatures} mapped golf features` : '');
+    $('terrainNote2').textContent = world.meta.measured ? `Live registered terrain: USGS 3DEP. Course vectors: ${world.meta.vectorSource || 'unavailable'}. Hole 10: ${world.meta.hole10Registered ? 'registered' : 'fallback route'}.` : world.meta.note;
+    const cartReady = vis.body.loaded && vis.wheel.loaded && vis.wheelCount === 4;
+    $('status').textContent = `${world.meta.measured ? 'Measured Presidio' : 'Fallback terrain'} · ${cartReady ? 'body + 4 wheel GLBs locked' : `asset fallback: body ${vis.body.loaded ? 'OK' : 'missing'}, wheel ${vis.wheel.loaded ? 'OK' : 'missing'}`}.`;
+    if (!cartReady) toast('Cart asset contract fell back — check sibling GLB filenames');
+    $('go').disabled = false; const c0 = S.refOrigin(sim.cart); camPos.set(c0[0] - 4, c0[1] + 30, c0[2] - 30); camLook.fromArray(c0);
+    requestAnimationFrame(frame);
   }
-  $('padBtn').addEventListener('click',()=>{worldChoice++;configureWorld(S.createHandlingWorld());resetInput();$('panel').classList.remove('on');toast('Proving ground / follow BUMP and JUMP signs');});
-  $('fallbackBtn').addEventListener('click',()=>{worldChoice++;configureWorld(S.createWorld());resetInput();$('panel').classList.remove('on');});
-  $('measuredBtn').addEventListener('click',()=>{if(measuredWorld){worldChoice++;configureWorld(measuredWorld);resetInput();$('panel').classList.remove('on');}});
-  async function boot(){
-    resize();const pr=Math.min(devicePixelRatio||1,2);plate.width=PL.w*pr;plate.height=PL.h*pr;map.width=MW*2;map.height=MH*2;
-    configureWorld(QUERY.get('terrain')==='pad'?S.createHandlingWorld():S.createWorld());
-    const models=buildCartVisual();requestAnimationFrame(frame);
-    $('status').textContent='Loading body + four wheels...';
-    if(QUERY.get('terrain')!=='fallback'&&QUERY.get('terrain')!=='pad'){
-      withDeadline(loadMeasuredWorld(),16000,'Measured course').then(w=>{
-        measuredWorld=w;$('measuredBtn').disabled=false;$('measuredBtn').textContent='Drive measured Presidio';
-        if(!running&&worldChoice===0)configureWorld(w);else toast('Measured course ready / choose it in the handbook');
-      }).catch(e=>{$('measuredBtn').textContent='Measured course unavailable';$('terrainNote2').textContent=(world.meta.note||'')+' / '+e.message;console.warn('Measured world unavailable; authored terrain retained:',e.message);});
-    }else $('measuredBtn').textContent='Local terrain selected';
-    const vis=await models,ok=vis.body.loaded&&vis.wheel.loaded&&vis.wheelCount===4;
-    $('status').textContent=ok?'Body + four GLB wheels ready / RALLY 1':'Visible asset fallback / check sibling GLB filenames';
-    if(!ok)toast('Asset fallback / see handbook diagnostics');
-    $('go').disabled=false;hudText();drawPlate();
-  }
-  $('go').addEventListener('click',()=>{$('intro').classList.add('off');running=true;last=performance.now();canvas.focus();});
-  window.HOLE10={sim,world:()=>world,scene,renderer,camera,cartRoot,ASSET_FIT,visual:()=>visualContract,
-    build:S.BUILD,controls:{read:readInput,reset:resetInput},setWorld:configureWorld,ride:()=>({mode:camMode,labels:CAMS}),snap:()=>{sim.prev=snap();}};
-  boot().catch(e=>{$('status').textContent='Startup failed: '+e.message;console.error(e);});
+  $('go').addEventListener('click', () => { $('intro').classList.add('off'); running = true; last = performance.now(); canvas.focus && canvas.focus(); });
+  window.HOLE10 = { sim, world: () => world, scene, ASSET_FIT, visual: () => visualContract }; // console handle for the team
+  boot();
 
   /* ======================== STUBS for the team ===========================
      STUB(audio)      motor whine ∝ |vLong|, regen tick, tyre scrub ∝ slip, curb thunk on bump-stop.
@@ -5824,10 +5285,9 @@ const ASSET_URLS=Object.freeze({
      STUB(characters) rigged passengers; lean with lateral accel; enter/exit at seat anchors.
      STUB(golf)       ball, clubs, bag inventory (inventory only — no handling effect below a whole bag).
      STUB(combat)     passenger turret slot for C9 (Warthog kernel).
-     STUB(replay)     tick input + 20 Hz state export exists; in-app replay/import is not implemented.
+     STUB(replay)     play a saved trace's input tape back through SIM.step and diff against its trace.
   ========================================================================= */
 })();
-
 
 
 </script>
