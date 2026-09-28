@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Primary & Standard Meta Tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Ravenwood Faire</title>
+<meta name="title" content="Ravenwood Faire">
+<meta name="description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<link rel="canonical" href="https://www.redeyegame.com/RavenwoodFaire">
+<link rel="icon" type="image/png" href="https://www.redeyegame.com/RavenwoodFaire/rwf-favicon.png">
+<meta name="theme-color" content="#050505">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph / Facebook / LinkedIn / Discord / Slack -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.redeyegame.com/RavenwoodFaire">
+<meta property="og:site_name" content="Ravenwood Faire">
+<meta property="og:title" content="Ravenwood Faire">
+<meta property="og:description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<meta property="og:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
+<meta property="og:image:secure_url" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Ravenwood Faire">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter / X Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.redeyegame.com/RavenwoodFaire">
+<meta name="twitter:title" content="Ravenwood Faire">
+<meta name="twitter:description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<meta name="twitter:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
+<meta name="twitter:image:alt" content="Ravenwood Faire">
+<style>
+  /* FTS Futuro — light */
+  :root{
+    --bg:#f3efe6; --panel:#ebe6d9; --line:#d8d2c0; --ink:#15181a; --ink-2:#5c6058; --ink-3:#8a8d82;
+    --leaf:#5f8f2b; --tile:#d8d3a2;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{
+    min-height:100dvh; display:grid; grid-template-rows:auto 1fr auto; gap:14px;
+    padding:max(18px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));
+    max-width:1500px; margin:0 auto;
+  }
+  header{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap}
+  h1{margin:0; font-size:clamp(28px,4.4vw,48px); line-height:.95; font-weight:800; letter-spacing:.005em; text-transform:uppercase}
+  .ver{margin:8px 0 0; font-size:13px; letter-spacing:.06em; color:var(--ink-2); text-transform:uppercase}
+  .mvp{text-align:right}
+  .mvp strong{display:block; font-size:clamp(18px,2.4vw,26px); font-weight:700; letter-spacing:.04em}
+  .mvp span{display:block; margin-top:6px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+
+  main{display:grid; grid-template-columns:minmax(0,1fr) 288px; gap:18px; min-height:0}
+  .stage{position:relative; min-height:420px; border-radius:18px}
+  canvas{position:absolute; inset:0; width:100%; height:100%; display:block; outline:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent}
+  canvas:focus-visible{outline:3px solid var(--leaf); outline-offset:-3px; border-radius:18px}
+
+  aside{display:flex; flex-direction:column; gap:14px; min-width:0}
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px}
+  .panel h2{margin:0; font-size:22px; font-weight:800; letter-spacing:.01em}
+  .panel .sub{margin:2px 0 12px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+  .mini{max-width:176px;margin:0 auto;display:grid; grid-template-columns:repeat(8,1fr); gap:2px; border-radius:6px; overflow:hidden}
+  .mini i{display:block; aspect-ratio:1; position:relative}
+  .mini i.on::after{content:""; position:absolute; inset:calc(50% - 28% * var(--g,1)); transition:inset .3s; background:#2f5d2e; clip-path:polygon(50% 0,88% 62%,64% 62%,100% 100%,0 100%,36% 62%,12% 62%)}
+  .info h3{margin:0 0 12px; font-size:13px; letter-spacing:.09em; text-transform:uppercase; display:inline-block; padding-bottom:4px; border-bottom:2px solid var(--ink)}
+  .who{display:flex; gap:14px; align-items:flex-start}
+  #thumb{width:76px; height:100px; flex:none}
+  .who b{display:block; font-size:16px; line-height:1.15; font-weight:800; text-transform:uppercase; letter-spacing:.02em}
+  .who em{display:block; margin-top:2px; font-size:12px; color:var(--ink-2)}
+  dl{margin:8px 0 0; display:grid; grid-template-columns:auto 1fr; gap:3px 12px; font-size:13px}
+  dt{color:var(--ink-2)} dd{margin:0; font-variant-numeric:tabular-nums}
+  .note{margin:14px 0 0; padding-top:12px; border-top:1px solid var(--line); font-size:13px; line-height:1.45; color:var(--ink-2)}
+
+  .loop{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+  .loop li{display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; position:relative}
+  .loop li:not(:last-child)::after{content:""; position:absolute; right:6%; top:50%; width:8px; height:8px; border-top:2px solid var(--ink-3); border-right:2px solid var(--ink-3); transform:translateY(-50%) rotate(45deg)}
+  .loop b{flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:13px}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+  @media (max-width:860px){
+    main{grid-template-columns:1fr}
+    .stage{min-height:0; aspect-ratio:1/.82}
+    aside{display:grid; grid-template-columns:1fr 1fr; align-items:start}
+    .mvp{text-align:left}
+    .loop{grid-template-columns:1fr 1fr; row-gap:10px}
+    .loop li:nth-child(even)::after{display:none}
+  }
+  @media (max-width:520px){
+    .app{padding-left:14px; padding-right:14px}
+    aside{grid-template-columns:1fr}
+    .stage{aspect-ratio:1/.82}
+  }
+
+  .action-panel{border-color:#a4b779;background:#e7ebd8}
+  .status-line,.session-line{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  #hitCount{font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;color:#48543a}
+  .grow{height:6px;background:#d6dcc4;border-radius:3px;overflow:hidden;margin:12px 0 6px}
+  .grow i{display:block;height:100%;background:#5f8f2b;transform-origin:left center;transform:scaleX(0)}
+  .action-panel[data-phase="cleared"] .grow i{background:#b2761c}
+  .action-panel:is([data-phase="damaged"],[data-phase="critical"],[data-phase="falling"]) .grow i{background:#8a8d82}
+  .grow-text{margin:0;font-size:12px;color:#48543a;font-variant-numeric:tabular-nums}
+  .hit-track{display:flex;gap:5px;margin:12px 0}
+  .hit-track i{flex:1;height:5px;background:#cbd4b7;border-radius:3px}
+  .hit-track i.done{background:#6b7e36}
+  #actionHint{font-size:13px;line-height:1.45;min-height:38px;margin:0 0 12px;color:#424e36}
+  button{font:inherit;touch-action:manipulation;cursor:pointer}
+  #chop{width:100%;min-height:46px;display:flex;align-items:center;justify-content:space-between;border:1px solid #324922;background:#375329;color:#fff;border-radius:9px;padding:10px 14px;font-weight:700}
+  #chop[aria-disabled="true"]{background:#68765e;border-color:#68765e;cursor:default}
+  #chop span{font-size:19px;opacity:.7}
+  button:focus-visible,a:focus-visible{outline:3px solid #b2761c;outline-offset:3px}
+  .session-line{margin-top:12px;font-size:12px}
+  #sound{background:transparent;border:1px solid #9da98b;border-radius:7px;min-height:44px;padding:4px 9px;color:#35482b}
+  .session-note{font-size:11px;color:#59634f;display:block;margin-top:3px}
+  .replay{font-size:12px;color:#375329;display:inline-block;padding:12px 0 0}
+  @media(max-width:860px){.action-panel{grid-column:1/-1}.action-panel #actionHint{min-height:0}.action-panel #chop{max-width:100%}}
+@media(max-width:360px){.who{flex-direction:column}.who>div{width:100%}.loop li{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <h1>Ravenwood Faire</h1>
+      <p class="ver">v0.0.3 · FTS Futuro</p>
+    </div>
+    <div class="mvp">
+      <strong>8 × 8 · Grow &amp; fell</strong>
+      <span>Sapling to timber, then regrowth</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="stage" id="stage">
+      <canvas id="c" tabindex="0" role="button" aria-label="Forest grid, 8 by 8. One growing tree. Click or tap its silhouette, or press Enter or Space, to strike. Three strikes fell it."></canvas>
+    </section>
+    <aside>
+      <div class="panel action-panel" id="panel">
+        <div class="status-line"><h2 id="condition">Sapling</h2><span id="hitCount">0 / 3 strikes</span></div>
+        <div class="grow" aria-hidden="true"><i id="growBar"></i></div>
+        <p class="grow-text" id="growText">—</p>
+        <div class="hit-track" id="hitTrack" aria-hidden="true"></div>
+        <p id="actionHint">A sapling. Too young to fell; let it root.</p>
+        <button id="chop" type="button">Strike tree <span>↵</span></button>
+        <div class="session-line"><span>Trees cleared <b id="clearedCount">0</b></span><button id="sound" type="button" aria-pressed="false">Sound off</button></div>
+        <small class="session-note">Count lasts for this visit.</small>
+      </div>
+      <div class="panel">
+        <h2>8 × 8</h2>
+        <p class="sub">Forest grid</p>
+        <div class="mini" id="mini" aria-hidden="true"></div>
+      </div>
+      <div class="panel info">
+        <h3>Tree info</h3>
+        <div class="who">
+          <canvas id="thumb" style="position:static" width="76" height="100" aria-hidden="true"></canvas>
+          <div>
+            <b id="tName">—</b>
+            <em id="tLatin">—</em>
+            <dl>
+              <dt>Stage</dt><dd id="tStage">—</dd>
+              <dt>Tree seed</dt><dd id="tSeed">—</dd>
+              <dt>Forest</dt><dd id="wSeed">—</dd>
+              <dt>Height</dt><dd id="tH">—</dd>
+              <dt>Cell</dt><dd id="tCell">—</dd>
+              <dt>Site</dt><dd id="tSite">—</dd>
+            </dl>
+          </div>
+        </div>
+        <p class="note">Inspired by real ridge and hollow forest structure from the Mark Twain National Forest, Missouri.</p>
+        <a id="replay" class="replay" href="#">Replay this forest</a>
+      </div>
+    </aside>
+  </main>
+
+  <ol class="loop">
+    <li><b>1</b>Sapling roots</li>
+    <li><b>2</b>Grows in real time</li>
+    <li><b>3</b>Three strikes</li>
+    <li><b>4</b>Regrows elsewhere</li>
+  </ol>
+  <div class="sr" id="live" aria-live="polite"></div>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* ─────────────────────────────────────────────────────────────
+   CONFIG
+   ───────────────────────────────────────────────────────────── */
+const GRID = 8;          // fixed 8×8
+const TILE_M = 3.8;      // metres per tile edge
+const GIRTH = 1.35;      // trunk exaggeration (readability at iso scale)
+const HEADROOM = 2.3;    // tile-widths of sky reserved above the grid
+const SLAB = 0.24;       // tile-widths of earth under the grid
+
+/* Game rules — single source of truth (UI, sim, tests read these). */
+const HITS = 3;              // strikes to fell
+const GROW_SEC = 120;        // sapling → full grown, sim seconds
+const RESPAWN_SEC = 3;       // stump → next sapling
+const FALL_SEC = 1.18;       // fall duration (motion-independent)
+const COOLDOWN_SEC = .24;    // min gap between accepted strikes
+const G0 = .02;              // growth at spawn
+const STRIKE_MIN = .16;      // saplings can't be felled
+const FIXED = 1 / 60;        // sim step
+const GROWTH_BUCKETS = 40;   // sprite rebuilds per growth cycle; drawImage scales between
+const GROW_DRAW_MS = 66;     // redraw cadence when only growth is animating
+// [upper bound (exclusive), key, label] — timeline v0.0.3
+const STAGES = [[.16, 'sapling', 'Sapling'], [.36, 'young', 'Young'], [.61, 'adolescent', 'Adolescent'], [.86, 'maturing', 'Maturing'], [Infinity, 'mature', 'Full grown']];
+
+/* ─────────────────────────────────────────────────────────────
+   MATH — seeded RNG + lattice noise (carried over from CRAWFORD COUNTY)
+   ───────────────────────────────────────────────────────────── */
+const TAU = Math.PI * 2;
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+
+function mulberry32(s) {
+  return function () {
+    s |= 0; s = s + 0x6D2B79F5 | 0;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function hash2(x, y, s) {
+  let h = (Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul(s | 0, 1013904223)) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 15; h = Math.imul(h, 2246822519); h ^= h >>> 13;
+  return (h >>> 0) / 4294967296;
+}
+function vnoise(x, y, s) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+  const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+  const a = hash2(xi, yi, s), b = hash2(xi + 1, yi, s), c = hash2(xi, yi + 1, s), d = hash2(xi + 1, yi + 1, s);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+function fbm(x, y, oct, s) {
+  let sum = 0, a = 1, f = 1, n = 0;
+  for (let i = 0; i < oct; i++) { sum += a * vnoise(x * f, y * f, s); n += a; a *= 0.5; f *= 2.02; }
+  return sum / n;
+}
+/* 1-D organic profile noise: smooth knot interpolation, t∈[0,1] → [-1,1] */
+const knots = rng => Array.from({ length: 5 }, () => rng() * 2 - 1);
+function noise1(k, t) {
+  const n = k.length - 1, x = clamp(t, 0, 1) * n, i = Math.min(n - 1, Math.floor(x)), f = x - i, u = f * f * (3 - 2 * f);
+  return k[i] + (k[i + 1] - k[i]) * u;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   WORLD — one seed drives terrain and the tree sequence
+   ───────────────────────────────────────────────────────────── */
+function readSeed() {
+  try { const m = /[?#&]seed=(\d+)/.exec(location.search + location.hash); if (m) return parseInt(m[1], 10) >>> 0; } catch (e) {}
+  return (Math.random() * 4294967296) >>> 0;
+}
+const WORLD = readSeed();
+const ridgeAt = (x, y) => sstep(0.30, 0.70, fbm(x * 0.42 + 3.7, y * 0.42 + 9.1, 3, WORLD));   // 0 hollow … 1 ridge
+const gladeAt = (x, y) => fbm(x * 0.6 + 41, y * 0.6 + 17, 2, WORLD ^ 0x5bd1e995);
+const siteName = r => r < 0.33 ? 'Hollow' : r < 0.66 ? 'Slope' : 'Ridge';
+
+/* ─────────────────────────────────────────────────────────────
+   COLOUR
+   ───────────────────────────────────────────────────────────── */
+const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+const css = (c, a) => a == null ? `rgb(${c[0] | 0},${c[1] | 0},${c[2] | 0})` : `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a})`;
+function ramp3(c0, c1, c2) {
+  const a = hex(c0), b = hex(c1), c = hex(c2), out = [];
+  for (let i = 0; i < 16; i++) { const t = i / 15; out.push(css(t < .5 ? mix(a, b, t * 2) : mix(b, c, (t - .5) * 2))); }
+  return out;
+}
+const col = (S, t) => S.ramp[Math.round(clamp(t, 0, 1) * 15)];
+
+/* ─────────────────────────────────────────────────────────────
+   SPECIES — Ozark natives, placed by ridge / hollow / glade
+   ───────────────────────────────────────────────────────────── */
+const SPECIES = {
+  shortleaf: { name: 'Shortleaf pine', latin: 'Pinus echinata', kind: 'pine',
+    H: [11, 14.5], rBase: [.24, .34], taper: .7, flare: .7, trunkTop: .985, t0: [.3, .42], Rf: [.25, .32], irr: 1.0,
+    bark: ['#b48a62', '#84603f', '#43301f'], leaf: ['#1c4630', '#3a7040', '#86b45a'] },
+  cedar: { name: 'Eastern red cedar', latin: 'Juniperus virginiana', kind: 'cedar',
+    H: [7, 10], rBase: [.16, .24], taper: .9, flare: .5, trunkTop: .9, t0: [.03, .07], Rf: [.17, .22], irr: .6,
+    bark: ['#b07d58', '#7d5538', '#412c1d'], leaf: ['#1b4137', '#2f6a56', '#74a684'] },
+  whiteoak: { name: 'White oak', latin: 'Quercus alba', kind: 'oak',
+    H: [10, 13], rBase: [.27, .38], taper: 1.25, flare: .55, trunkTop: .78, t0: [.34, .44], Rf: [.36, .44], irr: .9, envA: .8, envB: .6,
+    bark: ['#c2baa8', '#8f8674', '#50493f'], leaf: ['#2d5a24', '#5f9235', '#b8d85e'] },
+  postoak: { name: 'Post oak', latin: 'Quercus stellata', kind: 'oak',
+    H: [7.5, 10.5], rBase: [.23, .33], taper: 1.1, flare: .5, trunkTop: .74, t0: [.28, .38], Rf: [.36, .44], irr: 1.5, envA: .7, envB: .75,
+    bark: ['#9b8d7b', '#6a5e4f', '#3a3028'], leaf: ['#3b5a24', '#6f8f35', '#bccb60'] },
+};
+for (const k in SPECIES) SPECIES[k].ramp = ramp3(...SPECIES[k].leaf);
+
+function pickSpecies(rng, ridge, glade) {
+  const w = {
+    shortleaf: 0.12 + 2.4 * ridge * ridge,
+    postoak: 0.25 + 1.5 * Math.max(0, 1 - Math.abs(ridge - 0.6) * 2.4),
+    whiteoak: 0.25 + 2.3 * Math.pow(1 - ridge, 1.4),
+    cedar: 0.1 + 1.4 * sstep(0.55, 0.85, glade) * (1 - Math.abs(ridge - 0.5)),
+  };
+  let sum = 0; for (const k in w) sum += w[k];
+  let r = rng() * sum;
+  for (const k in w) { r -= w[k]; if (r <= 0) return k; }
+  return 'whiteoak';
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROJECTION — fixed 2:1 dimetric, 30° elevation. Metres in, pixels out.
+   k = px per metre along a ground axis (before the 45° fold).
+   ───────────────────────────────────────────────────────────── */
+const P = (x, y, z, k) => [(x - y) * k * 0.5, (x + y) * k * 0.25 - z * k * 0.612];
+const LIGHT = (() => { const v = [-0.62, 0.22, 0.75], n = Math.hypot(...v); return v.map(a => a / n); })();
+const SHADOW = [0.55, -0.19];       // ground offset per metre of height (foreshortened for readability)
+const keyOf = (x, y, z) => (x + y) * 0.612 + z * 0.5;   // depth toward camera
+
+/* ─────────────────────────────────────────────────────────────
+   TREE GENERATION — organic profile mathematics
+     axis(t)      lean + knot-noise sway of the trunk centreline
+     radAt(t)     taper^p · root flare · bark noise
+     env(u)       crown radius envelope over crown height u∈[0,1]
+     lobe(θ,u)    3-harmonic angular modulation with height-twist
+   Output is a flat, depth-keyed list of primitives in metres.
+   ───────────────────────────────────────────────────────────── */
+function generateTree(seed, cell) {
+  const rng = mulberry32((seed * 2654435761) ^ 0x9e3779b9);
+  const ridge = ridgeAt(cell.x, cell.y), glade = gladeAt(cell.x, cell.y);
+  const key = pickSpecies(rng, ridge, glade), S = SPECIES[key], kind = S.kind;
+  const H = lerp(S.H[0], S.H[1], rng());
+  const rBase = lerp(S.rBase[0], S.rBase[1], rng()) * GIRTH;
+  const kx = knots(rng), ky = knots(rng), kr = knots(rng);
+  const leanA = rng() * TAU, leanM = H * (kind === 'pine' ? .02 + .035 * rng() : .03 + .07 * rng());
+  const sway = H * (kind === 'pine' ? .02 : .04);
+  const axis = t => { const s = t * t; return [Math.cos(leanA) * leanM * s + noise1(kx, t) * sway * t, Math.sin(leanA) * leanM * s + noise1(ky, t) * sway * t]; };
+  const tt = S.trunkTop;
+  const radAt = t => {
+    const core = .16 + .84 * Math.pow(1 - clamp(t / tt, 0, 1), S.taper);
+    return rBase * core * (1 + S.flare * Math.exp(-t * H / .55)) * (1 + .06 * noise1(kr, t));
+  };
+  const t0 = lerp(S.t0[0], S.t0[1], rng()), Rmax = H * lerp(S.Rf[0], S.Rf[1], rng()), ch = H * (1 - t0);
+  const A = [.15, .10, .06].map(a => a * S.irr), ph = [rng() * TAU, rng() * TAU, rng() * TAU], ps = [rng() * 4 - 2, rng() * 4 - 2, rng() * 4 - 2];
+  const lobe = (th, u) => clamp(1 + A[0] * Math.sin(th + ph[0] + ps[0] * u) + A[1] * Math.sin(2 * th + ph[1] + ps[1] * u) + A[2] * Math.sin(3 * th + ph[2] + ps[2] * u), .5, 1.6);
+  const env = u => kind === 'pine' ? Math.pow(Math.sin(Math.PI * Math.pow(clamp(u, 0, 1), .55)), .9) * (1 - .12 * u)
+    : kind === 'cedar' ? Math.pow(1 - clamp(u, 0, .999), .82) * (.78 + .22 * Math.min(1, u * 4))
+    : Math.pow(Math.sin(Math.PI * Math.pow(clamp(u, 0, 1), S.envA)), S.envB);
+  const tAt = u => t0 + u * (1 - t0), zAt = u => tAt(u) * H;
+
+  const items = [];
+  let branchSeq = 0, activeBranch = -1;
+  const add = it => { it.i = items.length; it.branch = activeBranch; it.key = keyOf(it.x, it.y, it.z); items.push(it); };
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const norm = v => { const n = Math.hypot(...v) || 1; return [v[0] / n, v[1] / n, v[2] / n]; };
+
+  // trunk
+  const NS = kind === 'pine' ? 22 : 16;
+  for (let i = 0; i < NS; i++) {
+    const a = i / NS * tt, b = (i + 1) / NS * tt, m = (a + b) / 2, [mx, my] = axis(m);
+    add({ t: 'seg', a, b, first: i === 0, x: mx, y: my, z: m * H, br: radAt(a) + H * tt / NS * .6, sr: radAt(m),
+      fur: Array.from({ length: 4 }, () => [rng() * 1.7 - .85, .5 + .5 * rng()]) });
+  }
+
+  const limb = (A0, B0, r0) => {
+    activeBranch = ++branchSeq;
+    const len = Math.hypot(B0[0] - A0[0], B0[1] - A0[1], B0[2] - A0[2]);
+    const C = [(A0[0] + B0[0]) / 2, (A0[1] + B0[1]) / 2, (A0[2] + B0[2]) / 2 + len * .16];
+    const q = s => [0, 1, 2].map(i => (1 - s) * (1 - s) * A0[i] + 2 * s * (1 - s) * C[i] + s * s * B0[i]);
+    const w = s => r0 * Math.pow(1 - s, .9) + .03, n = 6;
+    for (let i = 0; i < n; i++) {
+      const p0 = q(i / n), p1 = q((i + 1) / n);
+      add({ t: 'limb', p0, p1, w0: w(i / n), w1: w((i + 1) / n), x: (p0[0] + p1[0]) / 2, y: (p0[1] + p1[1]) / 2, z: (p0[2] + p1[2]) / 2, br: len / n });
+    }
+  };
+
+  if (kind === 'oak') {
+    const nl = Math.round(lerp(5, 8, rng())) + (key === 'whiteoak' ? 1 : 0);
+    for (let i = 0; i < nl; i++) {
+      const th = i / nl * TAU + rng() * .8, ta = lerp(t0 * .85, tt * .92, rng());
+      const [ax0, ay0] = axis(ta), ut = lerp(.3, .85, rng()), rho = env(ut) * lobe(th, ut) * Rmax * .8, [tx, ty] = axis(tAt(ut));
+      limb([ax0, ay0, ta * H], [tx + Math.cos(th) * rho, ty + Math.sin(th) * rho, zAt(ut)], radAt(ta) * .62);
+    }
+  }
+
+  if (kind === 'pine') {
+    const W = Math.round(lerp(13, 19, rng())), [cx0, cy0] = axis(tAt(.5)), cz = zAt(.5);
+    const tuft = (x, y, z, r, u) => {
+      const n = norm([x - cx0, y - cy0, (z - cz) * .9]), lit = .5 + .5 * dot(n, LIGHT);
+      const tone = clamp(.10 + .72 * lit + .16 * u + .1 * (rng() - .5), 0, 1);
+      const nd = Array.from({ length: 15 }, () => {
+        const a = rng() * TAU, d = Math.cos(a) * -.65 + Math.sin(a) * -.75;
+        return [a, lerp(.55, 1.12, rng()), d > .35 ? 2 : d < -.35 ? 0 : 1];
+      });
+      add({ t: 'tuft', x, y, z, r, br: r * 1.15, tone, nd });
+    };
+    for (let w = 0; w < W; w++) {
+      const u = .04 + .94 * (w + .5 * rng()) / W, z = zAt(u), [ax1, ay1] = axis(tAt(u));
+      const nb = 5 + Math.floor(rng() * 4), base = rng() * TAU;
+      for (let j = 0; j < nb; j++) {
+        if (rng() < .1) continue;
+        const th = base + j * TAU / nb + (rng() - .5) * .5;
+        const Lb = Rmax * env(u) * lobe(th, u) * lerp(.75, 1.1, rng());
+        if (Lb < .4) continue;
+        const dx = Math.cos(th) * Lb, dy = Math.sin(th) * Lb, dz = Lb * (-.10 + .26 * u);
+        activeBranch = ++branchSeq;
+        add({ t: 'limb', p0: [ax1, ay1, z], p1: [ax1 + dx, ay1 + dy, z + dz], w0: .05 + .02 * (1 - u), w1: .02, x: ax1 + dx / 2, y: ay1 + dy / 2, z: z + dz / 2, br: Lb / 2 });
+        for (const s of [.5, .78, 1]) {
+          tuft(ax1 + dx * s, ay1 + dy * s, z + dz * s + .14, lerp(.65, 1.05, rng()) * (.7 + .4 * env(u)), u);
+        }
+      }
+    }
+    const [tx, ty] = axis(.985);
+    for (let i = 0; i < 3; i++) tuft(tx + (rng() - .5) * .5, ty + (rng() - .5) * .5, H * (.965 + .03 * i / 2), .5, 1);
+  } else {
+    const cedar = kind === 'cedar', [cx0, cy0] = axis(tAt(.5)), cz = zAt(.5);
+    const pr = cedar ? [.4, .85] : [.8, 1.45], rbar = (pr[0] + pr[1]) / 2;
+    const area = (cedar ? .5 : .7) * 2 * Rmax * ch;
+    const N = Math.round(area / (Math.PI * rbar * rbar) * (cedar ? 8 : 7.5));
+    for (let i = 0; i < N; i++) {
+      const u = cedar ? .02 + .97 * Math.pow(rng(), .9) : .05 + .95 * rng(), th = rng() * TAU;
+      const e = env(u), Re = e * lobe(th, u) * Rmax, shell = (cedar ? .55 : .5) + (cedar ? .45 : .5) * Math.sqrt(rng()), rho = Re * shell;
+      const [ax1, ay1] = axis(tAt(u));
+      const x = ax1 + Math.cos(th) * rho, y = ay1 + Math.sin(th) * rho, z = zAt(u) + (rng() - .5) * .6;
+      const r = lerp(pr[0], pr[1], rng()) * (cedar ? .55 + .45 * Math.sqrt(e) : .7 + .5 * e);
+      const n = norm([x - cx0, y - cy0, (z - cz) * .9]), lit = .5 + .5 * dot(n, LIGHT);
+      const tone = clamp(.12 + .78 * lit * (.5 + .5 * shell) + .14 * u + .12 * (rng() - .5), 0, 1);
+      const nb = cedar ? 7 : 11;
+      activeBranch = 1000 + Math.floor((th + TAU) % TAU / TAU * 8);
+      add({ t: 'puff', x, y, z, r, br: r * 1.12, sx: cedar ? .8 : 1, sy: cedar ? 1.15 : .92, tone,
+        blobs: Array.from({ length: nb }, () => [rng() * TAU, Math.sqrt(rng()) * .8, lerp(.26, .46, rng()), rng() * 2 - 1]) });
+    }
+  }
+
+  return { seed, cell, key, S, H, axis, radAt, items, ridge, Rmax };
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER — a tree becomes a cached sprite + a cached ground shadow.
+   Painter's algorithm over depth-keyed primitives.
+   ───────────────────────────────────────────────────────────── */
+function drawSeg(c, T, it, k, ox, oy) {
+  const S = T.S, R = .7071 * k;
+  const [ax, ay] = T.axis(it.a), [bx, by] = T.axis(it.b);
+  const p0 = P(ax, ay, it.a * T.H, k), p1 = P(bx, by, it.b * T.H, k);
+  const w0 = T.radAt(it.a) * R, w1 = T.radAt(it.b) * R;
+  const x0 = p0[0] + ox, y0 = p0[1] + oy, x1 = p1[0] + ox, y1 = p1[1] + oy, xm = (x0 + x1) / 2, wm = Math.max(w0, w1);
+  if (it.first) { c.fillStyle = S.bark[2]; c.beginPath(); c.ellipse(x0, y0, w0 * .98, w0 * .42, 0, 0, TAU); c.fill(); }
+  const g = c.createLinearGradient(xm - wm, 0, xm + wm, 0);
+  g.addColorStop(0, S.bark[0]); g.addColorStop(.42, S.bark[1]); g.addColorStop(1, S.bark[2]);
+  c.fillStyle = g;
+  c.beginPath(); c.moveTo(x0 - w0, y0 + .6); c.lineTo(x1 - w1, y1 - .6); c.lineTo(x1 + w1, y1 - .6); c.lineTo(x0 + w0, y0 + .6); c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(28,18,10,.34)'; c.lineWidth = Math.max(.7, k * .008); c.beginPath();
+  for (const [f, l] of it.fur) { c.moveTo(x0 + f * w0, y0); c.lineTo(x1 + f * w1, y0 + (y1 - y0) * l); }
+  c.stroke();
+}
+function drawLimb(c, T, it, k, ox, oy) {
+  const S = T.S, R = .7071 * k, a = P(...it.p0, k), b = P(...it.p1, k), lw = (it.w0 + it.w1) * R;
+  c.lineCap = 'round';
+  c.strokeStyle = S.bark[2]; c.lineWidth = lw + .8;
+  c.beginPath(); c.moveTo(a[0] + ox, a[1] + oy); c.lineTo(b[0] + ox, b[1] + oy); c.stroke();
+  if (lw > 4.5) { c.strokeStyle = S.bark[1]; c.lineWidth = Math.max(.6, lw * .62);
+    c.beginPath(); c.moveTo(a[0] + ox - .4, a[1] + oy - .5); c.lineTo(b[0] + ox - .4, b[1] + oy - .5); c.stroke(); }
+}
+function drawPuff(c, T, it, k, ox, oy) {
+  const S = T.S, [sx, sy] = P(it.x, it.y, it.z, k), px = sx + ox, py = sy + oy, R = it.r * .7071 * k;
+  c.fillStyle = col(S, it.tone * .5); c.beginPath(); c.ellipse(px, py, R * 1.07 * it.sx, R * 1.07 * it.sy, 0, 0, TAU); c.fill();
+  c.fillStyle = col(S, it.tone * .9); c.beginPath(); c.ellipse(px, py, R * it.sx, R * it.sy, 0, 0, TAU); c.fill();
+  for (const [a, d, rr, j] of it.blobs) {
+    const dl = (Math.cos(a) * -.65 + Math.sin(a) * -.75) * d;
+    c.fillStyle = col(S, it.tone * .9 + .34 * dl + .12 * j + .06);
+    c.beginPath(); c.arc(px + Math.cos(a) * d * R * it.sx, py + Math.sin(a) * d * R * it.sy, rr * R, 0, TAU); c.fill();
+  }
+}
+function drawTuft(c, T, it, k, ox, oy) {
+  const S = T.S, [sx, sy] = P(it.x, it.y, it.z, k), px = sx + ox, py = sy + oy, R = it.r * .7071 * k;
+  c.fillStyle = col(S, it.tone * .48); c.beginPath(); c.ellipse(px, py, R * .5, R * .34, 0, 0, TAU); c.fill();
+  c.lineWidth = Math.max(.8, k * .0065); c.lineCap = 'round';
+  for (let b = 0; b < 3; b++) {
+    c.strokeStyle = col(S, it.tone + (b - 1) * .24); c.beginPath();
+    for (const nd of it.nd) { if (nd[2] !== b) continue; c.moveTo(px, py); c.lineTo(px + Math.cos(nd[0]) * nd[1] * R, py + Math.sin(nd[0]) * nd[1] * R * .78); }
+    c.stroke();
+  }
+}
+const DRAW = { seg: drawSeg, limb: drawLimb, puff: drawPuff, tuft: drawTuft };
+
+function mk(w, h) { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; }
+
+// Growth thins the crown (stable per-item hash); damage removes stable branch groups.
+// Geometry and random streams never change on growth or strike.
+const density = g => .38 + .62 * sstep(0, .75, g);
+function retained(T, it) {
+  if (it.t === 'seg') return true;
+  if (hash2(it.i, 91, T.seed) > density(T.gb == null ? 1 : T.gb)) return false;
+  return !T.damage || hash2(it.branch, 37, T.seed) >= (T.damage === 1 ? .18 : .38);
+}
+function renderSprite(T, k, dpr) {
+  const R = .7071 * k;
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const it of T.items) {
+    const [sx, sy] = P(it.x, it.y, it.z, k), r = it.br * R * 1.1;
+    if (sx - r < x0) x0 = sx - r; if (sx + r > x1) x1 = sx + r; if (sy - r < y0) y0 = sy - r; if (sy + r > y1) y1 = sy + r;
+  }
+  const pad = 24; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+  const w = Math.ceil(x1 - x0), h = Math.ceil(y1 - y0);
+  const cv = mk(Math.ceil(w * dpr), Math.ceil(h * dpr)), c = cv.getContext('2d', { willReadFrequently: true });
+  c.scale(dpr, dpr);
+  const ox = -x0, oy = -y0;
+  for (const it of [...T.items].sort((a, b) => a.key - b.key)) if (retained(T, it)) DRAW[it.t](c, T, it, k, ox, oy);
+  if (T.damage) {
+    const cut = P(...T.axis(.055), T.H * .055, k), radius = T.radAt(.055) * .7071 * k;
+    c.fillStyle = '#321f13'; c.beginPath();
+    c.moveTo(ox + cut[0] - radius, oy + cut[1] - 3);
+    c.lineTo(ox + cut[0] + radius * (T.damage === 1 ? .05 : .7), oy + cut[1]);
+    c.lineTo(ox + cut[0] - radius, oy + cut[1] + 3 + T.damage); c.fill();
+    c.strokeStyle = '#eac48b'; c.lineWidth = 1.5; c.stroke();
+  }
+  const px = c.getImageData(0, 0, cv.width, cv.height).data, alpha = new Uint8Array(cv.width * cv.height);
+  for (let i = 0; i < alpha.length; i++) alpha[i] = px[i * 4 + 3];
+  return { cv, w, h, ox, oy, alpha, aw: cv.width, ah: cv.height };
+}
+
+function renderShadow(T, k, dpr) {
+  const R = .7071 * k, pts = [];
+  for (const it of T.items) {
+    if (it.t === 'limb' || !retained(T, it)) continue;
+    const gx = it.x + SHADOW[0] * it.z, gy = it.y + SHADOW[1] * it.z, r = it.t === 'seg' ? it.sr : it.r;
+    pts.push([...P(gx, gy, 0, k), r * R, r * R * .5]);
+  }
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y, rx, ry] of pts) { x0 = Math.min(x0, x - rx); x1 = Math.max(x1, x + rx); y0 = Math.min(y0, y - ry); y1 = Math.max(y1, y + ry); }
+  const pad = 12; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+  const w = Math.ceil(x1 - x0), h = Math.ceil(y1 - y0), cv = mk(Math.ceil(w * dpr), Math.ceil(h * dpr)), c = cv.getContext('2d');
+  c.scale(dpr, dpr); c.fillStyle = '#26330f';
+  for (const [x, y, rx, ry] of pts) { c.beginPath(); c.ellipse(x - x0, y - y0, rx, ry, 0, 0, TAU); c.fill(); }
+  return { cv, w, h, ox: -x0, oy: -y0 };
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GROUND — 8×8 slab. Tint follows the ridge/hollow field.
+   ───────────────────────────────────────────────────────────── */
+const G_HOLLOW = hex('#86a548'), G_MID = hex('#a0bb56'), G_RIDGE = hex('#bcc568');
+const tileColor = r => r < .5 ? mix(G_HOLLOW, G_MID, r * 2) : mix(G_MID, G_RIDGE, (r - .5) * 2);
+
+/* ─────────────────────────────────────────────────────────────
+   APP — sim (fixed-step, injectable clock) ⟂ render (throttled)
+   ───────────────────────────────────────────────────────────── */
+const VERSION = '0.0.3';
+const $ = id => document.getElementById(id);
+const stage = $('stage'), canvas = $('c'), ctx = canvas.getContext('2d');
+const thumb = $('thumb'), mini = $('mini'), live = $('live');
+const Q = new URLSearchParams(location.search);
+const TEST = Q.has('test'), DEBUG = TEST || Q.has('debug');
+
+const state = { tree: null, sprite: null, shadow: null, spriteKey: '', spriteGb: G0, hover: false, ptr: null,
+  id: 0, hits: 0, phase: 'growing', growth: G0, stageKey: 'sapling', elapsed: 0, cooldown: 0, shake: 0,
+  particles: [], cleared: 0, direction: 1, n: 0, log: [] };
+let ground = null, frame = 0, lastFrame = 0, lastDraw = 0, gesture = null, acc = 0;
+const phaseNames = { damaged: 'Damaged', critical: 'Critical', falling: 'Timber!', cleared: 'Cleared' };
+const motionQuery = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+const reducedMotion = () => !!(motionQuery && motionQuery.matches);
+const busy = () => state.phase === 'falling' || state.phase === 'cleared';
+const tooYoung = () => state.phase === 'growing' && state.growth < STRIKE_MIN;
+const canStrike = () => !busy() && !tooYoung() && state.cooldown <= 0;
+const metrics = { frames: 0, spriteBuilds: 0, acceptedHits: 0 };
+
+let W = 0, H = 0, dpr = 1, tw = 0, k = 0, cx = 0, topY = 0, spr = null;
+
+const cellLabel = c => 'ABCDEFGH'[c.x] + (c.y + 1);
+const cellFor = seed => { const r = mulberry32((seed * 40503) ^ 0xabcdef); const i = Math.floor(r() * GRID * GRID); return { x: i % GRID, y: (i / GRID) | 0 }; };
+const stageOf = g => STAGES.find(s => g < s[0]) || STAGES[STAGES.length - 1];
+const scaleOf = g => .16 + .84 * Math.pow(clamp(g, 0, 1), .8);           // visual height fraction
+const bucketOf = g => g >= 1 ? 1 : Math.max(G0, Math.floor(g * GROWTH_BUCKETS) / GROWTH_BUCKETS);
+const drawScale = () => scaleOf(state.growth) / scaleOf(state.spriteGb);
+const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const announce = m => { live.textContent = m; };
+
+// mini-map cells
+const miniCells = [];
+for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) {
+  const el = document.createElement('i');
+  el.style.background = css(mix(tileColor(ridgeAt(x, y)), [243, 239, 230], .5));
+  mini.appendChild(el); miniCells.push(el);
+}
+// hit track sized from config
+const track = $('hitTrack');
+for (let i = 0; i < HITS; i++) track.appendChild(document.createElement('i'));
+
+let nextSeedRng = mulberry32(WORLD);
+function spawn() {
+  const prev = state.tree && state.tree.cell;
+  const seed = 10000 + Math.floor(nextSeedRng() * 90000);
+  let cell = cellFor(seed);
+  // Guaranteed different cell, bounded work, exactly one world RNG draw per spawn.
+  if (prev && cell.x === prev.x && cell.y === prev.y) {
+    const i = (cell.y * GRID + cell.x + 1 + seed % (GRID * GRID - 1)) % (GRID * GRID);
+    cell = { x: i % GRID, y: Math.floor(i / GRID) };
+  }
+  const T = generateTree(seed, cell); T.damage = 0; T.gb = G0;
+  state.tree = T; state.id++; state.hits = 0; state.phase = 'growing'; state.growth = G0; state.stageKey = stageOf(G0)[1];
+  state.elapsed = 0; state.cooldown = 0; state.shake = 0; state.hover = false; state.ptr = null;
+  state.particles = []; gesture = null; state.spriteKey = '';
+  state.direction = cell.x >= cell.y ? -1 : 1;
+  $('tName').textContent = T.S.name; $('tLatin').textContent = T.S.latin;
+  $('tSeed').textContent = '#' + seed; $('wSeed').textContent = '#' + WORLD;
+  $('tCell').textContent = cellLabel(cell); $('tSite').textContent = siteName(T.ridge);
+  $('replay').href = '?seed=' + WORLD;
+  miniCells.forEach((el, i) => { el.classList.toggle('on', i === cell.y * GRID + cell.x); el.style.removeProperty('--g'); });
+  canvas.style.cursor = 'default'; tickerCache = ''; syncUI();
+  return T;
+}
+function resetWorld() {
+  nextSeedRng = mulberry32(WORLD); state.tree = null; state.cleared = 0; state.n = 0; state.log = []; acc = 0;
+  spawn(); if (k) draw();
+}
+
+function ensureSprites() {
+  const T = state.tree, gb = bucketOf(state.growth);
+  const key = state.id + '|' + T.damage + '|' + gb + '|' + k + '|' + dpr;
+  if (state.spriteKey === key) return;
+  T.gb = gb; const kk = k * scaleOf(gb);
+  state.sprite = renderSprite(T, kk, dpr);
+  state.shadow = renderShadow(T, kk, dpr);
+  state.spriteGb = gb; state.spriteKey = key; metrics.spriteBuilds++;
+  drawThumb();
+}
+
+function drawThumb() {
+  const s = state.sprite, t = thumb.getContext('2d'), tr = 2 * Math.min(2, dpr);
+  thumb.width = 76 * tr / 2; thumb.height = 100 * tr / 2;
+  t.clearRect(0, 0, thumb.width, thumb.height);
+  // fit the *mature* frame, so a sapling reads small in the thumbnail
+  const m = scaleOf(state.spriteGb), sc = Math.min(thumb.width * m / s.aw, thumb.height * m / s.ah);
+  const dw = s.aw * sc, dh = s.ah * sc;
+  t.drawImage(s.cv, (thumb.width - dw) / 2, thumb.height - dh, dw, dh);
+}
+
+const corner = (i, j) => [cx + (i - j) * tw / 2, topY + (i + j) * tw / 4];
+
+function drawGround() {
+  const c = ctx, T = tw, slab = SLAB * T;
+  const L = corner(0, GRID), B = corner(GRID, GRID), Rr = corner(GRID, 0), Tp = corner(0, 0);
+  let g = c.createLinearGradient(0, L[1], 0, L[1] + slab); g.addColorStop(0, '#8b6c47'); g.addColorStop(1, '#5e4630');
+  c.fillStyle = g; c.beginPath(); c.moveTo(L[0], L[1]); c.lineTo(B[0], B[1]); c.lineTo(B[0], B[1] + slab); c.lineTo(L[0], L[1] + slab); c.closePath(); c.fill();
+  g = c.createLinearGradient(0, Rr[1], 0, Rr[1] + slab); g.addColorStop(0, '#6f5236'); g.addColorStop(1, '#493626');
+  c.fillStyle = g; c.beginPath(); c.moveTo(B[0], B[1]); c.lineTo(Rr[0], Rr[1]); c.lineTo(Rr[0], Rr[1] + slab); c.lineTo(B[0], B[1] + slab); c.closePath(); c.fill();
+  c.fillStyle = '#5d6b2b'; c.beginPath(); c.moveTo(Tp[0], Tp[1]); c.lineTo(Rr[0], Rr[1]); c.lineTo(B[0], B[1]); c.lineTo(L[0], L[1]); c.closePath(); c.fill();
+  const gap = .018;
+  for (let j = 0; j < GRID; j++) for (let i = 0; i < GRID; i++) {
+    const a = corner(i + gap, j + gap), b = corner(i + 1 - gap, j + gap), d = corner(i + 1 - gap, j + 1 - gap), e = corner(i + gap, j + 1 - gap);
+    c.fillStyle = css(tileColor(ridgeAt(i, j)));
+    c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.lineTo(e[0], e[1]); c.closePath(); c.fill();
+    c.lineWidth = Math.max(1, T * .012); c.lineCap = 'round';
+    c.strokeStyle = 'rgba(255,255,225,.32)'; c.beginPath(); c.moveTo(e[0], e[1]); c.lineTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke();
+    c.strokeStyle = 'rgba(52,64,18,.30)'; c.beginPath(); c.moveTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.lineTo(e[0], e[1]); c.stroke();
+    for (let n = 0; n < 7; n++) {
+      const u = .12 + .76 * hash2(i * 7 + n, j * 13, WORLD ^ 0x51), v = .12 + .76 * hash2(i * 11, j * 5 + n, WORLD ^ 0x77), t = hash2(i + n * 31, j + n * 17, WORLD ^ 0x99);
+      const [x, y] = corner(i + u, j + v);
+      if (t < .42) {
+        c.strokeStyle = 'rgba(58,92,28,.55)'; c.lineWidth = Math.max(.8, T * .008); c.beginPath();
+        c.moveTo(x - T * .012, y); c.lineTo(x - T * .018, y - T * .03); c.moveTo(x, y); c.lineTo(x, y - T * .04); c.moveTo(x + T * .012, y); c.lineTo(x + T * .02, y - T * .03); c.stroke();
+      } else if (t < .68) {
+        c.fillStyle = 'rgba(70,72,50,.35)'; c.beginPath(); c.ellipse(x + 1, y + 1, T * .014, T * .007, 0, 0, TAU); c.fill();
+        c.fillStyle = '#c3c0ad'; c.beginPath(); c.ellipse(x, y, T * .014, T * .007, 0, 0, TAU); c.fill();
+      } else {
+        c.fillStyle = 'rgba(226,214,140,.22)'; c.beginPath(); c.ellipse(x, y, T * .06, T * .03, 0, 0, TAU); c.fill();
+      }
+    }
+  }
+}
+function cacheGround() {
+  drawGround();
+  ground = mk(canvas.width, canvas.height);
+  ground.getContext('2d').drawImage(canvas, 0, 0);
+}
+function basePoint() { return corner(state.tree.cell.x + .5, state.tree.cell.y + .5); }
+function spriteRect() {
+  const [bx, by] = basePoint(), s = state.sprite, d = drawScale();
+  return { x: bx - s.ox * d, y: by - s.oy * d, w: s.w * d, h: s.h * d, d };
+}
+function drawStump(bx, by) {
+  const sc = scaleOf(state.growth), r = Math.max(2, state.tree.radAt(0) * k * sc * .7071), h = Math.max(3, .55 * k * sc);
+  ctx.fillStyle = state.tree.S.bark[2];
+  ctx.beginPath(); ctx.ellipse(bx, by, r * 1.3, r * .5, 0, 0, TAU); ctx.fill();
+  ctx.fillStyle = state.tree.S.bark[1]; ctx.fillRect(bx - r, by - h, r * 2, h);
+  ctx.fillStyle = '#d3b07b'; ctx.beginPath(); ctx.ellipse(bx, by - h, r, r * .5, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = '#85633f'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(bx, by - h, r * .65, r * .30, 0, 0, TAU); ctx.stroke();
+}
+function draw() {
+  if (!state.tree || !k) return;
+  ensureSprites();
+  metrics.frames++; lastDraw = performance.now();
+  const c = ctx, ds = drawScale();
+  c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, canvas.width, canvas.height);
+  if (ground) c.drawImage(ground, 0, 0);
+  c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const [bx, by] = basePoint(), s = state.sprite;
+  spr = spriteRect();
+  const rm = reducedMotion();
+  if (state.phase !== 'cleared') {
+    const sh = state.shadow, fall = state.phase === 'falling';
+    const f = fall ? clamp(state.elapsed / .9, 0, 1) : 0;
+    const fade = fall ? 1 - sstep(.82, 1.18, state.elapsed) : 1;
+    const Tp = corner(0, 0), Rr = corner(GRID, 0), B = corner(GRID, GRID), L = corner(0, GRID);
+    c.save(); c.beginPath(); c.moveTo(...Tp); c.lineTo(...Rr); c.lineTo(...B); c.lineTo(...L); c.closePath(); c.clip();
+    c.globalAlpha = .25 * fade;
+    c.translate(bx, by);
+    if (fall && !rm) { c.rotate(state.direction * f * .35); c.scale(1 + f * .25, 1 - f * .3); }
+    c.scale(ds, ds);
+    c.drawImage(sh.cv, -sh.ox, -sh.oy, sh.w, sh.h); c.restore();
+    c.save(); c.translate(bx, by);
+    if (fall) {
+      // sim timing is motion-independent; reduced motion only changes what is drawn
+      c.globalAlpha = rm ? 1 - clamp(state.elapsed / .18, 0, 1) : fade;
+      if (!rm) c.rotate(state.direction * Math.pow(f, 2) * Math.PI * .48);
+    } else if (state.shake > 0 && !rm) {
+      c.rotate(Math.sin(state.shake * 65) * .022 * state.shake / .23);
+    }
+    if (state.hover && canStrike()) { c.shadowColor = 'rgba(142,181,54,.85)'; c.shadowBlur = 12; }
+    c.scale(ds, ds);
+    c.drawImage(s.cv, -s.ox, -s.oy, s.w, s.h); c.restore();
+  }
+  if (busy()) drawStump(bx, by);
+  for (const p of state.particles) {
+    const t = p.age, life = 1 - t / p.life;
+    c.save(); c.globalAlpha = Math.max(0, life);
+    c.translate(bx + (p.x + p.vx * t) * k, by + (p.y + p.vy * t + 3 * t * t) * k);
+    c.rotate(p.angle + p.spin * t); c.fillStyle = p.color;
+    if (p.branch) {
+      c.strokeStyle = state.tree.S.bark[1]; c.lineWidth = Math.max(1, k * .07);
+      c.beginPath(); c.moveTo(-k * .45, 0); c.lineTo(k * .45, 0); c.moveTo(0, 0); c.lineTo(k * .2, -k * .25); c.stroke();
+      c.beginPath(); c.ellipse(k * .2, -k * .25, k * .28, k * .12, 0, 0, TAU); c.fill();
+    } else c.fillRect(-p.size * k / 2, -p.size * k / 2, p.size * k, p.size * k * .55);
+    c.restore();
+  }
+  syncTicker();
+}
+function layout() {
+  const r = stage.getBoundingClientRect();
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.max(1, Math.round(W * dpr)); canvas.height = Math.max(1, Math.round(H * dpr));
+  tw = Math.min(W / 9.4, H / (HEADROOM + 4 + SLAB + .1));
+  k = tw / TILE_M; cx = W / 2; topY = (H - (HEADROOM + 4 + SLAB) * tw) / 2 + HEADROOM * tw;
+  state.spriteKey = ''; ensureSprites();
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); cacheGround(); draw();
+}
+function hit(px, py, rad) {
+  if (busy()) return false;
+  const s = state.sprite; if (!s) return false;
+  const rect = spriteRect(), d = rect.d;
+  const ix = Math.round((px - rect.x) / d * dpr), iy = Math.round((py - rect.y) / d * dpr);
+  const r = Math.max(1, Math.round(rad / d * dpr)), st = Math.max(1, Math.round(r / 2));
+  const sample = (x, y) => x >= 0 && y >= 0 && x < s.aw && y < s.ah && s.alpha[y * s.aw + x] > 40;
+  if (sample(ix, iy)) return true;
+  for (let dy = -r; dy <= r; dy += st) for (let dx = -r; dx <= r; dx += st) if (dx * dx + dy * dy <= r * r && sample(ix + dx, iy + dy)) return true;
+  return false;
+}
+const local = e => { const r = canvas.getBoundingClientRect(); return [(e.clientX - r.left) * W / Math.max(1, r.width), (e.clientY - r.top) * H / Math.max(1, r.height)]; };
+
+function hint() {
+  if (state.phase === 'growing') {
+    const s = stageOf(state.growth)[1];
+    if (s === 'sapling') return 'A sapling. Too young to fell; let it root.';
+    if (s === 'mature') return 'Full grown. ' + HITS + ' strikes to fell.';
+    return 'Still growing. Fell it now in ' + HITS + ' strikes, or let it mature.';
+  }
+  const left = HITS - state.hits;
+  return { damaged: 'A notch in the trunk. ' + left + ' more ' + (left === 1 ? 'strike.' : 'strikes.'),
+    critical: 'One more strike. Watch the branches give way.',
+    falling: 'Stand clear. The tree is coming down.',
+    cleared: 'A fresh stump. A new sapling will root in another cell.' }[state.phase];
+}
+function label() { return state.phase === 'growing' ? stageOf(state.growth)[2] : phaseNames[state.phase]; }
+// Discrete UI: changes on stage/phase/strike only (keeps aria-label stable between events).
+function syncUI() {
+  const T = state.tree;
+  $('condition').textContent = label();
+  $('tStage').textContent = label();
+  $('hitCount').textContent = state.hits + ' / ' + HITS + ' strikes';
+  track.querySelectorAll('i').forEach((el, i) => el.classList.toggle('done', i < state.hits));
+  $('actionHint').textContent = hint();
+  $('panel').dataset.phase = state.phase;
+  const blocked = busy() || tooYoung();
+  $('chop').setAttribute('aria-disabled', String(blocked));
+  $('chop').firstChild.textContent = busy() ? 'Stand clear ' : tooYoung() ? 'Too young ' : 'Strike tree ';
+  $('clearedCount').textContent = state.cleared;
+  canvas.setAttribute('aria-disabled', String(blocked));
+  canvas.setAttribute('aria-label', T.S.name + ' at ' + cellLabel(T.cell) + ', ' + label().toLowerCase() + '. ' + hint() + ' Press Enter or Space to strike.');
+}
+// Continuous UI: growth %, countdowns. Writes only when the text changes.
+let tickerCache = '';
+function syncTicker() {
+  const T = state.tree, g = state.growth;
+  let txt, bar = g;
+  if (state.phase === 'cleared') { const left = Math.max(0, RESPAWN_SEC - state.elapsed); txt = 'Next sapling in ' + left.toFixed(1) + ' s'; bar = 1 - left / RESPAWN_SEC; }
+  else if (state.phase === 'falling') txt = 'Falling';
+  else if (state.phase === 'growing') txt = g < 1 ? Math.floor(g * 100) + '% grown · full in ' + fmt((1 - g) * GROW_SEC) : '100% · full grown';
+  else txt = Math.floor(g * 100) + '% · growth halted';
+  if (txt === tickerCache) return; tickerCache = txt;
+  $('growText').textContent = txt;
+  $('growBar').style.transform = 'scaleX(' + bar.toFixed(3) + ')';
+  $('tH').textContent = (T.H * scaleOf(g)).toFixed(1) + ' of ' + T.H.toFixed(1) + ' m';
+  const el = miniCells[T.cell.y * GRID + T.cell.x]; if (el) el.style.setProperty('--g', scaleOf(g).toFixed(3));
+}
+// Effects have a separate RNG. Decorative changes cannot alter the forest sequence.
+function burst(impact = false) {
+  if (reducedMotion()) return;
+  const rng = mulberry32(state.tree.seed ^ (state.hits * 1031) ^ (impact ? 931 : 0)), sc = scaleOf(state.growth);
+  for (let i = 0; i < (impact ? 18 : 12); i++) {
+    const branch = !impact && i < 2;
+    state.particles.push({ x: 0, y: branch ? -state.tree.H * sc * .612 * .48 : -.55 * sc, vx: (rng() - .5) * (impact ? 5 : 3) * sc, vy: -.5 - rng() * 2,
+      age: 0, life: .45 + rng() * .5, size: (.06 + rng() * .13) * (.5 + .5 * sc), angle: rng() * TAU, spin: (rng() - .5) * 12, branch,
+      color: branch ? state.tree.S.leaf[1] : ['#b68b53', '#dac195', '#795336'][i % 3] });
+  }
+  state.particles = state.particles.slice(-48);
+}
+const sound = (() => {
+  let enabled = false, ac = null;
+  function tone(freq, duration, type, gain, delay = 0) {
+    if (!enabled || !ac || ac.state !== 'running') return;
+    const t = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t); o.frequency.exponentialRampToValueAtTime(Math.max(30, freq * .35), t + duration);
+    g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(.001, t + duration);
+    o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + duration);
+    o.onended = () => { o.disconnect(); g.disconnect(); };
+  }
+  return {
+    async toggle() {
+      try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+        if (!ac) ac = new AC(); enabled = !enabled; if (enabled) await ac.resume();
+        $('sound').textContent = enabled ? 'Sound on' : 'Sound off'; $('sound').setAttribute('aria-pressed', String(enabled));
+      } catch (e) { enabled = false; $('sound').textContent = 'Sound unavailable'; }
+    },
+    chop() { tone(240, .08, 'triangle', .18); tone(95, .12, 'sawtooth', .035); },
+    fall() { tone(150, .25, 'sawtooth', .025); },
+    land() { tone(65, .3, 'triangle', .2); },
+    root() { tone(520, .12, 'sine', .04); }
+  };
+})();
+
+/* ── SIM ── pure of wall-clock. Reads only state + FIXED steps. */
+function strike() {
+  if (!canStrike()) return false;
+  state.log.push([state.n, 'strike']);
+  state.hits++; metrics.acceptedHits++; state.cooldown = COOLDOWN_SEC; state.shake = .23;
+  state.phase = state.hits >= HITS ? 'falling' : state.hits >= HITS - 1 ? 'critical' : 'damaged';
+  state.tree.damage = state.phase === 'damaged' ? 1 : 2;       // growth freezes on first wound
+  state.elapsed = 0; state.hover = false;
+  burst(); sound.chop();
+  if (state.phase === 'falling') { gesture = null; canvas.style.cursor = 'default'; sound.fall(); }
+  syncUI(); announce(state.tree.S.name + ': ' + label() + '. ' + (HITS - state.hits) + ' strikes remaining.');
+  return true;
+}
+function update(dt) {
+  state.n++;
+  state.cooldown = Math.max(0, state.cooldown - dt); state.shake = Math.max(0, state.shake - dt);
+  for (const p of state.particles) p.age += dt;
+  if (state.particles.length) state.particles = state.particles.filter(p => p.age < p.life);
+  if (state.phase === 'growing') {
+    if (state.growth < 1) {
+      const was = tooYoung();
+      state.growth = Math.min(1, state.growth + dt / GROW_SEC);
+      const s = stageOf(state.growth);
+      if (s[1] !== state.stageKey) {
+        state.stageKey = s[1]; syncUI();
+        if (was && !tooYoung()) sound.root();
+        announce(state.tree.S.name + ' is now ' + s[2].toLowerCase() + '.');
+      }
+    }
+  } else if (busy()) {
+    state.elapsed += dt;
+    if (state.phase === 'falling' && state.elapsed >= FALL_SEC) {
+      state.phase = 'cleared'; state.elapsed = 0; state.cleared++; burst(true); sound.land(); syncUI();
+      announce('Tree cleared. ' + state.cleared + ' cleared this visit.');
+    } else if (state.phase === 'cleared' && state.elapsed >= RESPAWN_SEC) {
+      const T = spawn(); announce('A ' + T.S.name.toLowerCase() + ' sapling roots at ' + cellLabel(T.cell) + '.');
+    }
+  }
+}
+function advance(sec) {                      // fixed-step integrator: granularity-invariant
+  acc += sec;
+  while (acc >= FIXED - 1e-9) { acc -= FIXED; update(FIXED); }
+}
+
+/* ── REAL CLOCK ── drives sim only when not under test. */
+const growingOnly = () => state.phase === 'growing' && state.growth < 1 && state.shake <= 0 && !state.particles.length && state.cooldown <= 0;
+function animating() { return !TEST && (busy() || state.shake > 0 || state.cooldown > 0 || state.particles.length > 0 || (state.phase === 'growing' && state.growth < 1)); }
+function schedule() { if (!frame && !document.hidden && animating()) { lastFrame = performance.now(); frame = requestAnimationFrame(tick); } }
+function tick(now) {
+  frame = 0; if (document.hidden) return;
+  const dt = Math.min(.25, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now;
+  advance(dt);
+  if (!growingOnly() || now - lastDraw > GROW_DRAW_MS) draw();   // growth alone redraws at ~15 Hz
+  if (animating()) frame = requestAnimationFrame(tick); else draw();
+}
+function input(targetId = state.id) {
+  if (document.hidden || targetId !== state.id) return false;
+  const ok = strike(); if (ok) { draw(); schedule(); }
+  return ok;
+}
+
+canvas.addEventListener('pointermove', e => {
+  if (!e.isPrimary) return;
+  if (gesture && gesture.pointerId === e.pointerId && Math.hypot(e.clientX - gesture.clientX, e.clientY - gesture.clientY) > 10) gesture.cancelled = true;
+  state.ptr = local(e);
+  const h = hit(...state.ptr, e.pointerType === 'touch' ? 14 : 5);
+  canvas.style.cursor = h ? (canStrike() || state.cooldown > 0 ? 'pointer' : 'not-allowed') : 'default';
+  if (h !== state.hover) { state.hover = h; draw(); }
+});
+canvas.addEventListener('pointerdown', e => {
+  if (!e.isPrimary || e.button !== 0 || busy()) { gesture = null; return; }
+  const point = local(e);
+  gesture = { id: state.id, pointerId: e.pointerId, clientX: e.clientX, clientY: e.clientY, cancelled: !hit(...point, e.pointerType === 'touch' ? 14 : 5) };
+});
+canvas.addEventListener('pointercancel', () => { gesture = null; });
+canvas.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') gesture = null; state.ptr = null; state.hover = false; canvas.style.cursor = 'default'; draw(); });
+canvas.addEventListener('click', e => {
+  const g = gesture; gesture = null;
+  if (e.detail === 0) { input(); return; }
+  if (!g || g.cancelled || g.id !== state.id || e.detail > 1 || Math.hypot(e.clientX - g.clientX, e.clientY - g.clientY) > 10) return;
+  if (hit(...local(e), e.pointerType === 'touch' ? 14 : 5)) input(g.id);
+});
+canvas.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!e.repeat) input(); } });
+let actionGesture = null;
+$('chop').addEventListener('pointerdown', e => { actionGesture = { id: state.id, allowed: e.isPrimary && e.button === 0 && !busy() }; });
+$('chop').addEventListener('pointercancel', () => { actionGesture = { id: state.id, allowed: false }; });
+$('chop').addEventListener('click', e => {
+  const action = actionGesture; actionGesture = null;
+  if (e.detail > 1 || action && (!action.allowed || action.id !== state.id)) return;
+  input(action ? action.id : state.id);
+});
+$('chop').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { if (e.repeat) { e.preventDefault(); return; } actionGesture = { id: state.id, allowed: !busy() }; }
+});
+$('sound').addEventListener('click', () => sound.toggle());
+// Hidden tab pauses the sim (growth included): no wall-clock catch-up, no offline progress in v0.0.3.
+document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(frame); frame = 0; gesture = null; } else { draw(); schedule(); } });
+window.addEventListener('blur', () => { gesture = null; });
+
+spawn();
+if (typeof ResizeObserver === 'function') new ResizeObserver(layout).observe(stage);
+window.addEventListener('resize', layout);
+layout(); schedule();
+
+/* ── SEAMS ── ?debug: read-only diagnostics. ?test: manual clock + mutation API (sim frozen until stepped). */
+const sim = () => ({ world: WORLD, seed: state.tree.seed, species: state.tree.key, cell: { ...state.tree.cell },
+  phase: state.phase, stage: stageOf(state.growth)[1], growth: +state.growth.toFixed(6), hits: state.hits,
+  cooldown: +state.cooldown.toFixed(6), cleared: state.cleared, n: state.n, elapsed: +state.elapsed.toFixed(6) });
+const snapshot = () => ({ version: VERSION, id: state.id, ...sim(), t: +(state.n * FIXED).toFixed(4), particles: state.particles.length,
+  activeFrame: !!frame, metrics: { ...metrics }, rect: spriteRect(), base: basePoint(), size: [W, H], dpr,
+  config: { HITS, GROW_SEC, RESPAWN_SEC, FALL_SEC, COOLDOWN_SEC, STRIKE_MIN, FIXED, STAGES: STAGES.map(s => [s[1], s[0]]) } });
+if (DEBUG) Object.defineProperty(window, 'RAVENWOOD_DEBUG', { value: Object.freeze({
+  snapshot, sim,
+  treeSignature: () => JSON.stringify({ seed: state.tree.seed, cell: state.tree.cell, H: state.tree.H, items: state.tree.items }),
+  hitPoint: () => { const s = state.sprite, r = spriteRect(); for (let y = Math.floor(s.ah / 2); y < s.ah; y += 2) for (let x = 0; x < s.aw; x += 2) if (s.alpha[y * s.aw + x] > 100) return [r.x + x / dpr * r.d, r.y + y / dpr * r.d]; return null; }
+}) });
+if (TEST) Object.defineProperty(window, 'RAVENWOOD_TEST', { value: Object.freeze({
+  step: ms => { advance(ms / 1000); draw(); return sim(); },
+  strike: () => { const ok = strike(); draw(); return ok; },
+  log: () => ({ v: 1, world: WORLD, n: state.n, events: state.log.map(e => e.slice()) }),   // seed + input log + horizon
+  reset: () => { resetWorld(); return sim(); },
+  replay: L => { if (L.world !== WORLD) throw new Error('replay: world ' + L.world + ' ≠ ' + WORLD); resetWorld();
+    for (const [n, a] of L.events) { while (state.n < n) update(FIXED); if (a === 'strike') strike(); }
+    while (state.n < L.n) update(FIXED); draw(); return sim(); }
+}) });
+})();
+</script>
+</body>
+</html>

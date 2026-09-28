@@ -3,21 +3,20 @@
 <head>
 <!-- Primary & Standard Meta Tags -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Ravenwood Faire</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ravenwood Faire 0.1.0 — Two Trees</title>
 <meta name="title" content="Ravenwood Faire">
-<meta name="description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<meta name="description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <link rel="canonical" href="https://www.redeyegame.com/RavenwoodFaire">
-<link rel="icon" type="image/png" href="https://www.redeyegame.com/RavenwoodFaire/rwf-favicon.png">
-<meta name="theme-color" content="#050505">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#f3efe6">
+<meta name="color-scheme" content="light">
 
 <!-- Open Graph / Facebook / LinkedIn / Discord / Slack -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.redeyegame.com/RavenwoodFaire">
 <meta property="og:site_name" content="Ravenwood Faire">
 <meta property="og:title" content="Ravenwood Faire">
-<meta property="og:description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<meta property="og:description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <meta property="og:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta property="og:image:secure_url" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta property="og:image:type" content="image/png">
@@ -28,167 +27,198 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://www.redeyegame.com/RavenwoodFaire">
 <meta name="twitter:title" content="Ravenwood Faire">
-<meta name="twitter:description" content="Configure a Ravenwood Faire engagement across web, AI agents, integrated systems, commerce infrastructure, fixed-fee services, and shared-upside partnerships.">
+<meta name="twitter:description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <meta name="twitter:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta name="twitter:image:alt" content="Ravenwood Faire">
 <style>
-  /* FTS Futuro — light */
-  :root{
-    --bg:#f3efe6; --panel:#ebe6d9; --line:#d8d2c0; --ink:#15181a; --ink-2:#5c6058; --ink-3:#8a8d82;
-    --leaf:#5f8f2b; --tile:#d8d3a2;
-    color-scheme:light;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .app{
-    min-height:100dvh; display:grid; grid-template-rows:auto 1fr auto; gap:14px;
-    padding:max(18px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));
-    max-width:1500px; margin:0 auto;
-  }
-  header{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap}
-  h1{margin:0; font-size:clamp(28px,4.4vw,48px); line-height:.95; font-weight:800; letter-spacing:.005em; text-transform:uppercase}
-  .ver{margin:8px 0 0; font-size:13px; letter-spacing:.06em; color:var(--ink-2); text-transform:uppercase}
-  .mvp{text-align:right}
-  .mvp strong{display:block; font-size:clamp(18px,2.4vw,26px); font-weight:700; letter-spacing:.04em}
-  .mvp span{display:block; margin-top:6px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
+/* FTS FUTURO / Ravenwood Faire 0.1.0 */
+:root{
+  color-scheme:light;
+  --paper:#f3efe6;--panel:#ebe6d9;--line:#d8d2c0;--ink:#15181a;
+  --muted:#5c6058;--muted-2:#85887e;--leaf:#5f8f2b;--soil:#493626;
+  --amber:#9a6819;--focus:#155eaa;--safe-top:env(safe-area-inset-top,0px);
+  --safe-right:env(safe-area-inset-right,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);--hit:60px;
+}
+*{box-sizing:border-box}
+html{min-width:320px;min-height:100%;background:var(--paper);text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-width:320px;min-height:100vh;min-height:100svh;background:var(--paper);color:var(--ink);font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;touch-action:manipulation}
+button:focus-visible,dialog button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.app{height:100vh;height:100dvh;min-height:360px;padding:max(8px,var(--safe-top)) max(12px,var(--safe-right)) max(8px,var(--safe-bottom)) max(12px,var(--safe-left));display:grid;grid-template-rows:auto minmax(120px,1fr) auto;gap:12px;overflow:auto;overscroll-behavior:contain}
+.mast{width:min(100%,1400px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--ink);color:#d9e4a7;font-size:21px;flex:none}
+h1{margin:0;font-size:clamp(20px,2.4vw,30px);line-height:1;font-weight:820;letter-spacing:.015em;text-transform:uppercase}
+.edition{margin:5px 0 0;font-size:11px;line-height:1.2;font-weight:650;letter-spacing:.095em;color:var(--muted);text-transform:uppercase}
+.mast-actions{display:flex;align-items:center;gap:8px;flex:none}
+.header-button{min-height:48px;min-width:76px;border:1px solid var(--line);border-radius:12px;background:var(--panel);font-size:14px;font-weight:750;padding:8px 14px;cursor:pointer}
+.header-button[aria-pressed="true"]{background:#e0e7d2;border-color:#a4b779;color:#314729}
+.play{width:min(100%,1400px);min-height:0;margin:0 auto;display:grid;grid-template-rows:minmax(0,1fr) auto;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#f5f1e9 0%,#eeeadf 100%);overflow:hidden;position:relative}
+.stage{min-height:0;position:relative;overflow:hidden;touch-action:manipulation}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.scene-label{position:absolute;left:12px;top:12px;z-index:2;max-width:min(70%,440px);margin:0;padding:7px 11px;border-radius:10px;background:rgba(243,239,230,.88);border:1px solid rgba(216,210,192,.78);color:var(--muted);font-size:12px;font-weight:680;line-height:1.3;pointer-events:none}
+.scene-corner{position:absolute;right:12px;top:12px;z-index:2;padding:7px 10px;border:1px solid rgba(216,210,192,.8);border-radius:10px;background:rgba(243,239,230,.9);font-size:12px;font-weight:750;letter-spacing:.05em}
+.tree-dock{width:min(100%,1100px);margin:0 auto;padding:0 12px max(8px,var(--safe-bottom));display:grid;grid-template-columns:minmax(184px,1fr) minmax(184px,1fr) minmax(360px,1.85fr);gap:10px;align-items:stretch}
+.tree-choice{min-width:0;min-height:var(--hit);display:flex;align-items:center;gap:11px;padding:8px 12px;border:1px solid var(--line);border-radius:13px;background:var(--panel);text-align:left;cursor:pointer;transition:border-color .16s,background .16s,box-shadow .16s}
+.tree-choice[aria-pressed="true"]{background:#e6ebda;border:2px solid #6f843e;box-shadow:inset 0 0 0 1px rgba(95,143,43,.14)}
+.tree-thumb{width:44px;height:44px;flex:none;border-radius:9px;background:#f2efdf}
+.tree-copy{min-width:0;display:grid;gap:2px}
+.tree-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:830;letter-spacing:.035em;text-transform:uppercase}
+.tree-meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted)}
+.selected-state{display:grid;grid-template-columns:minmax(0,1fr) minmax(154px,43%);align-items:center;gap:10px;min-height:26px}
+.status-copy{min-width:0;flex:1}
+.status-line{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+#condition{margin:0;font-size:15px;line-height:1.1;font-weight:830}
+#hitCount{flex:none;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.grow-track{height:4px;margin-top:6px;border-radius:4px;background:#d7dbc9;overflow:hidden}
+#growBar{height:100%;width:0;background:var(--leaf);transform-origin:left;transition:width .22s linear}
+#growText{margin:4px 0 0;color:#48543a;font-size:11px;line-height:1.2;font-variant-numeric:tabular-nums}
+#actionHint{margin:3px 0 0;color:var(--muted);font-size:11px;line-height:1.25}
+#chop{min-width:0;width:100%;min-height:var(--hit);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border:1px solid #314825;border-radius:13px;background:#375329;color:#fff;text-align:left;font-weight:800;cursor:pointer;white-space:nowrap}
+#chop[aria-disabled="true"]{background:#68765e;border-color:#68765e;cursor:default}
+#chop .keycap{opacity:.74;font-size:20px;line-height:1}
+.track-marks{display:none}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+#live{position:fixed}
+dialog{width:min(480px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:min(82dvh,680px);padding:0;border:1px solid #c8c1ae;border-radius:20px;background:#f3efe6;color:var(--ink);box-shadow:0 24px 88px rgba(24,26,21,.25);overflow:hidden}
+dialog::backdrop{background:rgba(25,28,25,.36);backdrop-filter:blur(3px)}
+.dialog-scroll{max-height:min(82dvh,680px);overflow:auto;padding:20px}
+.dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.dialog-head h2{margin:0;font-size:21px;line-height:1.15}
+.dialog-head p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+.icon-button{width:48px;height:48px;flex:none;border:1px solid var(--line);border-radius:12px;background:#ebe6d9;font-size:21px;font-weight:700;cursor:pointer}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.detail-tree{min-width:0;padding:12px;border:1px solid var(--line);border-radius:14px;background:#ebe6d9}
+.detail-tree h3{margin:0 0 4px;font-size:14px;line-height:1.2;text-transform:uppercase;overflow-wrap:anywhere}
+.detail-tree em{display:block;min-height:30px;color:var(--muted);font-size:12px;line-height:1.35}
+.detail-tree dl{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;margin:8px 0 0;font-size:12px}
+.detail-tree dt{color:var(--muted)}.detail-tree dd{margin:0;font-weight:650;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.details-map{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#ebe6d9}
+.details-map h3{margin:0;font-size:14px}.details-map p{margin:4px 0 10px;color:var(--muted);font-size:12px}
+.mini{width:min(100%,208px);margin:0 auto;display:grid;grid-template-columns:repeat(8,1fr);gap:3px;overflow:hidden;border-radius:7px}
+.mini i{aspect-ratio:1;border-radius:2px;position:relative}
+.mini i::after{content:"";position:absolute;width:10px;height:10px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:60% 15%;background:transparent}
+.mini i.mark-a::after{background:#314e22;transform:translate(-85%,-60%) rotate(-10deg)}
+.mini i.mark-b::after{background:#b47720;transform:translate(-15%,-60%) rotate(10deg)}
+.utility-list{display:grid;gap:8px;margin-top:14px}
+.utility-toggle{min-height:var(--hit);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#f7f4ec;font-size:14px;font-weight:700}
+.utility-toggle input{width:24px;height:24px;accent-color:#375329}
+.dialog-actions{display:flex;gap:8px;margin-top:14px}
+.dialog-actions button{min-height:var(--hit);flex:1;border:1px solid var(--line);border-radius:12px;background:#ebe6d9;font-weight:760;cursor:pointer}
+.replay-link{min-height:var(--hit);display:grid;place-items:center;padding:10px;text-decoration:none;color:#375329}
+.paused-shade{position:absolute;inset:0;z-index:3;display:none;place-items:center;background:rgba(243,239,230,.42);pointer-events:none}
+.paused-shade span{padding:10px 16px;border:1px solid var(--line);border-radius:14px;background:#f3efe6;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.paused .paused-shade{display:grid}
+@media(max-width:700px){
+  :root{--hit:60px}
+  .app{padding-left:max(8px,var(--safe-left));padding-right:max(8px,var(--safe-right));gap:8px}
+  .mast{min-height:42px;gap:8px}.brand{gap:8px}.brand-mark{width:30px;height:30px}
+  .edition{font-size:9px;margin-top:3px}.mast-actions{gap:6px}.header-button{min-height:48px;min-width:54px;padding:6px 10px;font-size:12px;border-radius:11px}
+  .play{border-radius:16px}
+  .scene-label{left:8px;top:8px;max-width:65%;padding:6px 8px;font-size:11px}
+  .scene-corner{right:8px;top:8px;padding:6px 8px;font-size:10px}
+  .tree-dock{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;padding:0 2px max(6px,var(--safe-bottom))}
+  .tree-choice{min-height:60px;padding:6px 7px;gap:7px;border-radius:12px}.tree-thumb{width:34px;height:38px}
+  .tree-title{font-size:11px;letter-spacing:.015em}.tree-meta{font-size:10px}
+  .selected-state{grid-column:1/-1;gap:8px;grid-template-columns:minmax(0,1fr) minmax(136px,42%);}.status-line{gap:5px}#condition{font-size:14px}#hitCount{font-size:10px}#growText{font-size:10px}#actionHint{font-size:10px}
+  #chop{width:100%;min-width:0;min-height:58px;border-radius:13px;font-size:14px;padding:9px 9px}
+  .dialog-scroll{padding:14px}.dialog-head h2{font-size:19px}
+}
+@media(max-width:390px){
+  h1{font-size:clamp(17px,5.1vw,20px)}.brand-mark{width:28px;height:28px;font-size:18px}
+  .tree-choice{gap:5px;padding-left:5px;padding-right:5px}.tree-thumb{width:29px;height:34px}
+  .tree-title{font-size:10px}.tree-meta{font-size:9px}
+  .selected-state{align-items:center;grid-template-columns:minmax(0,1fr) minmax(126px,42%)}.status-copy{max-width:100%}
+}
+@media(max-width:350px){.edition{display:none}.header-button{min-width:48px;padding-left:7px;padding-right:7px}.mast-actions{gap:4px}}
+@media(max-height:560px) and (orientation:landscape){
+  .app{grid-template-rows:auto minmax(100px,1fr) auto;gap:6px;padding-top:max(4px,var(--safe-top));padding-bottom:max(4px,var(--safe-bottom))}
+  .mast{min-height:38px}.brand-mark{width:28px;height:28px}.edition{display:none}.header-button{min-height:44px}
+  .tree-dock{width:min(100%,1040px);grid-template-columns:minmax(130px,.8fr) minmax(130px,.8fr) minmax(250px,1.35fr);gap:8px}
+  .tree-choice{min-height:52px}.tree-thumb{width:32px;height:34px}
+  .selected-state{grid-column:3;grid-row:1;min-height:48px;gap:6px;grid-template-columns:minmax(0,1fr) minmax(120px,42%)}
+  #chop{min-width:0;min-height:52px;padding:8px;font-size:12px}
+}
+@media(min-width:701px) and (max-height:540px){.scene-label,.scene-corner{top:6px}.tree-dock{gap:7px}.tree-choice{min-height:50px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(hover:none){.tree-choice:hover,.header-button:hover,#chop:hover{filter:none}}
 
-  main{display:grid; grid-template-columns:minmax(0,1fr) 288px; gap:18px; min-height:0}
-  .stage{position:relative; min-height:420px; border-radius:18px}
-  canvas{position:absolute; inset:0; width:100%; height:100%; display:block; outline:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent}
-  canvas:focus-visible{outline:3px solid var(--leaf); outline-offset:-3px; border-radius:18px}
-
-  aside{display:flex; flex-direction:column; gap:14px; min-width:0}
-  .panel{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px}
-  .panel h2{margin:0; font-size:22px; font-weight:800; letter-spacing:.01em}
-  .panel .sub{margin:2px 0 12px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2)}
-  .mini{max-width:176px;margin:0 auto;display:grid; grid-template-columns:repeat(8,1fr); gap:2px; border-radius:6px; overflow:hidden}
-  .mini i{display:block; aspect-ratio:1; position:relative}
-  .mini i.on::after{content:""; position:absolute; inset:calc(50% - 28% * var(--g,1)); transition:inset .3s; background:#2f5d2e; clip-path:polygon(50% 0,88% 62%,64% 62%,100% 100%,0 100%,36% 62%,12% 62%)}
-  .info h3{margin:0 0 12px; font-size:13px; letter-spacing:.09em; text-transform:uppercase; display:inline-block; padding-bottom:4px; border-bottom:2px solid var(--ink)}
-  .who{display:flex; gap:14px; align-items:flex-start}
-  #thumb{width:76px; height:100px; flex:none}
-  .who b{display:block; font-size:16px; line-height:1.15; font-weight:800; text-transform:uppercase; letter-spacing:.02em}
-  .who em{display:block; margin-top:2px; font-size:12px; color:var(--ink-2)}
-  dl{margin:8px 0 0; display:grid; grid-template-columns:auto 1fr; gap:3px 12px; font-size:13px}
-  dt{color:var(--ink-2)} dd{margin:0; font-variant-numeric:tabular-nums}
-  .note{margin:14px 0 0; padding-top:12px; border-top:1px solid var(--line); font-size:13px; line-height:1.45; color:var(--ink-2)}
-
-  .loop{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
-  .loop li{display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; position:relative}
-  .loop li:not(:last-child)::after{content:""; position:absolute; right:6%; top:50%; width:8px; height:8px; border-top:2px solid var(--ink-3); border-right:2px solid var(--ink-3); transform:translateY(-50%) rotate(45deg)}
-  .loop b{flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:13px}
-  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
-
-  @media (max-width:860px){
-    main{grid-template-columns:1fr}
-    .stage{min-height:0; aspect-ratio:1/.82}
-    aside{display:grid; grid-template-columns:1fr 1fr; align-items:start}
-    .mvp{text-align:left}
-    .loop{grid-template-columns:1fr 1fr; row-gap:10px}
-    .loop li:nth-child(even)::after{display:none}
-  }
-  @media (max-width:520px){
-    .app{padding-left:14px; padding-right:14px}
-    aside{grid-template-columns:1fr}
-    .stage{aspect-ratio:1/.82}
-  }
-
-  .action-panel{border-color:#a4b779;background:#e7ebd8}
-  .status-line,.session-line{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  #hitCount{font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;color:#48543a}
-  .grow{height:6px;background:#d6dcc4;border-radius:3px;overflow:hidden;margin:12px 0 6px}
-  .grow i{display:block;height:100%;background:#5f8f2b;transform-origin:left center;transform:scaleX(0)}
-  .action-panel[data-phase="cleared"] .grow i{background:#b2761c}
-  .action-panel:is([data-phase="damaged"],[data-phase="critical"],[data-phase="falling"]) .grow i{background:#8a8d82}
-  .grow-text{margin:0;font-size:12px;color:#48543a;font-variant-numeric:tabular-nums}
-  .hit-track{display:flex;gap:5px;margin:12px 0}
-  .hit-track i{flex:1;height:5px;background:#cbd4b7;border-radius:3px}
-  .hit-track i.done{background:#6b7e36}
-  #actionHint{font-size:13px;line-height:1.45;min-height:38px;margin:0 0 12px;color:#424e36}
-  button{font:inherit;touch-action:manipulation;cursor:pointer}
-  #chop{width:100%;min-height:46px;display:flex;align-items:center;justify-content:space-between;border:1px solid #324922;background:#375329;color:#fff;border-radius:9px;padding:10px 14px;font-weight:700}
-  #chop[aria-disabled="true"]{background:#68765e;border-color:#68765e;cursor:default}
-  #chop span{font-size:19px;opacity:.7}
-  button:focus-visible,a:focus-visible{outline:3px solid #b2761c;outline-offset:3px}
-  .session-line{margin-top:12px;font-size:12px}
-  #sound{background:transparent;border:1px solid #9da98b;border-radius:7px;min-height:44px;padding:4px 9px;color:#35482b}
-  .session-note{font-size:11px;color:#59634f;display:block;margin-top:3px}
-  .replay{font-size:12px;color:#375329;display:inline-block;padding:12px 0 0}
-  @media(max-width:860px){.action-panel{grid-column:1/-1}.action-panel #actionHint{min-height:0}.action-panel #chop{max-width:100%}}
-@media(max-width:360px){.who{flex-direction:column}.who>div{width:100%}.loop li{font-size:11px}}
 </style>
 </head>
 <body>
-<div class="app">
-  <header>
-    <div>
-      <h1>Ravenwood Faire</h1>
-      <p class="ver">v0.0.3 · FTS Futuro</p>
+<div class="app" id="app">
+  <header class="mast">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">♣</span>
+      <div><h1>Ravenwood Faire</h1><p class="edition">FTS FUTURO · FIELD STUDY 01</p></div>
     </div>
-    <div class="mvp">
-      <strong>8 × 8 · Grow &amp; fell</strong>
-      <span>Sapling to timber, then regrowth</span>
+    <div class="mast-actions">
+      <button class="header-button" id="pause" type="button" aria-pressed="false"><span id="pauseText">Pause</span></button>
+      <button class="header-button" id="menu" type="button" aria-haspopup="dialog" aria-controls="details">Details</button>
     </div>
   </header>
 
-  <main>
-    <section class="stage" id="stage">
-      <canvas id="c" tabindex="0" role="button" aria-label="Forest grid, 8 by 8. One growing tree. Click or tap its silhouette, or press Enter or Space, to strike. Three strikes fell it."></canvas>
+  <main class="play" id="panel" aria-label="Ravenwood forest">
+    <section class="stage" id="stage" aria-label="Forest view">
+      <canvas id="c" role="img" aria-label="Two trees in an 8 by 8 forest." tabindex="-1"></canvas>
+      <p class="scene-label" id="sceneLabel" aria-hidden="true">A SMALL FOREST · 8 × 8</p>
+      <span class="scene-corner" id="worldLabel" aria-hidden="true">2 TREES · 8 × 8</span>
+      <div class="paused-shade" id="paused" aria-hidden="true"><span>Forest paused</span></div>
     </section>
-    <aside>
-      <div class="panel action-panel" id="panel">
-        <div class="status-line"><h2 id="condition">Sapling</h2><span id="hitCount">0 / 3 strikes</span></div>
-        <div class="grow" aria-hidden="true"><i id="growBar"></i></div>
-        <p class="grow-text" id="growText">—</p>
-        <div class="hit-track" id="hitTrack" aria-hidden="true"></div>
-        <p id="actionHint">A sapling. Too young to fell; let it root.</p>
-        <button id="chop" type="button">Strike tree <span>↵</span></button>
-        <div class="session-line"><span>Trees cleared <b id="clearedCount">0</b></span><button id="sound" type="button" aria-pressed="false">Sound off</button></div>
-        <small class="session-note">Count lasts for this visit.</small>
-      </div>
-      <div class="panel">
-        <h2>8 × 8</h2>
-        <p class="sub">Forest grid</p>
-        <div class="mini" id="mini" aria-hidden="true"></div>
-      </div>
-      <div class="panel info">
-        <h3>Tree info</h3>
-        <div class="who">
-          <canvas id="thumb" style="position:static" width="76" height="100" aria-hidden="true"></canvas>
-          <div>
-            <b id="tName">—</b>
-            <em id="tLatin">—</em>
-            <dl>
-              <dt>Stage</dt><dd id="tStage">—</dd>
-              <dt>Tree seed</dt><dd id="tSeed">—</dd>
-              <dt>Forest</dt><dd id="wSeed">—</dd>
-              <dt>Height</dt><dd id="tH">—</dd>
-              <dt>Cell</dt><dd id="tCell">—</dd>
-              <dt>Site</dt><dd id="tSite">—</dd>
-            </dl>
-          </div>
+
+    <section class="tree-dock" aria-label="Tree selection and action">
+      <button class="tree-choice" id="pick0" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End">
+        <canvas class="tree-thumb" id="treeThumb0" width="88" height="88" aria-hidden="true"></canvas>
+        <span class="tree-copy"><span class="tree-title" id="treeName0">Growing</span><span class="tree-meta" id="treeMeta0">Tree A</span></span>
+      </button>
+      <button class="tree-choice" id="pick1" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End">
+        <canvas class="tree-thumb" id="treeThumb1" width="88" height="88" aria-hidden="true"></canvas>
+        <span class="tree-copy"><span class="tree-title" id="treeName1">Growing</span><span class="tree-meta" id="treeMeta1">Tree B</span></span>
+      </button>
+      <div class="selected-state" id="actionPanel">
+        <div class="status-copy">
+          <div class="status-line"><h2 id="condition">Sapling</h2><span id="hitCount">0 / 3 strikes</span></div>
+          <div class="grow-track" id="growTrack" role="progressbar" aria-label="Selected tree growth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2"><div id="growBar"></div></div>
+          <p id="growText">2% grown</p>
+          <p id="actionHint">Let the selected sapling root.</p>
         </div>
-        <p class="note">Inspired by real ridge and hollow forest structure from the Mark Twain National Forest, Missouri.</p>
-        <a id="replay" class="replay" href="#">Replay this forest</a>
+        <button id="chop" type="button" aria-disabled="true" aria-describedby="condition hitCount actionHint"><span id="chopText">Too young</span><span class="keycap" aria-hidden="true">↵</span></button>
       </div>
-    </aside>
+    </section>
   </main>
 
-  <ol class="loop">
-    <li><b>1</b>Sapling roots</li>
-    <li><b>2</b>Grows in real time</li>
-    <li><b>3</b>Three strikes</li>
-    <li><b>4</b>Regrows elsewhere</li>
-  </ol>
-  <div class="sr" id="live" aria-live="polite"></div>
+  <p class="sr-only" id="live" aria-live="polite" aria-atomic="true"></p>
+
+  <dialog id="details" aria-labelledby="detailsTitle">
+    <div class="dialog-scroll">
+      <header class="dialog-head">
+        <div><h2 id="detailsTitle">Forest details</h2><p>The trees grow separately. Your forest seed and visit tally live here.</p></div>
+        <button class="icon-button" id="closeDetails" type="button" aria-label="Close details">×</button>
+      </header>
+      <div class="detail-grid">
+        <section class="detail-tree" aria-labelledby="detailName0"><h3 id="detailName0">Tree A</h3><em id="detailLatin0"></em><dl>
+          <dt>Stage</dt><dd id="detailStage0">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed0">—</dd><dt>Height</dt><dd id="detailHeight0">—</dd><dt>Cell</dt><dd id="detailCell0">—</dd><dt>Site</dt><dd id="detailSite0">—</dd>
+        </dl></section>
+        <section class="detail-tree" aria-labelledby="detailName1"><h3 id="detailName1">Tree B</h3><em id="detailLatin1"></em><dl>
+          <dt>Stage</dt><dd id="detailStage1">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed1">—</dd><dt>Height</dt><dd id="detailHeight1">—</dd><dt>Cell</dt><dd id="detailCell1">—</dd><dt>Site</dt><dd id="detailSite1">—</dd>
+        </dl></section>
+      </div>
+      <section class="details-map" aria-labelledby="mapTitle"><h3 id="mapTitle">Forest grid · 8 × 8</h3><p>Two tree markers. Ground color follows ridge and hollow.</p><div class="mini" id="mini" aria-hidden="true"></div><p>Forest seed <strong id="forestSeed">—</strong> · Trees cleared this visit <strong id="clearedCount">0</strong></p></section>
+      <div class="utility-list">
+        <label class="utility-toggle" for="motion"><span>Reduce motion and falling effects</span><input id="motion" type="checkbox"></label>
+      </div>
+      <div class="dialog-actions">
+        <button id="sound" type="button" aria-pressed="false">Sound off</button>
+        <button id="fullscreen" type="button">Forest view</button>
+      </div>
+      <a class="replay-link" id="replay" href="?seed=1">Replay this forest</a>
+    </div>
+  </dialog>
 </div>
 
 <script>
+
 (() => {
 'use strict';
 
@@ -545,429 +575,310 @@ function renderShadow(T, k, dpr) {
 const G_HOLLOW = hex('#86a548'), G_MID = hex('#a0bb56'), G_RIDGE = hex('#bcc568');
 const tileColor = r => r < .5 ? mix(G_HOLLOW, G_MID, r * 2) : mix(G_MID, G_RIDGE, (r - .5) * 2);
 
-/* ─────────────────────────────────────────────────────────────
-   APP — sim (fixed-step, injectable clock) ⟂ render (throttled)
-   ───────────────────────────────────────────────────────────── */
-const VERSION = '0.0.3';
-const $ = id => document.getElementById(id);
-const stage = $('stage'), canvas = $('c'), ctx = canvas.getContext('2d');
-const thumb = $('thumb'), mini = $('mini'), live = $('live');
-const Q = new URLSearchParams(location.search);
-const TEST = Q.has('test'), DEBUG = TEST || Q.has('debug');
+/* Ravenwood Faire 0.1.0 — deterministic two-tree simulation, shared world clock. */
+const VERSION='0.1.0', POPULATION=2;
+const phaseNames={damaged:'Damaged',critical:'Critical',falling:'Timber!',cleared:'Cleared'};
+const stageOf=g=>STAGES.find(s=>g<s[0])||STAGES[STAGES.length-1];
+const scaleOf=g=>.16+.84*Math.pow(clamp(g,0,1),.8);
+const bucketOf=g=>g>=1?1:Math.max(G0,Math.floor(g*GROWTH_BUCKETS)/GROWTH_BUCKETS);
+const $=id=>document.getElementById(id), stage=$('stage'),canvas=$('c'),ctx=canvas.getContext('2d'),mini=$('mini'),live=$('live'),dialog=$('details');
+const Q=new URLSearchParams(location.search),TEST=Q.has('test'),DEBUG=TEST||Q.has('debug');
+const canvasA11y='An isometric 8 by 8 forest. Tap a tree to select or strike it. Use the tree buttons below to select a tree, then Strike tree. Arrow keys change selection.';
+const SLOT=['A','B'];
+const state={trees:[],selectedId:null,cleared:0,n:0,paused:false,log:[],ran:new Map(),lastStageText:'',eventSeq:0};
+let ground=null,frame=0,lastFrame=0,lastDraw=0,acc=0,W=0,H=0,dpr=1,tw=0,k=0,cx=0,topY=0,scale=1;
+const metrics={frames:0,spriteBuilds:0,acceptedHits:0};
+const isBusy=t=>t.phase==='falling'||t.phase==='cleared';
+const tooYoung=t=>t.phase==='growing'&&t.growth<STRIKE_MIN;
+const canStrike=t=>!!t&&!state.paused&&!isBusy(t)&&!tooYoung(t)&&t.cooldown<=0;
+const stageLabel=t=>t.phase==='growing'?stageOf(t.growth)[2]:phaseNames[t.phase];
+const speak=text=>{if(live.textContent!==text)live.textContent=text};
+const fmt=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const cellTitle=c=>'ABCDEFGH'[c.x]+(c.y+1);
 
-const state = { tree: null, sprite: null, shadow: null, spriteKey: '', spriteGb: G0, hover: false, ptr: null,
-  id: 0, hits: 0, phase: 'growing', growth: G0, stageKey: 'sapling', elapsed: 0, cooldown: 0, shake: 0,
-  particles: [], cleared: 0, direction: 1, n: 0, log: [] };
-let ground = null, frame = 0, lastFrame = 0, lastDraw = 0, gesture = null, acc = 0;
-const phaseNames = { damaged: 'Damaged', critical: 'Critical', falling: 'Timber!', cleared: 'Cleared' };
-const motionQuery = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-const reducedMotion = () => !!(motionQuery && motionQuery.matches);
-const busy = () => state.phase === 'falling' || state.phase === 'cleared';
-const tooYoung = () => state.phase === 'growing' && state.growth < STRIKE_MIN;
-const canStrike = () => !busy() && !tooYoung() && state.cooldown <= 0;
-const metrics = { frames: 0, spriteBuilds: 0, acceptedHits: 0 };
-
-let W = 0, H = 0, dpr = 1, tw = 0, k = 0, cx = 0, topY = 0, spr = null;
-
-const cellLabel = c => 'ABCDEFGH'[c.x] + (c.y + 1);
-const cellFor = seed => { const r = mulberry32((seed * 40503) ^ 0xabcdef); const i = Math.floor(r() * GRID * GRID); return { x: i % GRID, y: (i / GRID) | 0 }; };
-const stageOf = g => STAGES.find(s => g < s[0]) || STAGES[STAGES.length - 1];
-const scaleOf = g => .16 + .84 * Math.pow(clamp(g, 0, 1), .8);           // visual height fraction
-const bucketOf = g => g >= 1 ? 1 : Math.max(G0, Math.floor(g * GROWTH_BUCKETS) / GROWTH_BUCKETS);
-const drawScale = () => scaleOf(state.growth) / scaleOf(state.spriteGb);
-const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const announce = m => { live.textContent = m; };
-
-// mini-map cells
-const miniCells = [];
-for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) {
-  const el = document.createElement('i');
-  el.style.background = css(mix(tileColor(ridgeAt(x, y)), [243, 239, 230], .5));
-  mini.appendChild(el); miniCells.push(el);
+/* The mini-map is a terrain readout; exactly two markers identify active tree objects. */
+const cells=[];
+for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
+  const el=document.createElement('i');el.style.background=css(mix(tileColor(ridgeAt(x,y)),[243,239,230],.5));mini.appendChild(el);cells.push(el);
 }
-// hit track sized from config
-const track = $('hitTrack');
-for (let i = 0; i < HITS; i++) track.appendChild(document.createElement('i'));
-
-let nextSeedRng = mulberry32(WORLD);
-function spawn() {
-  const prev = state.tree && state.tree.cell;
-  const seed = 10000 + Math.floor(nextSeedRng() * 90000);
-  let cell = cellFor(seed);
-  // Guaranteed different cell, bounded work, exactly one world RNG draw per spawn.
-  if (prev && cell.x === prev.x && cell.y === prev.y) {
-    const i = (cell.y * GRID + cell.x + 1 + seed % (GRID * GRID - 1)) % (GRID * GRID);
-    cell = { x: i % GRID, y: Math.floor(i / GRID) };
+let nextTreeRandom=mulberry32(WORLD);
+function occupied(exceptId){return state.trees.filter(t=>t.id!==exceptId).map(t=>t.cell)}
+function allocateCell(seed,exceptId){
+  const taken=occupied(exceptId),start=(Math.imul(seed,40503)>>>0)%(GRID*GRID);
+  let best=null,bestScore=-1;
+  for(let n=0;n<GRID*GRID;n++){
+    const ix=(start+n)%64,c={x:ix%GRID,y:Math.floor(ix/GRID)};
+    const dist=taken.length?Math.min(...taken.map(p=>Math.abs(c.x-p.x)+Math.abs(c.y-p.y))):99;
+    const score=dist*1000+hash2(c.x,c.y,seed);
+    if(score>bestScore){bestScore=score;best=c}
+    if(dist>=4)return c;
   }
-  const T = generateTree(seed, cell); T.damage = 0; T.gb = G0;
-  state.tree = T; state.id++; state.hits = 0; state.phase = 'growing'; state.growth = G0; state.stageKey = stageOf(G0)[1];
-  state.elapsed = 0; state.cooldown = 0; state.shake = 0; state.hover = false; state.ptr = null;
-  state.particles = []; gesture = null; state.spriteKey = '';
-  state.direction = cell.x >= cell.y ? -1 : 1;
-  $('tName').textContent = T.S.name; $('tLatin').textContent = T.S.latin;
-  $('tSeed').textContent = '#' + seed; $('wSeed').textContent = '#' + WORLD;
-  $('tCell').textContent = cellLabel(cell); $('tSite').textContent = siteName(T.ridge);
-  $('replay').href = '?seed=' + WORLD;
-  miniCells.forEach((el, i) => { el.classList.toggle('on', i === cell.y * GRID + cell.x); el.style.removeProperty('--g'); });
-  canvas.style.cursor = 'default'; tickerCache = ''; syncUI();
-  return T;
+  return best||{x:0,y:0};
 }
-function resetWorld() {
-  nextSeedRng = mulberry32(WORLD); state.tree = null; state.cleared = 0; state.n = 0; state.log = []; acc = 0;
-  spawn(); if (k) draw();
+function createTree(seed,cell,id,slot){
+  const model=generateTree(seed,cell);model.damage=0;model.gb=G0;
+  return {id,slot,model,seed,cell,phase:'growing',growth:G0,hits:0,elapsed:0,cooldown:0,shake:0,stageKey:stageOf(G0)[1],sprite:null,shadow:null,spriteKey:'',spriteGb:G0,particles:[],direction:cell.x>=cell.y?-1:1,hover:false};
 }
-
-function ensureSprites() {
-  const T = state.tree, gb = bucketOf(state.growth);
-  const key = state.id + '|' + T.damage + '|' + gb + '|' + k + '|' + dpr;
-  if (state.spriteKey === key) return;
-  T.gb = gb; const kk = k * scaleOf(gb);
-  state.sprite = renderSprite(T, kk, dpr);
-  state.shadow = renderShadow(T, kk, dpr);
-  state.spriteGb = gb; state.spriteKey = key; metrics.spriteBuilds++;
-  drawThumb();
+function spawn(slot,exceptId=null){
+  const seed=10000+Math.floor(nextTreeRandom()*90000),cell=allocateCell(seed,exceptId),t=createTree(seed,cell,state.eventSeq++,slot);
+  state.trees[slot]=t;
+  if(state.selectedId===null||state.selectedId===exceptId)state.selectedId=t.id;
+  t.spriteKey='';updateInterface();return t;
 }
-
-function drawThumb() {
-  const s = state.sprite, t = thumb.getContext('2d'), tr = 2 * Math.min(2, dpr);
-  thumb.width = 76 * tr / 2; thumb.height = 100 * tr / 2;
-  t.clearRect(0, 0, thumb.width, thumb.height);
-  // fit the *mature* frame, so a sapling reads small in the thumbnail
-  const m = scaleOf(state.spriteGb), sc = Math.min(thumb.width * m / s.aw, thumb.height * m / s.ah);
-  const dw = s.aw * sc, dh = s.ah * sc;
-  t.drawImage(s.cv, (thumb.width - dw) / 2, thumb.height - dh, dw, dh);
+function resetWorld(){cancelGestures();nextTreeRandom=mulberry32(WORLD);state.trees=[];state.selectedId=null;state.cleared=0;state.n=0;state.log=[];state.eventSeq=0;acc=0;state.paused=false;spawn(0);spawn(1);if(k)draw()}
+function selected(){return state.trees.find(t=>t.id===state.selectedId)||state.trees[0]}
+function choose(id,{log=true,announce=true}={}){
+  const t=state.trees.find(x=>x.id===id);if(!t)return false;
+  state.selectedId=id;updateInterface();
+  if(log&&TEST)state.log.push([state.n,'select',id]);
+  if(announce)speak('Selected '+t.model.S.name+' at '+cellTitle(t.cell)+'. '+stageLabel(t)+'.');
+  draw();return true;
 }
+function makeSprites(t){
+  const g=bucketOf(t.growth),key=t.id+'|'+t.model.damage+'|'+g+'|'+k+'|'+dpr;
+  if(t.spriteKey===key)return;
+  t.model.gb=g;const kk=k*scaleOf(g);t.sprite=renderSprite(t.model,kk,dpr);t.shadow=renderShadow(t.model,kk,dpr);
+  t.spriteGb=g;t.spriteKey=key;metrics.spriteBuilds++;drawThumb(t);
+}
+function drawThumb(t){
+  const el=$('treeThumb'+t.slot),s=t.sprite;if(!el||!s)return;
+  const ratio=Math.min(2,window.devicePixelRatio||1);el.width=44*ratio;el.height=44*ratio;
+  const c=el.getContext('2d');c.clearRect(0,0,el.width,el.height);
+  const f=.55,sc=Math.min(el.width*f/s.aw,el.height*f/s.ah),dw=s.aw*sc,dh=s.ah*sc;
+  c.drawImage(s.cv,(el.width-dw)/2,el.height-dh,dw,dh);
+}
+const corner=(i,j)=>[cx+(i-j)*tw/2,topY+(i+j)*tw/4];
+function treeBase(t){return corner(t.cell.x+.5,t.cell.y+.5)}
+function treeRect(t){const [bx,by]=treeBase(t),s=t.sprite,d=scaleOf(t.growth)/scaleOf(t.spriteGb);return{x:bx-s.ox*d,y:by-s.oy*d,w:s.w*d,h:s.h*d,d}}
 
-const corner = (i, j) => [cx + (i - j) * tw / 2, topY + (i + j) * tw / 4];
-
-function drawGround() {
-  const c = ctx, T = tw, slab = SLAB * T;
-  const L = corner(0, GRID), B = corner(GRID, GRID), Rr = corner(GRID, 0), Tp = corner(0, 0);
-  let g = c.createLinearGradient(0, L[1], 0, L[1] + slab); g.addColorStop(0, '#8b6c47'); g.addColorStop(1, '#5e4630');
-  c.fillStyle = g; c.beginPath(); c.moveTo(L[0], L[1]); c.lineTo(B[0], B[1]); c.lineTo(B[0], B[1] + slab); c.lineTo(L[0], L[1] + slab); c.closePath(); c.fill();
-  g = c.createLinearGradient(0, Rr[1], 0, Rr[1] + slab); g.addColorStop(0, '#6f5236'); g.addColorStop(1, '#493626');
-  c.fillStyle = g; c.beginPath(); c.moveTo(B[0], B[1]); c.lineTo(Rr[0], Rr[1]); c.lineTo(Rr[0], Rr[1] + slab); c.lineTo(B[0], B[1] + slab); c.closePath(); c.fill();
-  c.fillStyle = '#5d6b2b'; c.beginPath(); c.moveTo(Tp[0], Tp[1]); c.lineTo(Rr[0], Rr[1]); c.lineTo(B[0], B[1]); c.lineTo(L[0], L[1]); c.closePath(); c.fill();
-  const gap = .018;
-  for (let j = 0; j < GRID; j++) for (let i = 0; i < GRID; i++) {
-    const a = corner(i + gap, j + gap), b = corner(i + 1 - gap, j + gap), d = corner(i + 1 - gap, j + 1 - gap), e = corner(i + gap, j + 1 - gap);
-    c.fillStyle = css(tileColor(ridgeAt(i, j)));
-    c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.lineTo(e[0], e[1]); c.closePath(); c.fill();
-    c.lineWidth = Math.max(1, T * .012); c.lineCap = 'round';
-    c.strokeStyle = 'rgba(255,255,225,.32)'; c.beginPath(); c.moveTo(e[0], e[1]); c.lineTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke();
-    c.strokeStyle = 'rgba(52,64,18,.30)'; c.beginPath(); c.moveTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.lineTo(e[0], e[1]); c.stroke();
-    for (let n = 0; n < 7; n++) {
-      const u = .12 + .76 * hash2(i * 7 + n, j * 13, WORLD ^ 0x51), v = .12 + .76 * hash2(i * 11, j * 5 + n, WORLD ^ 0x77), t = hash2(i + n * 31, j + n * 17, WORLD ^ 0x99);
-      const [x, y] = corner(i + u, j + v);
-      if (t < .42) {
-        c.strokeStyle = 'rgba(58,92,28,.55)'; c.lineWidth = Math.max(.8, T * .008); c.beginPath();
-        c.moveTo(x - T * .012, y); c.lineTo(x - T * .018, y - T * .03); c.moveTo(x, y); c.lineTo(x, y - T * .04); c.moveTo(x + T * .012, y); c.lineTo(x + T * .02, y - T * .03); c.stroke();
-      } else if (t < .68) {
-        c.fillStyle = 'rgba(70,72,50,.35)'; c.beginPath(); c.ellipse(x + 1, y + 1, T * .014, T * .007, 0, 0, TAU); c.fill();
-        c.fillStyle = '#c3c0ad'; c.beginPath(); c.ellipse(x, y, T * .014, T * .007, 0, 0, TAU); c.fill();
-      } else {
-        c.fillStyle = 'rgba(226,214,140,.22)'; c.beginPath(); c.ellipse(x, y, T * .06, T * .03, 0, 0, TAU); c.fill();
-      }
+/* Keep terrain drawing, painter's geometry, palettes and seed noise from the prior increment. */
+function drawGround(){
+  const c=ctx,T=tw,slab=SLAB*T,L=corner(0,GRID),B=corner(GRID,GRID),Rr=corner(GRID,0),Tp=corner(0,0);
+  let g=c.createLinearGradient(0,L[1],0,L[1]+slab);g.addColorStop(0,'#8b6c47');g.addColorStop(1,'#5e4630');c.fillStyle=g;c.beginPath();c.moveTo(...L);c.lineTo(...B);c.lineTo(B[0],B[1]+slab);c.lineTo(L[0],L[1]+slab);c.closePath();c.fill();
+  g=c.createLinearGradient(0,Rr[1],0,Rr[1]+slab);g.addColorStop(0,'#6f5236');g.addColorStop(1,'#493626');c.fillStyle=g;c.beginPath();c.moveTo(...B);c.lineTo(...Rr);c.lineTo(Rr[0],Rr[1]+slab);c.lineTo(B[0],B[1]+slab);c.closePath();c.fill();
+  c.fillStyle='#5d6b2b';c.beginPath();c.moveTo(...Tp);c.lineTo(...Rr);c.lineTo(...B);c.lineTo(...L);c.closePath();c.fill();
+  const gap=.018;
+  for(let j=0;j<GRID;j++)for(let i=0;i<GRID;i++){
+    const a=corner(i+gap,j+gap),b=corner(i+1-gap,j+gap),d=corner(i+1-gap,j+1-gap),e=corner(i+gap,j+1-gap);
+    c.fillStyle=css(tileColor(ridgeAt(i,j)));c.beginPath();c.moveTo(...a);c.lineTo(...b);c.lineTo(...d);c.lineTo(...e);c.closePath();c.fill();
+    c.lineWidth=Math.max(1,T*.012);c.lineCap='round';c.strokeStyle='rgba(255,255,225,.32)';c.beginPath();c.moveTo(...e);c.lineTo(...a);c.lineTo(...b);c.stroke();
+    c.strokeStyle='rgba(52,64,18,.30)';c.beginPath();c.moveTo(...b);c.lineTo(...d);c.lineTo(...e);c.stroke();
+    for(let n=0;n<7;n++){
+      const u=.12+.76*hash2(i*7+n,j*13,WORLD^0x51),v=.12+.76*hash2(i*11,j*5+n,WORLD^0x77),q=hash2(i+n*31,j+n*17,WORLD^0x99),[x,y]=corner(i+u,j+v);
+      if(q<.42){c.strokeStyle='rgba(58,92,28,.55)';c.lineWidth=Math.max(.8,T*.008);c.beginPath();c.moveTo(x-T*.012,y);c.lineTo(x-T*.018,y-T*.03);c.moveTo(x,y);c.lineTo(x,y-T*.04);c.moveTo(x+T*.012,y);c.lineTo(x+T*.02,y-T*.03);c.stroke()}
+      else if(q<.68){c.fillStyle='rgba(70,72,50,.35)';c.beginPath();c.ellipse(x+1,y+1,T*.014,T*.007,0,0,TAU);c.fill();c.fillStyle='#c3c0ad';c.beginPath();c.ellipse(x,y,T*.014,T*.007,0,0,TAU);c.fill()}
+      else{c.fillStyle='rgba(226,214,140,.22)';c.beginPath();c.ellipse(x,y,T*.06,T*.03,0,0,TAU);c.fill()}
     }
   }
 }
-function cacheGround() {
-  drawGround();
-  ground = mk(canvas.width, canvas.height);
-  ground.getContext('2d').drawImage(canvas, 0, 0);
-}
-function basePoint() { return corner(state.tree.cell.x + .5, state.tree.cell.y + .5); }
-function spriteRect() {
-  const [bx, by] = basePoint(), s = state.sprite, d = drawScale();
-  return { x: bx - s.ox * d, y: by - s.oy * d, w: s.w * d, h: s.h * d, d };
-}
-function drawStump(bx, by) {
-  const sc = scaleOf(state.growth), r = Math.max(2, state.tree.radAt(0) * k * sc * .7071), h = Math.max(3, .55 * k * sc);
-  ctx.fillStyle = state.tree.S.bark[2];
-  ctx.beginPath(); ctx.ellipse(bx, by, r * 1.3, r * .5, 0, 0, TAU); ctx.fill();
-  ctx.fillStyle = state.tree.S.bark[1]; ctx.fillRect(bx - r, by - h, r * 2, h);
-  ctx.fillStyle = '#d3b07b'; ctx.beginPath(); ctx.ellipse(bx, by - h, r, r * .5, 0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = '#85633f'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.ellipse(bx, by - h, r * .65, r * .30, 0, 0, TAU); ctx.stroke();
-}
-function draw() {
-  if (!state.tree || !k) return;
-  ensureSprites();
-  metrics.frames++; lastDraw = performance.now();
-  const c = ctx, ds = drawScale();
-  c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, canvas.width, canvas.height);
-  if (ground) c.drawImage(ground, 0, 0);
-  c.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const [bx, by] = basePoint(), s = state.sprite;
-  spr = spriteRect();
-  const rm = reducedMotion();
-  if (state.phase !== 'cleared') {
-    const sh = state.shadow, fall = state.phase === 'falling';
-    const f = fall ? clamp(state.elapsed / .9, 0, 1) : 0;
-    const fade = fall ? 1 - sstep(.82, 1.18, state.elapsed) : 1;
-    const Tp = corner(0, 0), Rr = corner(GRID, 0), B = corner(GRID, GRID), L = corner(0, GRID);
-    c.save(); c.beginPath(); c.moveTo(...Tp); c.lineTo(...Rr); c.lineTo(...B); c.lineTo(...L); c.closePath(); c.clip();
-    c.globalAlpha = .25 * fade;
-    c.translate(bx, by);
-    if (fall && !rm) { c.rotate(state.direction * f * .35); c.scale(1 + f * .25, 1 - f * .3); }
-    c.scale(ds, ds);
-    c.drawImage(sh.cv, -sh.ox, -sh.oy, sh.w, sh.h); c.restore();
-    c.save(); c.translate(bx, by);
-    if (fall) {
-      // sim timing is motion-independent; reduced motion only changes what is drawn
-      c.globalAlpha = rm ? 1 - clamp(state.elapsed / .18, 0, 1) : fade;
-      if (!rm) c.rotate(state.direction * Math.pow(f, 2) * Math.PI * .48);
-    } else if (state.shake > 0 && !rm) {
-      c.rotate(Math.sin(state.shake * 65) * .022 * state.shake / .23);
-    }
-    if (state.hover && canStrike()) { c.shadowColor = 'rgba(142,181,54,.85)'; c.shadowBlur = 12; }
-    c.scale(ds, ds);
-    c.drawImage(s.cv, -s.ox, -s.oy, s.w, s.h); c.restore();
+function cacheGround(){drawGround();ground=mk(canvas.width,canvas.height);ground.getContext('2d').drawImage(canvas,0,0)}
+function sceneBounds(){
+  const half=GRID*TILE_M/2;let minX=-half,maxX=half,minY=0,maxY=GRID*TILE_M*.5+SLAB*TILE_M;
+  for(const t of state.trees){const p=P((t.cell.x+.5)*TILE_M,(t.cell.y+.5)*TILE_M,0,1),s=t.model;
+    for(const it of s.items){const [x,y]=P(it.x,it.y,it.z,1),r=it.br*.78;minX=Math.min(minX,p[0]+x-r);maxX=Math.max(maxX,p[0]+x+r);minY=Math.min(minY,p[1]+y-r);maxY=Math.max(maxY,p[1]+y+r)}
   }
-  if (busy()) drawStump(bx, by);
-  for (const p of state.particles) {
-    const t = p.age, life = 1 - t / p.life;
-    c.save(); c.globalAlpha = Math.max(0, life);
-    c.translate(bx + (p.x + p.vx * t) * k, by + (p.y + p.vy * t + 3 * t * t) * k);
-    c.rotate(p.angle + p.spin * t); c.fillStyle = p.color;
-    if (p.branch) {
-      c.strokeStyle = state.tree.S.bark[1]; c.lineWidth = Math.max(1, k * .07);
-      c.beginPath(); c.moveTo(-k * .45, 0); c.lineTo(k * .45, 0); c.moveTo(0, 0); c.lineTo(k * .2, -k * .25); c.stroke();
-      c.beginPath(); c.ellipse(k * .2, -k * .25, k * .28, k * .12, 0, 0, TAU); c.fill();
-    } else c.fillRect(-p.size * k / 2, -p.size * k / 2, p.size * k, p.size * k * .55);
-    c.restore();
-  }
-  syncTicker();
+  return{minX,maxX,minY,maxY};
 }
-function layout() {
-  const r = stage.getBoundingClientRect();
-  W = Math.max(1, r.width); H = Math.max(1, r.height);
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = Math.max(1, Math.round(W * dpr)); canvas.height = Math.max(1, Math.round(H * dpr));
-  tw = Math.min(W / 9.4, H / (HEADROOM + 4 + SLAB + .1));
-  k = tw / TILE_M; cx = W / 2; topY = (H - (HEADROOM + 4 + SLAB) * tw) / 2 + HEADROOM * tw;
-  state.spriteKey = ''; ensureSprites();
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); cacheGround(); draw();
+function layout(){
+  const r=stage.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.max(1,Math.round(W*dpr));canvas.height=Math.max(1,Math.round(H*dpr));
+  const bounds=sceneBounds(),padX=18,padTop=42,padBottom=14,bw=bounds.maxX-bounds.minX,bh=bounds.maxY-bounds.minY;
+  k=Math.max(.1,Math.min((W-padX*2)/bw,(H-padTop-padBottom)/bh));tw=k*TILE_M;scale=1;
+  cx=(W-bw*k)/2-bounds.minX*k;topY=padTop+(H-padTop-padBottom-bh*k)/2-bounds.minY*k;
+  for(const t of state.trees)t.spriteKey='';ctx.setTransform(dpr,0,0,dpr,0,0);cacheGround();draw();
 }
-function hit(px, py, rad) {
-  if (busy()) return false;
-  const s = state.sprite; if (!s) return false;
-  const rect = spriteRect(), d = rect.d;
-  const ix = Math.round((px - rect.x) / d * dpr), iy = Math.round((py - rect.y) / d * dpr);
-  const r = Math.max(1, Math.round(rad / d * dpr)), st = Math.max(1, Math.round(r / 2));
-  const sample = (x, y) => x >= 0 && y >= 0 && x < s.aw && y < s.ah && s.alpha[y * s.aw + x] > 40;
-  if (sample(ix, iy)) return true;
-  for (let dy = -r; dy <= r; dy += st) for (let dx = -r; dx <= r; dx += st) if (dx * dx + dy * dy <= r * r && sample(ix + dx, iy + dy)) return true;
+function hitTree(px,py,t,rad=8){
+  if(!t||isBusy(t)||!t.sprite)return false;
+  const r=treeRect(t),d=r.d,ix=Math.round((px-r.x)/d*dpr),iy=Math.round((py-r.y)/d*dpr),rr=Math.max(1,Math.round(rad/d*dpr)),st=Math.max(1,Math.round(rr/2)),s=t.sprite;
+  const sample=(x,y)=>x>=0&&y>=0&&x<s.aw&&y<s.ah&&s.alpha[y*s.aw+x]>40;
+  if(sample(ix,iy))return true;
+  for(let dy=-rr;dy<=rr;dy+=st)for(let dx=-rr;dx<=rr;dx+=st)if(dx*dx+dy*dy<=rr*rr&&sample(ix+dx,iy+dy))return true;
   return false;
 }
-const local = e => { const r = canvas.getBoundingClientRect(); return [(e.clientX - r.left) * W / Math.max(1, r.width), (e.clientY - r.top) * H / Math.max(1, r.height)]; };
-
-function hint() {
-  if (state.phase === 'growing') {
-    const s = stageOf(state.growth)[1];
-    if (s === 'sapling') return 'A sapling. Too young to fell; let it root.';
-    if (s === 'mature') return 'Full grown. ' + HITS + ' strikes to fell.';
-    return 'Still growing. Fell it now in ' + HITS + ' strikes, or let it mature.';
+function pickTreeAt(x,y,type='mouse'){
+  const r=canvas.getBoundingClientRect(),px=(x-r.left)*W/Math.max(1,r.width),py=(y-r.top)*H/Math.max(1,r.height),radius=type==='touch'?18:8;
+  const top=[...state.trees].sort((a,b)=>(b.cell.x+b.cell.y)-(a.cell.x+a.cell.y));
+  return top.find(t=>hitTree(px,py,t,radius))||null;
+}
+function drawStump(t,bx,by){const sc=scaleOf(t.growth),r=Math.max(2,t.model.radAt(0)*k*sc*.7071),h=Math.max(3,.55*k*sc);ctx.fillStyle=t.model.S.bark[2];ctx.beginPath();ctx.ellipse(bx,by,r*1.3,r*.5,0,0,TAU);ctx.fill();ctx.fillStyle=t.model.S.bark[1];ctx.fillRect(bx-r,by-h,r*2,h);ctx.fillStyle='#d3b07b';ctx.beginPath();ctx.ellipse(bx,by-h,r,r*.5,0,0,TAU);ctx.fill();ctx.strokeStyle='#85633f';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(bx,by-h,r*.65,r*.30,0,0,TAU);ctx.stroke()}
+function draw(){
+  if(!state.trees.length||!k)return;
+  for(const t of state.trees)makeSprites(t);
+  metrics.frames++;lastDraw=performance.now();const c=ctx,rm=reducedMotion(),sort=[...state.trees].sort((a,b)=>(a.cell.x+a.cell.y)-(b.cell.x+b.cell.y));
+  c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,canvas.width,canvas.height);if(ground)c.drawImage(ground,0,0);c.setTransform(dpr,0,0,dpr,0,0);
+  const Tp=corner(0,0),Rr=corner(GRID,0),B=corner(GRID,GRID),L=corner(0,GRID);
+  for(const t of sort){
+    const [bx,by]=treeBase(t),s=t.sprite,ds=scaleOf(t.growth)/scaleOf(t.spriteGb),fall=t.phase==='falling',fade=fall?1-sstep(.82,1.18,t.elapsed):1;
+    c.save();c.beginPath();c.moveTo(...Tp);c.lineTo(...Rr);c.lineTo(...B);c.lineTo(...L);c.closePath();c.clip();c.globalAlpha=.25*fade;c.translate(bx,by);
+    if(fall&&!rm){const f=clamp(t.elapsed/.9,0,1);c.rotate(t.direction*f*.35);c.scale(1+f*.25,1-f*.3)}c.scale(ds,ds);c.drawImage(t.shadow.cv,-t.shadow.ox,-t.shadow.oy,t.shadow.w,t.shadow.h);c.restore();
   }
-  const left = HITS - state.hits;
-  return { damaged: 'A notch in the trunk. ' + left + ' more ' + (left === 1 ? 'strike.' : 'strikes.'),
-    critical: 'One more strike. Watch the branches give way.',
-    falling: 'Stand clear. The tree is coming down.',
-    cleared: 'A fresh stump. A new sapling will root in another cell.' }[state.phase];
-}
-function label() { return state.phase === 'growing' ? stageOf(state.growth)[2] : phaseNames[state.phase]; }
-// Discrete UI: changes on stage/phase/strike only (keeps aria-label stable between events).
-function syncUI() {
-  const T = state.tree;
-  $('condition').textContent = label();
-  $('tStage').textContent = label();
-  $('hitCount').textContent = state.hits + ' / ' + HITS + ' strikes';
-  track.querySelectorAll('i').forEach((el, i) => el.classList.toggle('done', i < state.hits));
-  $('actionHint').textContent = hint();
-  $('panel').dataset.phase = state.phase;
-  const blocked = busy() || tooYoung();
-  $('chop').setAttribute('aria-disabled', String(blocked));
-  $('chop').firstChild.textContent = busy() ? 'Stand clear ' : tooYoung() ? 'Too young ' : 'Strike tree ';
-  $('clearedCount').textContent = state.cleared;
-  canvas.setAttribute('aria-disabled', String(blocked));
-  canvas.setAttribute('aria-label', T.S.name + ' at ' + cellLabel(T.cell) + ', ' + label().toLowerCase() + '. ' + hint() + ' Press Enter or Space to strike.');
-}
-// Continuous UI: growth %, countdowns. Writes only when the text changes.
-let tickerCache = '';
-function syncTicker() {
-  const T = state.tree, g = state.growth;
-  let txt, bar = g;
-  if (state.phase === 'cleared') { const left = Math.max(0, RESPAWN_SEC - state.elapsed); txt = 'Next sapling in ' + left.toFixed(1) + ' s'; bar = 1 - left / RESPAWN_SEC; }
-  else if (state.phase === 'falling') txt = 'Falling';
-  else if (state.phase === 'growing') txt = g < 1 ? Math.floor(g * 100) + '% grown · full in ' + fmt((1 - g) * GROW_SEC) : '100% · full grown';
-  else txt = Math.floor(g * 100) + '% · growth halted';
-  if (txt === tickerCache) return; tickerCache = txt;
-  $('growText').textContent = txt;
-  $('growBar').style.transform = 'scaleX(' + bar.toFixed(3) + ')';
-  $('tH').textContent = (T.H * scaleOf(g)).toFixed(1) + ' of ' + T.H.toFixed(1) + ' m';
-  const el = miniCells[T.cell.y * GRID + T.cell.x]; if (el) el.style.setProperty('--g', scaleOf(g).toFixed(3));
-}
-// Effects have a separate RNG. Decorative changes cannot alter the forest sequence.
-function burst(impact = false) {
-  if (reducedMotion()) return;
-  const rng = mulberry32(state.tree.seed ^ (state.hits * 1031) ^ (impact ? 931 : 0)), sc = scaleOf(state.growth);
-  for (let i = 0; i < (impact ? 18 : 12); i++) {
-    const branch = !impact && i < 2;
-    state.particles.push({ x: 0, y: branch ? -state.tree.H * sc * .612 * .48 : -.55 * sc, vx: (rng() - .5) * (impact ? 5 : 3) * sc, vy: -.5 - rng() * 2,
-      age: 0, life: .45 + rng() * .5, size: (.06 + rng() * .13) * (.5 + .5 * sc), angle: rng() * TAU, spin: (rng() - .5) * 12, branch,
-      color: branch ? state.tree.S.leaf[1] : ['#b68b53', '#dac195', '#795336'][i % 3] });
+  for(const t of sort){
+    const [bx,by]=treeBase(t),s=t.sprite,ds=scaleOf(t.growth)/scaleOf(t.spriteGb),rm2=rm;
+    if(t.phase!=='cleared'){
+      c.save();c.translate(bx,by);
+      if(t.phase==='falling'){c.globalAlpha=rm2?1-clamp(t.elapsed/.18,0,1):1-sstep(.82,1.18,t.elapsed);if(!rm2)c.rotate(t.direction*Math.pow(clamp(t.elapsed/.9,0,1),2)*Math.PI*.48)}
+      else if(t.shake>0&&!rm2)c.rotate(Math.sin(t.shake*65)*.022*t.shake/.23);
+      c.scale(ds,ds);c.drawImage(s.cv,-s.ox,-s.oy,s.w,s.h);c.restore();
+    }
+    if(isBusy(t))drawStump(t,bx,by);
+    for(const p of t.particles){const age=p.age,life=1-age/p.life;c.save();c.globalAlpha=Math.max(0,life);c.translate(bx+(p.x+p.vx*age)*k,by+(p.y+p.vy*age+3*age*age)*k);c.rotate(p.angle+p.spin*age);c.fillStyle=p.color;
+      if(p.branch){c.strokeStyle=t.model.S.bark[1];c.lineWidth=Math.max(1,k*.07);c.beginPath();c.moveTo(-k*.45,0);c.lineTo(k*.45,0);c.moveTo(0,0);c.lineTo(k*.2,-k*.25);c.stroke();c.beginPath();c.ellipse(k*.2,-k*.25,k*.28,k*.12,0,0,TAU);c.fill()}
+      else c.fillRect(-p.size*k/2,-p.size*k/2,p.size*k,p.size*k*.55);c.restore();
+    }
+    if(t.id===state.selectedId){c.save();c.strokeStyle='rgba(49,75,31,.82)';c.lineWidth=2;c.setLineDash([5,4]);c.beginPath();c.ellipse(bx,by-2,Math.max(22,t.model.radAt(0)*k*1.25),Math.max(12,t.model.radAt(0)*k*.68),0,0,TAU);c.stroke();c.restore()}
   }
-  state.particles = state.particles.slice(-48);
+  updateTicker();
 }
-const sound = (() => {
-  let enabled = false, ac = null;
-  function tone(freq, duration, type, gain, delay = 0) {
-    if (!enabled || !ac || ac.state !== 'running') return;
-    const t = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
-    o.type = type; o.frequency.setValueAtTime(freq, t); o.frequency.exponentialRampToValueAtTime(Math.max(30, freq * .35), t + duration);
-    g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(.001, t + duration);
-    o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + duration);
-    o.onended = () => { o.disconnect(); g.disconnect(); };
+function describe(t){return SLOT[t.slot]+' · '+t.model.S.name+', '+stageLabel(t).toLowerCase()+', at '+cellTitle(t.cell)}
+function updateInterface(){
+  const s=selected();if(!s)return;
+  for(const t of state.trees){
+    const button=$('pick'+t.slot),name=$('treeName'+t.slot),meta=$('treeMeta'+t.slot);
+    button.setAttribute('aria-pressed',String(t.id===state.selectedId));
+    button.setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell));
+    name.textContent=t.model.S.name;meta.textContent=stageLabel(t)+' · '+Math.floor(t.growth*100)+'% · '+cellTitle(t.cell);
+    const buttonLabel='Tree '+SLOT[t.slot]+': '+describe(t);button.title=buttonLabel;
   }
-  return {
-    async toggle() {
-      try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-        if (!ac) ac = new AC(); enabled = !enabled; if (enabled) await ac.resume();
-        $('sound').textContent = enabled ? 'Sound on' : 'Sound off'; $('sound').setAttribute('aria-pressed', String(enabled));
-      } catch (e) { enabled = false; $('sound').textContent = 'Sound unavailable'; }
-    },
-    chop() { tone(240, .08, 'triangle', .18); tone(95, .12, 'sawtooth', .035); },
-    fall() { tone(150, .25, 'sawtooth', .025); },
-    land() { tone(65, .3, 'triangle', .2); },
-    root() { tone(520, .12, 'sine', .04); }
-  };
+  $('condition').textContent=stageLabel(s);$('hitCount').textContent=s.hits+' / '+HITS+' strikes';$('actionHint').textContent=hint(s);
+  const growText=s.phase==='cleared'?'Next tree in '+Math.max(0,RESPAWN_SEC-s.elapsed).toFixed(1)+' s':s.phase==='falling'?'Falling':s.phase==='growing'&&s.growth<1?Math.floor(s.growth*100)+'% grown · full in '+fmt((1-s.growth)*GROW_SEC):s.phase==='growing'?'100% · full grown':Math.floor(s.growth*100)+'% · growth halted';
+  $('growText').textContent=growText;$('growBar').style.width=(s.phase==='cleared'?clamp(s.elapsed/RESPAWN_SEC,0,1):s.growth)*100+'%';$('growTrack').setAttribute('aria-label','Growth for Tree '+SLOT[s.slot]);$('growTrack').setAttribute('aria-valuenow',String(Math.floor(s.growth*100)));
+  $('panel').dataset.phase=s.phase;
+  const chop=$('chop'),blocked=state.paused||tooYoung(s)||isBusy(s);
+  chop.setAttribute('aria-disabled',String(blocked));chop.disabled=false;chop.setAttribute('aria-label',state.paused?'Game paused':tooYoung(s)?'Too young to fell: '+describe(s):isBusy(s)?'Tree is '+stageLabel(s).toLowerCase()+': '+describe(s):'Strike selected tree: '+describe(s));
+  $('chopText').textContent=state.paused?'Paused':tooYoung(s)?'Too young':isBusy(s)?'Stand clear':'Strike tree';
+  $('clearedCount').textContent=String(state.cleared);$('worldLabel').textContent='2 trees · 8 × 8';
+  canvas.setAttribute('aria-label',state.trees.map(describe).join('. ')+'. Selected: '+describe(s)+'. Use the tree buttons below to change selection and the Strike tree button to act.');
+  $('app').classList.toggle('paused',state.paused);$('pause').setAttribute('aria-pressed',String(state.paused));$('pauseText').textContent=state.paused?'Resume':'Pause';
+  for(const el of cells)el.classList.remove('mark-a','mark-b');
+  for(const t of state.trees){const i=cells[t.cell.y*GRID+t.cell.x];if(i)i.classList.add(t.slot===0?'mark-a':'mark-b')}
+  if(dialog.open)updateDetails();
+  updateTicker();
+}
+function hint(t){
+  if(state.paused)return'Game paused. Resume to continue growing trees.';
+  if(t.phase==='growing'){const s=stageOf(t.growth)[1];return s==='sapling'?'A sapling. Let it root before striking.':s==='mature'?HITS+' strikes to fell this tree.':'Still growing. Fell it now in '+HITS+' strikes or let it mature.'}
+  const left=HITS-t.hits;return{damaged:'A notch in the trunk. '+left+' more '+(left===1?'strike.':'strikes.'),critical:'One more strike. Watch the branches give way.',falling:'The tree is coming down.',cleared:'A fresh stump. Its new sapling will grow in another cell.'}[t.phase]||'';
+}
+let ticker='';
+function updateTicker(){
+  const value=state.trees.map(t=>Math.floor(t.growth*100)+'/'+stageLabel(t)+'/'+t.phase+'/'+t.elapsed.toFixed(1)).join('|');
+  if(value===ticker)return;ticker=value;
+  for(const t of state.trees){$('treeMeta'+t.slot).textContent=stageLabel(t)+' · '+Math.floor(t.growth*100)+'% · '+cellTitle(t.cell);$('pick'+t.slot).setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell))}
+  for(const t of state.trees){const el=cells[t.cell.y*GRID+t.cell.x];if(el)el.style.setProperty('--g',scaleOf(t.growth).toFixed(3))}
+  const s=selected();if(!s)return;
+  const text=s.phase==='cleared'?'Next tree in '+Math.max(0,RESPAWN_SEC-s.elapsed).toFixed(1)+' s':s.phase==='falling'?'Falling':s.phase==='growing'&&s.growth<1?Math.floor(s.growth*100)+'% grown · full in '+fmt((1-s.growth)*GROW_SEC):s.phase==='growing'?'100% · full grown':Math.floor(s.growth*100)+'% · growth halted';
+  $('growText').textContent=text;$('growBar').style.width=(s.phase==='cleared'?clamp(s.elapsed/RESPAWN_SEC,0,1):s.growth)*100+'%';$('growTrack').setAttribute('aria-valuenow',String(Math.floor(s.growth*100)));
+}
+function updateDetails(){
+  for(const t of state.trees){const p=t.slot;$('detailName'+p).textContent=t.model.S.name;$('detailLatin'+p).textContent=t.model.S.latin;$('detailStage'+p).textContent=stageLabel(t);$('detailSeed'+p).textContent='#'+t.seed;$('detailHeight'+p).textContent=(t.model.H*scaleOf(t.growth)).toFixed(1)+' / '+t.model.H.toFixed(1)+' m';$('detailCell'+p).textContent=cellTitle(t.cell);$('detailSite'+p).textContent=siteName(t.model.ridge)}
+  $('forestSeed').textContent='#'+WORLD;$('sound').textContent=sound.on?'Sound on':'Sound off';$('sound').setAttribute('aria-pressed',String(sound.on));$('motion').checked=reducedMotion();
+}
+let reducedMotionOverride=null;
+function reducedMotion(){return reducedMotionOverride===true||(reducedMotionOverride===null&&!!(motionQuery&&motionQuery.matches))}
+const motionQuery=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'):null;
+function burst(t,impact=false){
+  if(reducedMotion())return;
+  const rng=mulberry32(t.seed^(t.hits*1031)^(impact?931:0)),sc=scaleOf(t.growth);
+  for(let i=0;i<(impact?18:12);i++){const branch=!impact&&i<2;t.particles.push({x:0,y:branch?-t.model.H*sc*.612*.48:-.55*sc,vx:(rng()-.5)*(impact?5:3)*sc,vy:-.5-rng()*2,age:0,life:.45+rng()*.5,size:(.06+rng()*.13)*(.5+.5*sc),angle:rng()*TAU,spin:(rng()-.5)*12,branch,color:branch?t.model.S.leaf[1]:['#b68b53','#dac195','#795336'][i%3]})}
+  t.particles=t.particles.slice(-24);
+}
+const sound=(()=>{
+  let enabled=false,ac=null;function tone(freq,duration,type,gain,delay=0){if(!enabled||!ac||ac.state!=='running')return;const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(30,freq*.35),t+duration);g.gain.setValueAtTime(gain,t);g.gain.exponentialRampToValueAtTime(.001,t+duration);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect()}}
+  return{get on(){return enabled},async toggle(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){$('sound').textContent='Sound unavailable';return}if(!ac)ac=new AC();enabled=!enabled;if(enabled)await ac.resume();$('sound').textContent=enabled?'Sound on':'Sound off';$('sound').setAttribute('aria-pressed',String(enabled));}catch{enabled=false;$('sound').textContent='Sound unavailable';$('sound').setAttribute('aria-pressed','false')}},chop(){tone(240,.08,'triangle',.18);tone(95,.12,'sawtooth',.035)},fall(){tone(150,.25,'sawtooth',.025)},land(){tone(65,.3,'triangle',.2)},root(){tone(520,.12,'sine',.04)}};
 })();
-
-/* ── SIM ── pure of wall-clock. Reads only state + FIXED steps. */
-function strike() {
-  if (!canStrike()) return false;
-  state.log.push([state.n, 'strike']);
-  state.hits++; metrics.acceptedHits++; state.cooldown = COOLDOWN_SEC; state.shake = .23;
-  state.phase = state.hits >= HITS ? 'falling' : state.hits >= HITS - 1 ? 'critical' : 'damaged';
-  state.tree.damage = state.phase === 'damaged' ? 1 : 2;       // growth freezes on first wound
-  state.elapsed = 0; state.hover = false;
-  burst(); sound.chop();
-  if (state.phase === 'falling') { gesture = null; canvas.style.cursor = 'default'; sound.fall(); }
-  syncUI(); announce(state.tree.S.name + ': ' + label() + '. ' + (HITS - state.hits) + ' strikes remaining.');
-  return true;
+function strike(t,{log=true,announce=true}={}){
+  if(!canStrike(t))return false;
+  if(log&&TEST)state.log.push([state.n,'strike',t.id]);
+  t.hits++;metrics.acceptedHits++;t.cooldown=COOLDOWN_SEC;t.shake=.23;
+  t.phase=t.hits>=HITS?'falling':t.hits>=HITS-1?'critical':'damaged';t.model.damage=t.phase==='damaged'?1:2;t.elapsed=0;t.hover=false;
+  burst(t);sound.chop();if(t.phase==='falling')sound.fall();updateInterface();if(announce)speak(t.model.S.name+': '+stageLabel(t)+'. '+Math.max(0,HITS-t.hits)+' strikes remaining.');draw();return true;
 }
-function update(dt) {
+function applyCommand(command,{record=true}={}){
+  if(!command||!['select','strike'].includes(command.type)||!Number.isInteger(command.targetId))return{accepted:false,reason:'invalid-command'};
+  const t=state.trees.find(x=>x.id===command.targetId);if(!t)return{accepted:false,reason:'stale-target'};
+  if(command.type==='select')return{accepted:choose(t.id,{log:record,announce:true})};
+  return{accepted:strike(t,{log:record})};
+}
+function update(dt){
   state.n++;
-  state.cooldown = Math.max(0, state.cooldown - dt); state.shake = Math.max(0, state.shake - dt);
-  for (const p of state.particles) p.age += dt;
-  if (state.particles.length) state.particles = state.particles.filter(p => p.age < p.life);
-  if (state.phase === 'growing') {
-    if (state.growth < 1) {
-      const was = tooYoung();
-      state.growth = Math.min(1, state.growth + dt / GROW_SEC);
-      const s = stageOf(state.growth);
-      if (s[1] !== state.stageKey) {
-        state.stageKey = s[1]; syncUI();
-        if (was && !tooYoung()) sound.root();
-        announce(state.tree.S.name + ' is now ' + s[2].toLowerCase() + '.');
-      }
-    }
-  } else if (busy()) {
-    state.elapsed += dt;
-    if (state.phase === 'falling' && state.elapsed >= FALL_SEC) {
-      state.phase = 'cleared'; state.elapsed = 0; state.cleared++; burst(true); sound.land(); syncUI();
-      announce('Tree cleared. ' + state.cleared + ' cleared this visit.');
-    } else if (state.phase === 'cleared' && state.elapsed >= RESPAWN_SEC) {
-      const T = spawn(); announce('A ' + T.S.name.toLowerCase() + ' sapling roots at ' + cellLabel(T.cell) + '.');
+  for(const t of state.trees){t.cooldown=Math.max(0,t.cooldown-dt);t.shake=Math.max(0,t.shake-dt);for(const p of t.particles)p.age+=dt;t.particles=t.particles.filter(p=>p.age<p.life);
+    if(t.phase==='growing'&&t.growth<1){t.growth=Math.min(1,t.growth+dt/GROW_SEC);const s=stageOf(t.growth);if(s[1]!==t.stageKey){t.stageKey=s[1];updateInterface();sound.root();speak(t.model.S.name+' is now '+s[2].toLowerCase()+'.')}}
+    else if(t.phase==='falling'||t.phase==='cleared'){
+      t.elapsed+=dt;
+      if(t.phase==='falling'&&t.elapsed>=FALL_SEC){t.phase='cleared';t.elapsed=0;state.cleared++;burst(t,true);sound.land();updateInterface();speak(t.model.S.name+' cleared. '+state.cleared+' trees cleared this visit.')}
+      else if(t.phase==='cleared'&&t.elapsed>=RESPAWN_SEC){const slot=t.slot,old=t.id,oldCell=t.cell,next=spawn(slot,old);if(state.selectedId===old)state.selectedId=next.id;updateInterface();layout();speak('A '+next.model.S.name.toLowerCase()+' sapling roots at '+cellTitle(next.cell)+'. Previous tree was at '+cellTitle(oldCell)+'.')}
     }
   }
 }
-function advance(sec) {                      // fixed-step integrator: granularity-invariant
-  acc += sec;
-  while (acc >= FIXED - 1e-9) { acc -= FIXED; update(FIXED); }
+function advance(sec){if(!Number.isFinite(sec)||sec<0||sec>86400)throw new RangeError('Clock step must be finite, nonnegative, and at most 24 hours');acc+=sec;while(acc>=FIXED-1e-9){acc-=FIXED;update(FIXED)}}
+function animating(){return!TEST&&!state.paused&&!document.hidden&&state.trees.some(t=>isBusy(t)||t.shake>0||t.cooldown>0||t.particles.length>0||(t.phase==='growing'&&t.growth<1))}
+function schedule(){if(!frame&&animating()){lastFrame=performance.now();frame=requestAnimationFrame(tick)}}
+function tick(now){frame=0;if(document.hidden||state.paused)return;const dt=Math.min(.25,Math.max(0,(now-lastFrame)/1000));lastFrame=now;advance(dt);const active=state.trees.some(t=>t.phase!=='growing'||t.shake>0||t.particles.length>0||t.cooldown>0);if(active||now-lastDraw>66)draw();if(animating())frame=requestAnimationFrame(tick);else draw()}
+function stepManual(ms){if(!TEST)throw new Error('test seam is disabled');if(!Number.isFinite(ms)||ms<0||ms>86400000)throw new RangeError('step must be finite, nonnegative, and ≤ 24 hours');advance(ms/1000);draw();return sim()}
+function simTree(t){return{id:t.id,slot:t.slot,seed:t.seed,species:t.model.key,cell:{...t.cell},phase:t.phase,stage:stageOf(t.growth)[1],growth:+t.growth.toFixed(6),hits:t.hits,cooldown:+t.cooldown.toFixed(6),elapsed:+t.elapsed.toFixed(6),damage:t.model.damage}}
+function sim(){return{world:WORLD,selectedId:state.selectedId,cleared:state.cleared,n:state.n,trees:state.trees.map(simTree)}}
+function snapshot(){return{version:VERSION,...sim(),timeRemainder:+acc.toFixed(6),paused:state.paused,metrics:{...metrics},viewport:{width:W,height:H,dpr},config:{GRID,POPULATION,HITS,GROW_SEC,RESPAWN_SEC,FALL_SEC,COOLDOWN_SEC,STRIKE_MIN,FIXED,STAGES:STAGES.map(x=>[x[1],x[0]])}}}
+function eventLog(){return{v:2,world:WORLD,n:state.n,remainder:+acc.toFixed(9),selectedId:state.selectedId,events:state.log.map(e=>e.slice())}}
+function replay(log){if(!TEST)throw new Error('test seam is disabled');if(!log||log.v!==2||log.world!==WORLD||!Number.isSafeInteger(log.n)||!Array.isArray(log.events)||log.events.length>100000)throw new Error('replay log is incompatible');resetWorld();
+  for(const [n,type,id]of log.events){if(!Number.isInteger(n)||n<0||n>log.n||!Number.isInteger(id))throw new Error('replay event is invalid');while(state.n<n)update(FIXED);if(type==='strike')strike(state.trees.find(t=>t.id===id),{log:false,announce:false});else if(type==='select')choose(id,{log:false,announce:false});else throw new Error('replay event type is invalid')}
+  while(state.n<log.n)update(FIXED);acc=clamp(Number(log.remainder)||0,0,FIXED-1e-9);choose(log.selectedId,{log:false,announce:false});draw();return sim();
 }
 
-/* ── REAL CLOCK ── drives sim only when not under test. */
-const growingOnly = () => state.phase === 'growing' && state.growth < 1 && state.shake <= 0 && !state.particles.length && state.cooldown <= 0;
-function animating() { return !TEST && (busy() || state.shake > 0 || state.cooldown > 0 || state.particles.length > 0 || (state.phase === 'growing' && state.growth < 1)); }
-function schedule() { if (!frame && !document.hidden && animating()) { lastFrame = performance.now(); frame = requestAnimationFrame(tick); } }
-function tick(now) {
-  frame = 0; if (document.hidden) return;
-  const dt = Math.min(.25, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now;
-  advance(dt);
-  if (!growingOnly() || now - lastDraw > GROW_DRAW_MS) draw();   // growth alone redraws at ~15 Hz
-  if (animating()) frame = requestAnimationFrame(tick); else draw();
+function inputAtPointer(t,px,py,{log=true}={}){
+  if(!t)return false;if(t.id!==state.selectedId){choose(t.id,{log,announce:true});return true}return applyCommand({type:'strike',targetId:t.id},{record:log}).accepted;
 }
-function input(targetId = state.id) {
-  if (document.hidden || targetId !== state.id) return false;
-  const ok = strike(); if (ok) { draw(); schedule(); }
-  return ok;
+let canvasGesture=null,buttonGesture=null;
+function cancelGestures(){if(canvasGesture)canvasGesture.cancelled=true;if(buttonGesture)buttonGesture.cancelled=true}
+canvas.addEventListener('pointerdown',e=>{
+  if(!e.isPrimary||e.button!==0||state.paused){canvasGesture=null;return}
+  const r=canvas.getBoundingClientRect(),px=(e.clientX-r.left)*W/Math.max(1,r.width),py=(e.clientY-r.top)*H/Math.max(1,r.height),t=pickTreeAt(e.clientX,e.clientY,e.pointerType);
+  canvasGesture={id:t?.id??null,pointerId:e.pointerId,x:e.clientX,y:e.clientY,cancelled:!t};
+});
+canvas.addEventListener('pointermove',e=>{if(canvasGesture&&canvasGesture.pointerId===e.pointerId&&Math.hypot(e.clientX-canvasGesture.x,e.clientY-canvasGesture.y)>10)canvasGesture.cancelled=true});
+canvas.addEventListener('pointercancel',()=>{if(canvasGesture)canvasGesture.cancelled=true});
+canvas.addEventListener('click',e=>{const g=canvasGesture;canvasGesture=null;if(!g||g.cancelled||g.id==null||e.detail>1||Math.hypot(e.clientX-g.x,e.clientY-g.y)>10)return;const t=state.trees.find(x=>x.id===g.id);if(t)inputAtPointer(t,e.clientX,e.clientY)});
+canvas.addEventListener('pointerleave',e=>{if(e.pointerType!=='touch'&&canvasGesture)canvasGesture.cancelled=true});
+for(const tslot of [0,1])$('pick'+tslot).addEventListener('click',()=>choose(state.trees[tslot].id));
+$('chop').addEventListener('pointerdown',e=>{buttonGesture={id:state.selectedId,pointerId:e.pointerId,x:e.clientX,y:e.clientY,allowed:e.isPrimary&&e.button===0&&!state.paused,cancelled:false}});
+$('chop').addEventListener('pointermove',e=>{if(buttonGesture&&buttonGesture.pointerId===e.pointerId&&Math.hypot(e.clientX-buttonGesture.x,e.clientY-buttonGesture.y)>10)buttonGesture.cancelled=true});
+$('chop').addEventListener('pointercancel',()=>{if(buttonGesture)buttonGesture.cancelled=true});
+$('chop').addEventListener('click',e=>{const g=buttonGesture;buttonGesture=null;if(document.hidden||state.paused||e.detail>1||g&&(!g.allowed||g.cancelled||g.id!==state.selectedId))return;applyCommand({type:'strike',targetId:g?g.id:state.selectedId})});
+$('chop').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){if(e.repeat){e.preventDefault();return}buttonGesture={id:state.selectedId,allowed:!state.paused,cancelled:false}}});
+for(const i of [0,1])$('pick'+i).addEventListener('keydown',e=>{
+  if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Home','End'].includes(e.key))return;
+  e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?1:1-i;choose(state.trees[next].id);$('pick'+next).focus();
+});
+document.addEventListener('keydown',e=>{if(dialog.open&&e.key==='Escape'){e.preventDefault();closeDialog()}});
+function setPaused(value){state.paused=!!value;cancelGestures();updateInterface();if(state.paused){cancelAnimationFrame(frame);frame=0}else schedule();speak(state.paused?'Forest paused. Growth resumes when you unpause.':'Forest resumed.')}
+$('pause').addEventListener('click',()=>setPaused(!state.paused));
+function openDialog(){updateDetails();if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.setAttribute('open','');dialog.classList.add('fallback-open');document.querySelector('main').inert=true}cancelGestures();$('closeDetails').focus()}
+function closeDialog(){if(typeof dialog.close==='function'&&dialog.open)dialog.close();else dialog.removeAttribute('open');dialog.classList.remove('fallback-open');document.querySelector('main').inert=false;$('menu').focus()}
+$('menu').addEventListener('click',openDialog);$('closeDetails').addEventListener('click',closeDialog);
+dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))closeDialog()});
+dialog.addEventListener('close',()=>{if(!dialog.classList.contains('fallback-open'))$('menu').focus()});
+$('sound').addEventListener('click',()=>sound.toggle().then(updateDetails));
+$('motion').addEventListener('change',e=>{reducedMotionOverride=e.target.checked;if(reducedMotionOverride)for(const t of state.trees)t.particles=[];draw();schedule()});
+$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(stage.requestFullscreen)await stage.requestFullscreen();}catch{speak('Full screen is not available in this browser.')}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;cancelGestures()}else{draw();schedule()}});
+window.addEventListener('blur',cancelGestures);window.addEventListener('resize',layout);
+
+function domReady(){
+  $('replay').href='?seed='+WORLD;
+  if(typeof ResizeObserver==='function')new ResizeObserver(layout).observe(stage);
+  for(const t of state.trees)makeSprites(t);layout();updateInterface();schedule();
 }
+spawn(0);spawn(1);domReady();
 
-canvas.addEventListener('pointermove', e => {
-  if (!e.isPrimary) return;
-  if (gesture && gesture.pointerId === e.pointerId && Math.hypot(e.clientX - gesture.clientX, e.clientY - gesture.clientY) > 10) gesture.cancelled = true;
-  state.ptr = local(e);
-  const h = hit(...state.ptr, e.pointerType === 'touch' ? 14 : 5);
-  canvas.style.cursor = h ? (canStrike() || state.cooldown > 0 ? 'pointer' : 'not-allowed') : 'default';
-  if (h !== state.hover) { state.hover = h; draw(); }
-});
-canvas.addEventListener('pointerdown', e => {
-  if (!e.isPrimary || e.button !== 0 || busy()) { gesture = null; return; }
-  const point = local(e);
-  gesture = { id: state.id, pointerId: e.pointerId, clientX: e.clientX, clientY: e.clientY, cancelled: !hit(...point, e.pointerType === 'touch' ? 14 : 5) };
-});
-canvas.addEventListener('pointercancel', () => { gesture = null; });
-canvas.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') gesture = null; state.ptr = null; state.hover = false; canvas.style.cursor = 'default'; draw(); });
-canvas.addEventListener('click', e => {
-  const g = gesture; gesture = null;
-  if (e.detail === 0) { input(); return; }
-  if (!g || g.cancelled || g.id !== state.id || e.detail > 1 || Math.hypot(e.clientX - g.clientX, e.clientY - g.clientY) > 10) return;
-  if (hit(...local(e), e.pointerType === 'touch' ? 14 : 5)) input(g.id);
-});
-canvas.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!e.repeat) input(); } });
-let actionGesture = null;
-$('chop').addEventListener('pointerdown', e => { actionGesture = { id: state.id, allowed: e.isPrimary && e.button === 0 && !busy() }; });
-$('chop').addEventListener('pointercancel', () => { actionGesture = { id: state.id, allowed: false }; });
-$('chop').addEventListener('click', e => {
-  const action = actionGesture; actionGesture = null;
-  if (e.detail > 1 || action && (!action.allowed || action.id !== state.id)) return;
-  input(action ? action.id : state.id);
-});
-$('chop').addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') { if (e.repeat) { e.preventDefault(); return; } actionGesture = { id: state.id, allowed: !busy() }; }
-});
-$('sound').addEventListener('click', () => sound.toggle());
-// Hidden tab pauses the sim (growth included): no wall-clock catch-up, no offline progress in v0.0.3.
-document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(frame); frame = 0; gesture = null; } else { draw(); schedule(); } });
-window.addEventListener('blur', () => { gesture = null; });
+/* Opt-in test surfaces: deterministic world clock; versioned object identities. */
+if(DEBUG)Object.defineProperty(window,'RAVENWOOD_DEBUG',{value:Object.freeze({snapshot,sim,treeSignature:()=>JSON.stringify(state.trees.map(t=>({id:t.id,seed:t.seed,cell:t.cell,H:t.model.H,items:t.model.items}))),hitPoint:id=>{const t=state.trees.find(x=>x.id===id)||selected();if(!t)return null;const s=t.sprite,r=treeRect(t);for(let y=Math.floor(s.ah/2);y<s.ah;y+=2)for(let x=0;x<s.aw;x+=2)if(s.alpha[y*s.aw+x]>100)return[r.x+x/dpr*r.d,r.y+y/dpr*r.d];return null}})});
+if(TEST)Object.defineProperty(window,'RAVENWOOD_TEST',{value:Object.freeze({
+  step:stepManual,command:cmd=>applyCommand(cmd),select:id=>applyCommand({type:'select',targetId:id}),strike:id=>applyCommand({type:'strike',targetId:id}).accepted,
+  log:eventLog,reset:()=>{resetWorld();return sim()},replay,
+  setPause:setPaused,setMotion:value=>{reducedMotionOverride=!!value;if(value)for(const t of state.trees)t.particles=[];return sim()},
+  closeMenu:closeDialog,openMenu:openDialog,
+  treeIds:()=>state.trees.map(t=>t.id)
+})});
 
-spawn();
-if (typeof ResizeObserver === 'function') new ResizeObserver(layout).observe(stage);
-window.addEventListener('resize', layout);
-layout(); schedule();
-
-/* ── SEAMS ── ?debug: read-only diagnostics. ?test: manual clock + mutation API (sim frozen until stepped). */
-const sim = () => ({ world: WORLD, seed: state.tree.seed, species: state.tree.key, cell: { ...state.tree.cell },
-  phase: state.phase, stage: stageOf(state.growth)[1], growth: +state.growth.toFixed(6), hits: state.hits,
-  cooldown: +state.cooldown.toFixed(6), cleared: state.cleared, n: state.n, elapsed: +state.elapsed.toFixed(6) });
-const snapshot = () => ({ version: VERSION, id: state.id, ...sim(), t: +(state.n * FIXED).toFixed(4), particles: state.particles.length,
-  activeFrame: !!frame, metrics: { ...metrics }, rect: spriteRect(), base: basePoint(), size: [W, H], dpr,
-  config: { HITS, GROW_SEC, RESPAWN_SEC, FALL_SEC, COOLDOWN_SEC, STRIKE_MIN, FIXED, STAGES: STAGES.map(s => [s[1], s[0]]) } });
-if (DEBUG) Object.defineProperty(window, 'RAVENWOOD_DEBUG', { value: Object.freeze({
-  snapshot, sim,
-  treeSignature: () => JSON.stringify({ seed: state.tree.seed, cell: state.tree.cell, H: state.tree.H, items: state.tree.items }),
-  hitPoint: () => { const s = state.sprite, r = spriteRect(); for (let y = Math.floor(s.ah / 2); y < s.ah; y += 2) for (let x = 0; x < s.aw; x += 2) if (s.alpha[y * s.aw + x] > 100) return [r.x + x / dpr * r.d, r.y + y / dpr * r.d]; return null; }
-}) });
-if (TEST) Object.defineProperty(window, 'RAVENWOOD_TEST', { value: Object.freeze({
-  step: ms => { advance(ms / 1000); draw(); return sim(); },
-  strike: () => { const ok = strike(); draw(); return ok; },
-  log: () => ({ v: 1, world: WORLD, n: state.n, events: state.log.map(e => e.slice()) }),   // seed + input log + horizon
-  reset: () => { resetWorld(); return sim(); },
-  replay: L => { if (L.world !== WORLD) throw new Error('replay: world ' + L.world + ' ≠ ' + WORLD); resetWorld();
-    for (const [n, a] of L.events) { while (state.n < n) update(FIXED); if (a === 'strike') strike(); }
-    while (state.n < L.n) update(FIXED); draw(); return sim(); }
-}) });
 })();
 </script>
 </body>
