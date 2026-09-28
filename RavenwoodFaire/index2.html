@@ -4,9 +4,9 @@
 <!-- Primary & Standard Meta Tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ravenwood Faire 0.2.0 — Bourbon County</title>
+<title>Ravenwood Faire 0.1.0 — Two Trees</title>
 <meta name="title" content="Ravenwood Faire">
-<meta name="description" content="Ten distinct trees in county parcels around Bourbon. Clear a frontier tree to annex its parcel.">
+<meta name="description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <link rel="canonical" href="https://www.redeyegame.com/RavenwoodFaire">
 <meta name="theme-color" content="#f3efe6">
 <meta name="color-scheme" content="light">
@@ -16,7 +16,7 @@
 <meta property="og:url" content="https://www.redeyegame.com/RavenwoodFaire">
 <meta property="og:site_name" content="Ravenwood Faire">
 <meta property="og:title" content="Ravenwood Faire">
-<meta property="og:description" content="Ten distinct trees in county parcels around Bourbon. Clear a frontier tree to annex its parcel.">
+<meta property="og:description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <meta property="og:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta property="og:image:secure_url" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta property="og:image:type" content="image/png">
@@ -27,7 +27,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://www.redeyegame.com/RavenwoodFaire">
 <meta name="twitter:title" content="Ravenwood Faire">
-<meta name="twitter:description" content="Ten distinct trees in county parcels around Bourbon. Clear a frontier tree to annex its parcel.">
+<meta name="twitter:description" content="A small, seed-replayable forest. Grow two distinct trees, tend them separately, and watch the ridge take shape.">
 <meta name="twitter:image" content="https://www.redeyegame.com/RavenwoodFaire/rwf_preview.png">
 <meta name="twitter:image:alt" content="Ravenwood Faire">
 <style>
@@ -143,102 +143,78 @@ dialog::backdrop{background:rgba(25,28,25,.36);backdrop-filter:blur(3px)}
 @media(min-width:701px) and (max-height:540px){.scene-label,.scene-corner{top:6px}.tree-dock{gap:7px}.tree-choice{min-height:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(hover:none){.tree-choice:hover,.header-button:hover,#chop:hover{filter:none}}
-/* County increment: ten native targets remain in view; the long inventory stays in Details. */
-.tree-dock{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;gap:8px;padding:0 12px max(8px,var(--safe-bottom));width:min(100%,1180px)}
-.tree-choices{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;min-width:0}
-.tree-choice{min-height:56px;padding:7px;gap:7px}
-.tree-number{display:grid;place-items:center;min-width:30px;height:30px;border-radius:8px;background:#d7d9ca;color:#27331d;font-size:12px;font-weight:850;font-variant-numeric:tabular-nums;flex:none}
-.tree-choice[data-status="frontier"]{background:#f4e7c6;border-color:#af8234}
-.tree-choice[data-status="frontier"] .tree-number{background:#c89135;color:#161711}
-.tree-choice[data-status="owned"]{background:#dce8d1;border-color:#88a673}
-.tree-choice[data-status="owned"] .tree-number{background:#4c7740;color:white}
-.tree-choice[data-status="waiting"]{opacity:.8}
-.tree-choice[aria-pressed="true"]{outline:2px solid #243b2c;outline-offset:1px}
-.selected-state{grid-column:1;grid-template-columns:minmax(0,1fr) minmax(154px,28%)}
-.county-summary{display:flex;align-items:center;gap:8px;margin:14px 0 0;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.county-summary strong{font-size:14px;color:#294d32}
-.tree-list-title{font-size:14px;text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px}
-.detail-tree h4{margin:0 0 4px;font-size:14px;line-height:1.2;text-transform:uppercase;overflow-wrap:anywhere}
-.mini i{border:1px solid rgba(29,42,27,.13)}
-.mini i.outside{background:#29322c!important;opacity:.5}
-.mini i.waiting{filter:saturate(.55);opacity:.62}
-.mini i.frontier{box-shadow:inset 0 0 0 2px #c58e2e}
-.mini i.owned{box-shadow:inset 0 0 0 2px #3e733a}
-.mini i.mark-tree::after{content:attr(data-tree);display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#273d28;color:white;font:bold 10px/1 system-ui;transform:translate(-50%,-50%)}
-.mini i.mark-tree.frontier::after{background:#9a6819}
-#sourceNote{line-height:1.4}
-@media(max-width:700px){
- .tree-dock{width:100%;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;padding:0 2px max(6px,var(--safe-bottom));gap:7px}
- .tree-choices{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
- .tree-choice{min-height:50px;padding:5px;justify-content:center}
- .tree-number{min-width:27px;height:27px;font-size:11px}
- .tree-copy{display:none}
- .selected-state{grid-column:1;grid-row:auto;grid-template-columns:minmax(0,1fr) minmax(126px,38%)}
- .detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-height:560px) and (orientation:landscape){
- .tree-dock{grid-template-columns:minmax(0,1fr) minmax(210px,28%);grid-template-rows:auto;gap:8px}
- .tree-choices{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(2,26px);gap:3px}
- .tree-choice{min-height:26px;padding:2px;justify-content:center}.tree-number{height:22px;min-width:23px;font-size:10px}.tree-copy{display:none}
- .selected-state{grid-column:2;grid-row:1;grid-template-columns:minmax(0,1fr) minmax(96px,42%);min-height:0}
- #chop{min-height:52px}
-}
-@media(max-width:390px) and (max-height:560px) and (orientation:landscape){.tree-dock{grid-template-columns:minmax(0,1fr)}.tree-choices{grid-template-rows:repeat(2,32px)}.selected-state{grid-column:1;grid-row:2}}
-.mini i.core::after{content:"B";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#f5edda;color:#24402c;font:bold 10px/1 system-ui;box-shadow:0 0 0 1px #385a3a;transform:translate(-50%,-50%)}
 
 </style>
 </head>
 <body>
 <div class="app" id="app">
   <header class="mast">
-    <div class="brand"><span class="brand-mark" aria-hidden="true">♣</span><div><h1>Ravenwood Faire</h1><p class="edition">BOURBON · CRAWFORD COUNTY · FIELD STUDY 02</p></div></div>
-    <div class="mast-actions"><button class="header-button" id="pause" type="button" aria-pressed="false"><span id="pauseText">Pause</span></button><button class="header-button" id="menu" type="button" aria-haspopup="dialog" aria-controls="details">Details</button></div>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">♣</span>
+      <div><h1>Ravenwood Faire</h1><p class="edition">FTS FUTURO · FIELD STUDY 01</p></div>
+    </div>
+    <div class="mast-actions">
+      <button class="header-button" id="pause" type="button" aria-pressed="false"><span id="pauseText">Pause</span></button>
+      <button class="header-button" id="menu" type="button" aria-haspopup="dialog" aria-controls="details">Details</button>
+    </div>
   </header>
-  <main class="play" id="panel" aria-label="Bourbon county forest">
-    <section class="stage" id="stage" aria-label="County parcels and trees">
-      <canvas id="c" role="img" aria-label="Ten trees on a partitioned county map around Bourbon." tabindex="-1"></canvas>
-      <p class="scene-label" id="sceneLabel" aria-hidden="true">BOURBON · CRAWFORD COUNTY</p>
-      <span class="scene-corner" id="worldLabel" aria-hidden="true">10 TREES · 10 PARCELS</span>
+
+  <main class="play" id="panel" aria-label="Ravenwood forest">
+    <section class="stage" id="stage" aria-label="Forest view">
+      <canvas id="c" role="img" aria-label="Two trees in an 8 by 8 forest." tabindex="-1"></canvas>
+      <p class="scene-label" id="sceneLabel" aria-hidden="true">A SMALL FOREST · 8 × 8</p>
+      <span class="scene-corner" id="worldLabel" aria-hidden="true">2 TREES · 8 × 8</span>
       <div class="paused-shade" id="paused" aria-hidden="true"><span>Forest paused</span></div>
     </section>
-    <section class="tree-dock" aria-label="Ten tree selection and action">
-      <div class="tree-choices" role="group" aria-label="Select a tree parcel"><button class="tree-choice" id="pick0" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">01</span><span class="tree-copy"><span class="tree-title" id="treeName0">Tree 01</span><span class="tree-meta" id="treeMeta0">Parcel 01</span></span></button>
-<button class="tree-choice" id="pick1" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">02</span><span class="tree-copy"><span class="tree-title" id="treeName1">Tree 02</span><span class="tree-meta" id="treeMeta1">Parcel 02</span></span></button>
-<button class="tree-choice" id="pick2" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">03</span><span class="tree-copy"><span class="tree-title" id="treeName2">Tree 03</span><span class="tree-meta" id="treeMeta2">Parcel 03</span></span></button>
-<button class="tree-choice" id="pick3" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">04</span><span class="tree-copy"><span class="tree-title" id="treeName3">Tree 04</span><span class="tree-meta" id="treeMeta3">Parcel 04</span></span></button>
-<button class="tree-choice" id="pick4" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">05</span><span class="tree-copy"><span class="tree-title" id="treeName4">Tree 05</span><span class="tree-meta" id="treeMeta4">Parcel 05</span></span></button>
-<button class="tree-choice" id="pick5" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">06</span><span class="tree-copy"><span class="tree-title" id="treeName5">Tree 06</span><span class="tree-meta" id="treeMeta5">Parcel 06</span></span></button>
-<button class="tree-choice" id="pick6" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">07</span><span class="tree-copy"><span class="tree-title" id="treeName6">Tree 07</span><span class="tree-meta" id="treeMeta6">Parcel 07</span></span></button>
-<button class="tree-choice" id="pick7" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">08</span><span class="tree-copy"><span class="tree-title" id="treeName7">Tree 08</span><span class="tree-meta" id="treeMeta7">Parcel 08</span></span></button>
-<button class="tree-choice" id="pick8" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">09</span><span class="tree-copy"><span class="tree-title" id="treeName8">Tree 09</span><span class="tree-meta" id="treeMeta8">Parcel 09</span></span></button>
-<button class="tree-choice" id="pick9" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End"><span class="tree-number">10</span><span class="tree-copy"><span class="tree-title" id="treeName9">Tree 10</span><span class="tree-meta" id="treeMeta9">Parcel 10</span></span></button></div>
+
+    <section class="tree-dock" aria-label="Tree selection and action">
+      <button class="tree-choice" id="pick0" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End">
+        <canvas class="tree-thumb" id="treeThumb0" width="88" height="88" aria-hidden="true"></canvas>
+        <span class="tree-copy"><span class="tree-title" id="treeName0">Growing</span><span class="tree-meta" id="treeMeta0">Tree A</span></span>
+      </button>
+      <button class="tree-choice" id="pick1" type="button" aria-pressed="false" aria-keyshortcuts="ArrowLeft ArrowRight Home End">
+        <canvas class="tree-thumb" id="treeThumb1" width="88" height="88" aria-hidden="true"></canvas>
+        <span class="tree-copy"><span class="tree-title" id="treeName1">Growing</span><span class="tree-meta" id="treeMeta1">Tree B</span></span>
+      </button>
       <div class="selected-state" id="actionPanel">
-        <div class="status-copy"><div class="status-line"><h2 id="condition">Sapling</h2><span id="hitCount">0 / 3 strikes</span></div>
+        <div class="status-copy">
+          <div class="status-line"><h2 id="condition">Sapling</h2><span id="hitCount">0 / 3 strikes</span></div>
           <div class="grow-track" id="growTrack" role="progressbar" aria-label="Selected tree growth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2"><div id="growBar"></div></div>
-          <p id="growText">2% grown</p><p id="actionHint">Annex a neighboring parcel by clearing its tree.</p>
+          <p id="growText">2% grown</p>
+          <p id="actionHint">Let the selected sapling root.</p>
         </div>
         <button id="chop" type="button" aria-disabled="true" aria-describedby="condition hitCount actionHint"><span id="chopText">Too young</span><span class="keycap" aria-hidden="true">↵</span></button>
       </div>
     </section>
   </main>
+
   <p class="sr-only" id="live" aria-live="polite" aria-atomic="true"></p>
-  <dialog id="details" aria-labelledby="detailsTitle"><div class="dialog-scroll">
-    <header class="dialog-head"><div><h2 id="detailsTitle">Bourbon field map</h2><p>Ten tree parcels. Clear the highlighted frontier to extend the territory.</p></div><button class="icon-button" id="closeDetails" type="button" aria-label="Close details">×</button></header>
-    <div class="county-summary"><strong id="annexedCount">0 / 10 parcels annexed</strong><span>·</span><span id="elevationNote">Elevation source loading</span></div>
-    <section class="details-map" aria-labelledby="mapTitle"><h3 id="mapTitle">County partitions · 8 × 8</h3><p>Gold: annexable frontier · green: held · dim: waiting · dark: outside county. Numbers identify the ten trees.</p><div class="mini" id="mini" aria-hidden="true"></div><p>Forest seed <strong id="forestSeed">—</strong> · Trees cleared this visit <strong id="clearedCount">0</strong></p><p id="sourceNote"></p></section>
-    <h3 class="tree-list-title">Tree objects</h3><div class="detail-grid"><section class="detail-tree" aria-labelledby="detailName0"><h4 id="detailName0">Tree 01</h4><em id="detailLatin0"></em><dl><dt>Parcel</dt><dd id="detailZone0">—</dd><dt>State</dt><dd id="detailStage0">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed0">—</dd><dt>Height</dt><dd id="detailHeight0">—</dd><dt>Grid</dt><dd id="detailCell0">—</dd><dt>Elevation</dt><dd id="detailElevation0">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName1"><h4 id="detailName1">Tree 02</h4><em id="detailLatin1"></em><dl><dt>Parcel</dt><dd id="detailZone1">—</dd><dt>State</dt><dd id="detailStage1">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed1">—</dd><dt>Height</dt><dd id="detailHeight1">—</dd><dt>Grid</dt><dd id="detailCell1">—</dd><dt>Elevation</dt><dd id="detailElevation1">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName2"><h4 id="detailName2">Tree 03</h4><em id="detailLatin2"></em><dl><dt>Parcel</dt><dd id="detailZone2">—</dd><dt>State</dt><dd id="detailStage2">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed2">—</dd><dt>Height</dt><dd id="detailHeight2">—</dd><dt>Grid</dt><dd id="detailCell2">—</dd><dt>Elevation</dt><dd id="detailElevation2">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName3"><h4 id="detailName3">Tree 04</h4><em id="detailLatin3"></em><dl><dt>Parcel</dt><dd id="detailZone3">—</dd><dt>State</dt><dd id="detailStage3">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed3">—</dd><dt>Height</dt><dd id="detailHeight3">—</dd><dt>Grid</dt><dd id="detailCell3">—</dd><dt>Elevation</dt><dd id="detailElevation3">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName4"><h4 id="detailName4">Tree 05</h4><em id="detailLatin4"></em><dl><dt>Parcel</dt><dd id="detailZone4">—</dd><dt>State</dt><dd id="detailStage4">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed4">—</dd><dt>Height</dt><dd id="detailHeight4">—</dd><dt>Grid</dt><dd id="detailCell4">—</dd><dt>Elevation</dt><dd id="detailElevation4">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName5"><h4 id="detailName5">Tree 06</h4><em id="detailLatin5"></em><dl><dt>Parcel</dt><dd id="detailZone5">—</dd><dt>State</dt><dd id="detailStage5">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed5">—</dd><dt>Height</dt><dd id="detailHeight5">—</dd><dt>Grid</dt><dd id="detailCell5">—</dd><dt>Elevation</dt><dd id="detailElevation5">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName6"><h4 id="detailName6">Tree 07</h4><em id="detailLatin6"></em><dl><dt>Parcel</dt><dd id="detailZone6">—</dd><dt>State</dt><dd id="detailStage6">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed6">—</dd><dt>Height</dt><dd id="detailHeight6">—</dd><dt>Grid</dt><dd id="detailCell6">—</dd><dt>Elevation</dt><dd id="detailElevation6">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName7"><h4 id="detailName7">Tree 08</h4><em id="detailLatin7"></em><dl><dt>Parcel</dt><dd id="detailZone7">—</dd><dt>State</dt><dd id="detailStage7">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed7">—</dd><dt>Height</dt><dd id="detailHeight7">—</dd><dt>Grid</dt><dd id="detailCell7">—</dd><dt>Elevation</dt><dd id="detailElevation7">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName8"><h4 id="detailName8">Tree 09</h4><em id="detailLatin8"></em><dl><dt>Parcel</dt><dd id="detailZone8">—</dd><dt>State</dt><dd id="detailStage8">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed8">—</dd><dt>Height</dt><dd id="detailHeight8">—</dd><dt>Grid</dt><dd id="detailCell8">—</dd><dt>Elevation</dt><dd id="detailElevation8">—</dd></dl></section>
-<section class="detail-tree" aria-labelledby="detailName9"><h4 id="detailName9">Tree 10</h4><em id="detailLatin9"></em><dl><dt>Parcel</dt><dd id="detailZone9">—</dd><dt>State</dt><dd id="detailStage9">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed9">—</dd><dt>Height</dt><dd id="detailHeight9">—</dd><dt>Grid</dt><dd id="detailCell9">—</dd><dt>Elevation</dt><dd id="detailElevation9">—</dd></dl></section></div>
-    <div class="utility-list"><label class="utility-toggle" for="motion"><span>Reduce motion and falling effects</span><input id="motion" type="checkbox"></label></div>
-    <div class="dialog-actions"><button id="sound" type="button" aria-pressed="false">Sound off</button><button id="fullscreen" type="button">Forest view</button></div><a class="replay-link" id="replay" href="?seed=1">Replay this forest</a>
-  </div></dialog>
+
+  <dialog id="details" aria-labelledby="detailsTitle">
+    <div class="dialog-scroll">
+      <header class="dialog-head">
+        <div><h2 id="detailsTitle">Forest details</h2><p>The trees grow separately. Your forest seed and visit tally live here.</p></div>
+        <button class="icon-button" id="closeDetails" type="button" aria-label="Close details">×</button>
+      </header>
+      <div class="detail-grid">
+        <section class="detail-tree" aria-labelledby="detailName0"><h3 id="detailName0">Tree A</h3><em id="detailLatin0"></em><dl>
+          <dt>Stage</dt><dd id="detailStage0">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed0">—</dd><dt>Height</dt><dd id="detailHeight0">—</dd><dt>Cell</dt><dd id="detailCell0">—</dd><dt>Site</dt><dd id="detailSite0">—</dd>
+        </dl></section>
+        <section class="detail-tree" aria-labelledby="detailName1"><h3 id="detailName1">Tree B</h3><em id="detailLatin1"></em><dl>
+          <dt>Stage</dt><dd id="detailStage1">Sapling</dd><dt>Tree seed</dt><dd id="detailSeed1">—</dd><dt>Height</dt><dd id="detailHeight1">—</dd><dt>Cell</dt><dd id="detailCell1">—</dd><dt>Site</dt><dd id="detailSite1">—</dd>
+        </dl></section>
+      </div>
+      <section class="details-map" aria-labelledby="mapTitle"><h3 id="mapTitle">Forest grid · 8 × 8</h3><p>Two tree markers. Ground color follows ridge and hollow.</p><div class="mini" id="mini" aria-hidden="true"></div><p>Forest seed <strong id="forestSeed">—</strong> · Trees cleared this visit <strong id="clearedCount">0</strong></p></section>
+      <div class="utility-list">
+        <label class="utility-toggle" for="motion"><span>Reduce motion and falling effects</span><input id="motion" type="checkbox"></label>
+      </div>
+      <div class="dialog-actions">
+        <button id="sound" type="button" aria-pressed="false">Sound off</button>
+        <button id="fullscreen" type="button">Forest view</button>
+      </div>
+      <a class="replay-link" id="replay" href="?seed=1">Replay this forest</a>
+    </div>
+  </dialog>
 </div>
 
 <script>
@@ -599,77 +575,57 @@ function renderShadow(T, k, dpr) {
 const G_HOLLOW = hex('#86a548'), G_MID = hex('#a0bb56'), G_RIDGE = hex('#bcc568');
 const tileColor = r => r < .5 ? mix(G_HOLLOW, G_MID, r * 2) : mix(G_MID, G_RIDGE, (r - .5) * 2);
 
-const COUNTY={"source":"OpenStreetMap / Geofabrik Missouri extract","snapshot":"2026-09-19T20:22:34Z","relation":1180505,"license":"ODbL 1.0","countyFips":"29055","boundary":[[-91.3098407,37.7327619],[-91.3094008,37.7436136],[-91.3094169,37.7500653],[-91.3094115,37.7580773],[-91.308918,37.7653547],[-91.3090039,37.7729706],[-91.3083549,37.7871892],[-91.3278437,37.7871657],[-91.344409,37.7875896],[-91.3667464,37.7881492],[-91.3911653,37.7883697],[-91.4376641,37.7888106],[-91.4744425,37.7889971],[-91.5002346,37.7888275],[-91.5288896,37.7889397],[-91.5248682,38.1523775],[-91.5346529,38.1522425],[-91.5351679,38.2109394],[-91.442814,38.2099952],[-91.4242746,38.2116138],[-91.4242316,38.2102649],[-91.3674547,38.2097255],[-91.3676321,38.2042636],[-91.3276361,38.2042379],[-91.2326378,38.2040475],[-91.1875887,38.2040599],[-91.1821013,38.2040614],[-91.1454695,38.2041814],[-91.1404973,38.2041686],[-91.1127609,38.2040969],[-91.0955415,38.2040983],[-91.0962178,38.1806944],[-91.0962434,38.1797528],[-91.0960194,38.1704726],[-91.0956931,38.15695],[-91.0945123,38.0050522],[-91.1005213,37.7399062],[-91.1463548,37.7409922],[-91.1470653,37.6973012],[-91.1534285,37.6973199],[-91.310499,37.7000912],[-91.3103832,37.70737],[-91.3103235,37.7111216],[-91.3100841,37.7218534],[-91.3099996,37.7256422],[-91.3098407,37.7327619]],"bourbon":[-91.2440329,38.1547698],"localBounds":[-91.40153289999999,38.066457299999996,-91.12153289999999,38.2234573],"elevation":{"source":"USGS EPQS / 3DEP dynamic elevation service","point":[-91.2440329,38.1547698],"feet":942.1640732660472,"meters":287.1716095314912,"resolutionMeters":1,"coverage":"Bourbon point only"}};
-/* Ravenwood Faire 0.2.0 — ten independent trees, Bourbon-centered county parcels. */
-const VERSION='0.2.0', POPULATION=10;
+/* Ravenwood Faire 0.1.0 — deterministic two-tree simulation, shared world clock. */
+const VERSION='0.1.0', POPULATION=2;
 const phaseNames={damaged:'Damaged',critical:'Critical',falling:'Timber!',cleared:'Cleared'};
 const stageOf=g=>STAGES.find(s=>g<s[0])||STAGES[STAGES.length-1];
 const scaleOf=g=>.16+.84*Math.pow(clamp(g,0,1),.8);
 const bucketOf=g=>g>=1?1:Math.max(G0,Math.floor(g*GROWTH_BUCKETS)/GROWTH_BUCKETS);
 const $=id=>document.getElementById(id), stage=$('stage'),canvas=$('c'),ctx=canvas.getContext('2d'),mini=$('mini'),live=$('live'),dialog=$('details');
 const Q=new URLSearchParams(location.search),TEST=Q.has('test'),DEBUG=TEST||Q.has('debug');
-const SLOT=Array.from({length:POPULATION},(_,i)=>String(i+1).padStart(2,'0'));
-const SITES=[{x:4,y:3},{x:4,y:2},{x:5,y:3},{x:4,y:4},{x:3,y:3},{x:5,y:2},{x:6,y:3},{x:5,y:4},{x:4,y:5},{x:3,y:4},{x:2,y:3}];
-const [WEST,SOUTH,EAST,NORTH]=COUNTY.localBounds;
-const lonLat=(x,y)=>[WEST+(x+.5)*(EAST-WEST)/GRID,NORTH-(y+.5)*(NORTH-SOUTH)/GRID];
-function inCounty([lon,lat]){let hit=false;const ring=COUNTY.boundary;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>lat)!==(b[1]>lat)&&lon<(b[0]-a[0])*(lat-a[1])/(b[1]-a[1])+a[0])hit=!hit}return hit}
-const zoneMap=Array.from({length:GRID},(_,y)=>Array.from({length:GRID},(_,x)=>{
-  if(!inCounty(lonLat(x,y)))return -2;
-  let best=-1,d=Infinity;for(let s=0;s<SITES.length;s++){const q=(x-SITES[s].x)**2+(y-SITES[s].y)**2;if(q<d){d=q;best=s-1}}return best;
-}));
-const zoneCells=Array.from({length:POPULATION},(_,slot)=>[]),zoneNeighbors=Array.from({length:POPULATION},()=>new Set());
-for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
-  const z=zoneMap[y][x];if(z>=0)zoneCells[z].push({x,y});
-  for(const [dx,dy]of[[1,0],[0,1]]){const xx=x+dx,yy=y+dy;if(xx>=GRID||yy>=GRID||z===-2)continue;const other=zoneMap[yy][xx];if(other===-2||other===z)continue;if(z>=0)zoneNeighbors[z].add(other);if(other>=0)zoneNeighbors[other].add(z)}
-}
-const TOPO_SEED=1829;
-const terrainRidge=(x,y)=>sstep(.30,.70,fbm(x*.42+3.7,y*.42+9.1,3,TOPO_SEED));
-const bourbonRidge=terrainRidge(SITES[0].x,SITES[0].y);
-const measuredValues=COUNTY.demGrid?COUNTY.demGrid.flat().filter(Number.isFinite):[];
-const measuredLow=measuredValues.length?Math.min(...measuredValues):0,measuredHigh=measuredValues.length?Math.max(...measuredValues):1;
-function elevationAtCell(x,y){
-  if(COUNTY.demGrid){const grid=COUNTY.demGrid;return grid[y][x]}
-  return COUNTY.elevation.meters+(terrainRidge(x,y)-bourbonRidge)*46;
-}
-const elevationIsMeasured=!!COUNTY.demGrid;
-const terrainTone=(x,y)=>elevationIsMeasured&&Number.isFinite(elevationAtCell(x,y))?clamp((elevationAtCell(x,y)-measuredLow)/Math.max(1,measuredHigh-measuredLow),0,1):terrainRidge(x,y);
-const zoneStatus=z=>z===-2?'outside':z===-1||state.annexed.has(z)?'owned':zoneNeighbors[z].has(-1)||[...zoneNeighbors[z]].some(n=>state.annexed.has(n))?'frontier':'waiting';
-const state={trees:[],selectedId:null,cleared:0,annexed:new Set([-1]),n:0,paused:false,log:[],eventSeq:0};
+const canvasA11y='An isometric 8 by 8 forest. Tap a tree to select or strike it. Use the tree buttons below to select a tree, then Strike tree. Arrow keys change selection.';
+const SLOT=['A','B'];
+const state={trees:[],selectedId:null,cleared:0,n:0,paused:false,log:[],ran:new Map(),lastStageText:'',eventSeq:0};
 let ground=null,frame=0,lastFrame=0,lastDraw=0,acc=0,W=0,H=0,dpr=1,tw=0,k=0,cx=0,topY=0,scale=1;
 const metrics={frames:0,spriteBuilds:0,acceptedHits:0};
 const isBusy=t=>t.phase==='falling'||t.phase==='cleared';
 const tooYoung=t=>t.phase==='growing'&&t.growth<STRIKE_MIN;
-const canStrike=t=>!!t&&!state.paused&&!isBusy(t)&&!tooYoung(t)&&t.cooldown<=0&&zoneStatus(t.slot)!=='waiting';
+const canStrike=t=>!!t&&!state.paused&&!isBusy(t)&&!tooYoung(t)&&t.cooldown<=0;
 const stageLabel=t=>t.phase==='growing'?stageOf(t.growth)[2]:phaseNames[t.phase];
 const speak=text=>{if(live.textContent!==text)live.textContent=text};
 const fmt=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const cellTitle=c=>'ABCDEFGH'[c.x]+(c.y+1);
 
-/* Every in-county cell belongs to the Bourbon core or one of ten connected tree parcels. */
+/* The mini-map is a terrain readout; exactly two markers identify active tree objects. */
 const cells=[];
 for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){
-  const el=document.createElement('i');el.style.background=css(mix(tileColor(terrainTone(x,y)),[243,239,230],.5));mini.appendChild(el);cells.push(el);
+  const el=document.createElement('i');el.style.background=css(mix(tileColor(ridgeAt(x,y)),[243,239,230],.5));mini.appendChild(el);cells.push(el);
 }
 let nextTreeRandom=mulberry32(WORLD);
 function occupied(exceptId){return state.trees.filter(t=>t.id!==exceptId).map(t=>t.cell)}
-function allocateCell(slot,seed,exceptId){
-  const taken=occupied(exceptId),options=zoneCells[slot].filter(c=>!taken.some(p=>p.x===c.x&&p.y===c.y));
-  if(!options.length)throw new Error('Tree parcel has no free county cell: '+slot);
-  const previous=state.trees[slot]?.cell;
-  const sorted=options.slice().sort((a,b)=>hash2(a.x,a.y,seed)-hash2(b.x,b.y,seed));
-  return sorted.find(c=>!previous||c.x!==previous.x||c.y!==previous.y)||sorted[0];
+function allocateCell(seed,exceptId){
+  const taken=occupied(exceptId),start=(Math.imul(seed,40503)>>>0)%(GRID*GRID);
+  let best=null,bestScore=-1;
+  for(let n=0;n<GRID*GRID;n++){
+    const ix=(start+n)%64,c={x:ix%GRID,y:Math.floor(ix/GRID)};
+    const dist=taken.length?Math.min(...taken.map(p=>Math.abs(c.x-p.x)+Math.abs(c.y-p.y))):99;
+    const score=dist*1000+hash2(c.x,c.y,seed);
+    if(score>bestScore){bestScore=score;best=c}
+    if(dist>=4)return c;
+  }
+  return best||{x:0,y:0};
 }
 function createTree(seed,cell,id,slot){
   const model=generateTree(seed,cell);model.damage=0;model.gb=G0;
   return {id,slot,model,seed,cell,phase:'growing',growth:G0,hits:0,elapsed:0,cooldown:0,shake:0,stageKey:stageOf(G0)[1],sprite:null,shadow:null,spriteKey:'',spriteGb:G0,particles:[],direction:cell.x>=cell.y?-1:1,hover:false};
 }
 function spawn(slot,exceptId=null){
-  const seed=10000+Math.floor(nextTreeRandom()*90000),cell=allocateCell(slot,seed,exceptId),t=createTree(seed,cell,state.eventSeq++,slot);
+  const seed=10000+Math.floor(nextTreeRandom()*90000),cell=allocateCell(seed,exceptId),t=createTree(seed,cell,state.eventSeq++,slot);
   state.trees[slot]=t;
   if(state.selectedId===null||state.selectedId===exceptId)state.selectedId=t.id;
   t.spriteKey='';updateInterface();return t;
 }
-function resetWorld(){cancelGestures();nextTreeRandom=mulberry32(WORLD);state.trees=[];state.selectedId=null;state.cleared=0;state.annexed=new Set([-1]);state.n=0;state.log=[];state.eventSeq=0;acc=0;state.paused=false;for(let slot=0;slot<POPULATION;slot++)spawn(slot);if(k){cacheGround();draw()}}
+function resetWorld(){cancelGestures();nextTreeRandom=mulberry32(WORLD);state.trees=[];state.selectedId=null;state.cleared=0;state.n=0;state.log=[];state.eventSeq=0;acc=0;state.paused=false;spawn(0);spawn(1);if(k)draw()}
 function selected(){return state.trees.find(t=>t.id===state.selectedId)||state.trees[0]}
 function choose(id,{log=true,announce=true}={}){
   const t=state.trees.find(x=>x.id===id);if(!t)return false;
@@ -704,10 +660,7 @@ function drawGround(){
   const gap=.018;
   for(let j=0;j<GRID;j++)for(let i=0;i<GRID;i++){
     const a=corner(i+gap,j+gap),b=corner(i+1-gap,j+gap),d=corner(i+1-gap,j+1-gap),e=corner(i+gap,j+1-gap);
-    const zone=zoneMap[j][i],status=zoneStatus(zone),base=tileColor(terrainTone(i,j));
-    c.fillStyle=zone===-2?'#26302a':status==='owned'?css(mix(base,[136,180,103],.48)):status==='frontier'?css(mix(base,[217,177,91],.46)):css(mix(base,[124,126,105],.48));
-    c.beginPath();c.moveTo(...a);c.lineTo(...b);c.lineTo(...d);c.lineTo(...e);c.closePath();c.fill();
-    if(zone===-2)continue;
+    c.fillStyle=css(tileColor(ridgeAt(i,j)));c.beginPath();c.moveTo(...a);c.lineTo(...b);c.lineTo(...d);c.lineTo(...e);c.closePath();c.fill();
     c.lineWidth=Math.max(1,T*.012);c.lineCap='round';c.strokeStyle='rgba(255,255,225,.32)';c.beginPath();c.moveTo(...e);c.lineTo(...a);c.lineTo(...b);c.stroke();
     c.strokeStyle='rgba(52,64,18,.30)';c.beginPath();c.moveTo(...b);c.lineTo(...d);c.lineTo(...e);c.stroke();
     for(let n=0;n<7;n++){
@@ -753,7 +706,6 @@ function draw(){
   for(const t of state.trees)makeSprites(t);
   metrics.frames++;lastDraw=performance.now();const c=ctx,rm=reducedMotion(),sort=[...state.trees].sort((a,b)=>(a.cell.x+a.cell.y)-(b.cell.x+b.cell.y));
   c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,canvas.width,canvas.height);if(ground)c.drawImage(ground,0,0);c.setTransform(dpr,0,0,dpr,0,0);
-  const [townX,townY]=corner(SITES[0].x+.5,SITES[0].y+.5);c.save();c.fillStyle='#f5edda';c.strokeStyle='#385a3a';c.lineWidth=2;c.beginPath();c.arc(townX,townY,8,0,TAU);c.fill();c.stroke();c.fillStyle='#24402c';c.font='bold 11px system-ui';c.textAlign='center';c.fillText('BOURBON',townX,townY+25);c.restore();
   const Tp=corner(0,0),Rr=corner(GRID,0),B=corner(GRID,GRID),L=corner(0,GRID);
   for(const t of sort){
     const [bx,by]=treeBase(t),s=t.sprite,ds=scaleOf(t.growth)/scaleOf(t.spriteGb),fall=t.phase==='falling',fade=fall?1-sstep(.82,1.18,t.elapsed):1;
@@ -773,8 +725,7 @@ function draw(){
       if(p.branch){c.strokeStyle=t.model.S.bark[1];c.lineWidth=Math.max(1,k*.07);c.beginPath();c.moveTo(-k*.45,0);c.lineTo(k*.45,0);c.moveTo(0,0);c.lineTo(k*.2,-k*.25);c.stroke();c.beginPath();c.ellipse(k*.2,-k*.25,k*.28,k*.12,0,0,TAU);c.fill()}
       else c.fillRect(-p.size*k/2,-p.size*k/2,p.size*k,p.size*k*.55);c.restore();
     }
-    c.save();c.fillStyle=zoneStatus(t.slot)==='frontier'?'#9a6819':'#294c32';c.fillRect(bx+5,by-14,23,17);c.fillStyle='#fff';c.font='bold 11px system-ui';c.textAlign='center';c.fillText(SLOT[t.slot],bx+16.5,by-2);c.restore();
-    if(t.id===state.selectedId){c.save();c.strokeStyle=zoneStatus(t.slot)==='frontier'?'rgba(154,104,25,.95)':'rgba(49,75,31,.82)';c.lineWidth=2;c.setLineDash([5,4]);c.beginPath();c.ellipse(bx,by-2,Math.max(22,t.model.radAt(0)*k*1.25),Math.max(12,t.model.radAt(0)*k*.68),0,0,TAU);c.stroke();c.restore()}
+    if(t.id===state.selectedId){c.save();c.strokeStyle='rgba(49,75,31,.82)';c.lineWidth=2;c.setLineDash([5,4]);c.beginPath();c.ellipse(bx,by-2,Math.max(22,t.model.radAt(0)*k*1.25),Math.max(12,t.model.radAt(0)*k*.68),0,0,TAU);c.stroke();c.restore()}
   }
   updateTicker();
 }
@@ -783,31 +734,28 @@ function updateInterface(){
   const s=selected();if(!s)return;
   for(const t of state.trees){
     const button=$('pick'+t.slot),name=$('treeName'+t.slot),meta=$('treeMeta'+t.slot);
-    const status=zoneStatus(t.slot);
     button.setAttribute('aria-pressed',String(t.id===state.selectedId));
-    button.setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', parcel '+status+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell));
-    button.dataset.status=status;name.textContent=t.model.S.name;meta.textContent=status+' · '+Math.floor(t.growth*100)+'%';
+    button.setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell));
+    name.textContent=t.model.S.name;meta.textContent=stageLabel(t)+' · '+Math.floor(t.growth*100)+'% · '+cellTitle(t.cell);
     const buttonLabel='Tree '+SLOT[t.slot]+': '+describe(t);button.title=buttonLabel;
   }
   $('condition').textContent=stageLabel(s);$('hitCount').textContent=s.hits+' / '+HITS+' strikes';$('actionHint').textContent=hint(s);
   const growText=s.phase==='cleared'?'Next tree in '+Math.max(0,RESPAWN_SEC-s.elapsed).toFixed(1)+' s':s.phase==='falling'?'Falling':s.phase==='growing'&&s.growth<1?Math.floor(s.growth*100)+'% grown · full in '+fmt((1-s.growth)*GROW_SEC):s.phase==='growing'?'100% · full grown':Math.floor(s.growth*100)+'% · growth halted';
   $('growText').textContent=growText;$('growBar').style.width=(s.phase==='cleared'?clamp(s.elapsed/RESPAWN_SEC,0,1):s.growth)*100+'%';$('growTrack').setAttribute('aria-label','Growth for Tree '+SLOT[s.slot]);$('growTrack').setAttribute('aria-valuenow',String(Math.floor(s.growth*100)));
   $('panel').dataset.phase=s.phase;
-  const chop=$('chop'),waiting=zoneStatus(s.slot)==='waiting',blocked=state.paused||tooYoung(s)||isBusy(s)||waiting;
-  chop.setAttribute('aria-disabled',String(blocked));chop.disabled=false;chop.setAttribute('aria-label',state.paused?'Game paused':waiting?'Parcel not yet on the frontier: '+describe(s):tooYoung(s)?'Too young to fell: '+describe(s):isBusy(s)?'Tree is '+stageLabel(s).toLowerCase()+': '+describe(s):'Strike selected tree: '+describe(s));
-  $('chopText').textContent=state.paused?'Paused':waiting?'Beyond frontier':tooYoung(s)?'Too young':isBusy(s)?'Stand clear':'Strike tree';
-  $('clearedCount').textContent=String(state.cleared);$('annexedCount').textContent=(state.annexed.size-1)+' / 10 parcels annexed';$('worldLabel').textContent='10 trees · '+(state.annexed.size-1)+'/10 annexed';
-  canvas.setAttribute('aria-label','Ten trees in county parcels around Bourbon. '+(state.annexed.size-1)+' of 10 parcels annexed. Selected: '+describe(s)+'. Use the numbered tree buttons below to select, then Strike tree to act.');
+  const chop=$('chop'),blocked=state.paused||tooYoung(s)||isBusy(s);
+  chop.setAttribute('aria-disabled',String(blocked));chop.disabled=false;chop.setAttribute('aria-label',state.paused?'Game paused':tooYoung(s)?'Too young to fell: '+describe(s):isBusy(s)?'Tree is '+stageLabel(s).toLowerCase()+': '+describe(s):'Strike selected tree: '+describe(s));
+  $('chopText').textContent=state.paused?'Paused':tooYoung(s)?'Too young':isBusy(s)?'Stand clear':'Strike tree';
+  $('clearedCount').textContent=String(state.cleared);$('worldLabel').textContent='2 trees · 8 × 8';
+  canvas.setAttribute('aria-label',state.trees.map(describe).join('. ')+'. Selected: '+describe(s)+'. Use the tree buttons below to change selection and the Strike tree button to act.');
   $('app').classList.toggle('paused',state.paused);$('pause').setAttribute('aria-pressed',String(state.paused));$('pauseText').textContent=state.paused?'Resume':'Pause';
-  for(let y=0;y<GRID;y++)for(let x=0;x<GRID;x++){const el=cells[y*GRID+x],z=zoneMap[y][x],status=zoneStatus(z);el.classList.remove('mark-tree','core','owned','frontier','waiting','outside');el.classList.add(status);if(z===-1)el.classList.add('core');el.dataset.tree='';el.title=status+' parcel '+(z<0?'Bourbon':SLOT[z])+' · '+(elevationIsMeasured?Math.round(elevationAtCell(x,y))+' m':'estimated relief')}
-  for(const t of state.trees){const i=cells[t.cell.y*GRID+t.cell.x];if(i){i.classList.add('mark-tree');i.dataset.tree=String(t.slot+1)}}
+  for(const el of cells)el.classList.remove('mark-a','mark-b');
+  for(const t of state.trees){const i=cells[t.cell.y*GRID+t.cell.x];if(i)i.classList.add(t.slot===0?'mark-a':'mark-b')}
   if(dialog.open)updateDetails();
   updateTicker();
 }
 function hint(t){
   if(state.paused)return'Game paused. Resume to continue growing trees.';
-  if(zoneStatus(t.slot)==='waiting')return'This parcel does not yet touch Bourbon or held land. Select a gold frontier parcel.';
-  if(zoneStatus(t.slot)==='owned'&&t.hits===0)return'Annexed parcel. Its tree can grow again or be cleared for the visit tally.';
   if(t.phase==='growing'){const s=stageOf(t.growth)[1];return s==='sapling'?'A sapling. Let it root before striking.':s==='mature'?HITS+' strikes to fell this tree.':'Still growing. Fell it now in '+HITS+' strikes or let it mature.'}
   const left=HITS-t.hits;return{damaged:'A notch in the trunk. '+left+' more '+(left===1?'strike.':'strikes.'),critical:'One more strike. Watch the branches give way.',falling:'The tree is coming down.',cleared:'A fresh stump. Its new sapling will grow in another cell.'}[t.phase]||'';
 }
@@ -815,16 +763,14 @@ let ticker='';
 function updateTicker(){
   const value=state.trees.map(t=>Math.floor(t.growth*100)+'/'+stageLabel(t)+'/'+t.phase+'/'+t.elapsed.toFixed(1)).join('|');
   if(value===ticker)return;ticker=value;
-  for(const t of state.trees){$('treeMeta'+t.slot).textContent=zoneStatus(t.slot)+' · '+Math.floor(t.growth*100)+'%';$('pick'+t.slot).setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', parcel '+zoneStatus(t.slot)+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell))}
+  for(const t of state.trees){$('treeMeta'+t.slot).textContent=stageLabel(t)+' · '+Math.floor(t.growth*100)+'% · '+cellTitle(t.cell);$('pick'+t.slot).setAttribute('aria-label','Select tree '+SLOT[t.slot]+': '+t.model.S.name+', '+stageLabel(t).toLowerCase()+', '+Math.floor(t.growth*100)+' percent grown, '+(3-t.hits)+' strikes remaining, at '+cellTitle(t.cell))}
   for(const t of state.trees){const el=cells[t.cell.y*GRID+t.cell.x];if(el)el.style.setProperty('--g',scaleOf(t.growth).toFixed(3))}
   const s=selected();if(!s)return;
   const text=s.phase==='cleared'?'Next tree in '+Math.max(0,RESPAWN_SEC-s.elapsed).toFixed(1)+' s':s.phase==='falling'?'Falling':s.phase==='growing'&&s.growth<1?Math.floor(s.growth*100)+'% grown · full in '+fmt((1-s.growth)*GROW_SEC):s.phase==='growing'?'100% · full grown':Math.floor(s.growth*100)+'% · growth halted';
   $('growText').textContent=text;$('growBar').style.width=(s.phase==='cleared'?clamp(s.elapsed/RESPAWN_SEC,0,1):s.growth)*100+'%';$('growTrack').setAttribute('aria-valuenow',String(Math.floor(s.growth*100)));
 }
 function updateDetails(){
-  for(const t of state.trees){const p=t.slot;$('detailName'+p).textContent='Tree '+SLOT[p]+' · '+t.model.S.name;$('detailLatin'+p).textContent=t.model.S.latin;$('detailZone'+p).textContent=zoneStatus(p);$('detailStage'+p).textContent=stageLabel(t);$('detailSeed'+p).textContent='#'+t.seed;$('detailHeight'+p).textContent=(t.model.H*scaleOf(t.growth)).toFixed(1)+' / '+t.model.H.toFixed(1)+' m';$('detailCell'+p).textContent=cellTitle(t.cell);$('detailElevation'+p).textContent=(elevationIsMeasured?'':'~')+Math.round(elevationAtCell(t.cell.x,t.cell.y))+' m'+(elevationIsMeasured?' · DEM sample':' · illustrative')}
-  $('elevationNote').textContent=elevationIsMeasured?'DEM samples at county parcel centers':'USGS Bourbon point: 942.16 ft · other relief illustrative';
-  $('sourceNote').textContent='County outline: OpenStreetMap relation '+COUNTY.relation+', '+COUNTY.snapshot.slice(0,10)+'. Bourbon elevation: '+COUNTY.elevation.source+'.'+(elevationIsMeasured?' Parcel DEM: '+COUNTY.demSource.file+'.':'');
+  for(const t of state.trees){const p=t.slot;$('detailName'+p).textContent=t.model.S.name;$('detailLatin'+p).textContent=t.model.S.latin;$('detailStage'+p).textContent=stageLabel(t);$('detailSeed'+p).textContent='#'+t.seed;$('detailHeight'+p).textContent=(t.model.H*scaleOf(t.growth)).toFixed(1)+' / '+t.model.H.toFixed(1)+' m';$('detailCell'+p).textContent=cellTitle(t.cell);$('detailSite'+p).textContent=siteName(t.model.ridge)}
   $('forestSeed').textContent='#'+WORLD;$('sound').textContent=sound.on?'Sound on':'Sound off';$('sound').setAttribute('aria-pressed',String(sound.on));$('motion').checked=reducedMotion();
 }
 let reducedMotionOverride=null;
@@ -859,7 +805,7 @@ function update(dt){
     if(t.phase==='growing'&&t.growth<1){t.growth=Math.min(1,t.growth+dt/GROW_SEC);const s=stageOf(t.growth);if(s[1]!==t.stageKey){t.stageKey=s[1];updateInterface();sound.root();speak(t.model.S.name+' is now '+s[2].toLowerCase()+'.')}}
     else if(t.phase==='falling'||t.phase==='cleared'){
       t.elapsed+=dt;
-      if(t.phase==='falling'&&t.elapsed>=FALL_SEC){t.phase='cleared';t.elapsed=0;state.cleared++;const newParcel=!state.annexed.has(t.slot)&&zoneStatus(t.slot)==='frontier';if(newParcel){state.annexed.add(t.slot);if(k)cacheGround()}burst(t,true);sound.land();updateInterface();speak(t.model.S.name+' cleared. '+(newParcel?'Parcel '+SLOT[t.slot]+' annexed. ':'')+(state.annexed.size-1)+' of 10 parcels held.')}
+      if(t.phase==='falling'&&t.elapsed>=FALL_SEC){t.phase='cleared';t.elapsed=0;state.cleared++;burst(t,true);sound.land();updateInterface();speak(t.model.S.name+' cleared. '+state.cleared+' trees cleared this visit.')}
       else if(t.phase==='cleared'&&t.elapsed>=RESPAWN_SEC){const slot=t.slot,old=t.id,oldCell=t.cell,next=spawn(slot,old);if(state.selectedId===old)state.selectedId=next.id;updateInterface();layout();speak('A '+next.model.S.name.toLowerCase()+' sapling roots at '+cellTitle(next.cell)+'. Previous tree was at '+cellTitle(oldCell)+'.')}
     }
   }
@@ -870,8 +816,8 @@ function schedule(){if(!frame&&animating()){lastFrame=performance.now();frame=re
 function tick(now){frame=0;if(document.hidden||state.paused)return;const dt=Math.min(.25,Math.max(0,(now-lastFrame)/1000));lastFrame=now;advance(dt);const active=state.trees.some(t=>t.phase!=='growing'||t.shake>0||t.particles.length>0||t.cooldown>0);if(active||now-lastDraw>66)draw();if(animating())frame=requestAnimationFrame(tick);else draw()}
 function stepManual(ms){if(!TEST)throw new Error('test seam is disabled');if(!Number.isFinite(ms)||ms<0||ms>86400000)throw new RangeError('step must be finite, nonnegative, and ≤ 24 hours');advance(ms/1000);draw();return sim()}
 function simTree(t){return{id:t.id,slot:t.slot,seed:t.seed,species:t.model.key,cell:{...t.cell},phase:t.phase,stage:stageOf(t.growth)[1],growth:+t.growth.toFixed(6),hits:t.hits,cooldown:+t.cooldown.toFixed(6),elapsed:+t.elapsed.toFixed(6),damage:t.model.damage}}
-function sim(){return{world:WORLD,selectedId:state.selectedId,cleared:state.cleared,annexed:[...state.annexed].sort((a,b)=>a-b),n:state.n,trees:state.trees.map(simTree)}}
-function snapshot(){return{version:VERSION,...sim(),zones:zoneMap.map(row=>row.slice()),frontier:state.trees.filter(t=>zoneStatus(t.slot)==='frontier').map(t=>t.slot),elevation:{source:COUNTY.elevation.source,measuredGrid:elevationIsMeasured,bourbonFeet:COUNTY.elevation.feet},timeRemainder:+acc.toFixed(6),paused:state.paused,metrics:{...metrics},viewport:{width:W,height:H,dpr},config:{GRID,POPULATION,HITS,GROW_SEC,RESPAWN_SEC,FALL_SEC,COOLDOWN_SEC,STRIKE_MIN,FIXED,STAGES:STAGES.map(x=>[x[1],x[0]])}}}
+function sim(){return{world:WORLD,selectedId:state.selectedId,cleared:state.cleared,n:state.n,trees:state.trees.map(simTree)}}
+function snapshot(){return{version:VERSION,...sim(),timeRemainder:+acc.toFixed(6),paused:state.paused,metrics:{...metrics},viewport:{width:W,height:H,dpr},config:{GRID,POPULATION,HITS,GROW_SEC,RESPAWN_SEC,FALL_SEC,COOLDOWN_SEC,STRIKE_MIN,FIXED,STAGES:STAGES.map(x=>[x[1],x[0]])}}}
 function eventLog(){return{v:2,world:WORLD,n:state.n,remainder:+acc.toFixed(9),selectedId:state.selectedId,events:state.log.map(e=>e.slice())}}
 function replay(log){if(!TEST)throw new Error('test seam is disabled');if(!log||log.v!==2||log.world!==WORLD||!Number.isSafeInteger(log.n)||!Array.isArray(log.events)||log.events.length>100000)throw new Error('replay log is incompatible');resetWorld();
   for(const [n,type,id]of log.events){if(!Number.isInteger(n)||n<0||n>log.n||!Number.isInteger(id))throw new Error('replay event is invalid');while(state.n<n)update(FIXED);if(type==='strike')strike(state.trees.find(t=>t.id===id),{log:false,announce:false});else if(type==='select')choose(id,{log:false,announce:false});else throw new Error('replay event type is invalid')}
@@ -892,15 +838,15 @@ canvas.addEventListener('pointermove',e=>{if(canvasGesture&&canvasGesture.pointe
 canvas.addEventListener('pointercancel',()=>{if(canvasGesture)canvasGesture.cancelled=true});
 canvas.addEventListener('click',e=>{const g=canvasGesture;canvasGesture=null;if(!g||g.cancelled||g.id==null||e.detail>1||Math.hypot(e.clientX-g.x,e.clientY-g.y)>10)return;const t=state.trees.find(x=>x.id===g.id);if(t)inputAtPointer(t,e.clientX,e.clientY)});
 canvas.addEventListener('pointerleave',e=>{if(e.pointerType!=='touch'&&canvasGesture)canvasGesture.cancelled=true});
-for(let tslot=0;tslot<POPULATION;tslot++)$('pick'+tslot).addEventListener('click',()=>choose(state.trees[tslot].id));
+for(const tslot of [0,1])$('pick'+tslot).addEventListener('click',()=>choose(state.trees[tslot].id));
 $('chop').addEventListener('pointerdown',e=>{buttonGesture={id:state.selectedId,pointerId:e.pointerId,x:e.clientX,y:e.clientY,allowed:e.isPrimary&&e.button===0&&!state.paused,cancelled:false}});
 $('chop').addEventListener('pointermove',e=>{if(buttonGesture&&buttonGesture.pointerId===e.pointerId&&Math.hypot(e.clientX-buttonGesture.x,e.clientY-buttonGesture.y)>10)buttonGesture.cancelled=true});
 $('chop').addEventListener('pointercancel',()=>{if(buttonGesture)buttonGesture.cancelled=true});
 $('chop').addEventListener('click',e=>{const g=buttonGesture;buttonGesture=null;if(document.hidden||state.paused||e.detail>1||g&&(!g.allowed||g.cancelled||g.id!==state.selectedId))return;applyCommand({type:'strike',targetId:g?g.id:state.selectedId})});
 $('chop').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){if(e.repeat){e.preventDefault();return}buttonGesture={id:state.selectedId,allowed:!state.paused,cancelled:false}}});
-for(let i=0;i<POPULATION;i++)$('pick'+i).addEventListener('keydown',e=>{
+for(const i of [0,1])$('pick'+i).addEventListener('keydown',e=>{
   if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Home','End'].includes(e.key))return;
-  e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?POPULATION-1:(i+(e.key==='ArrowLeft'||e.key==='ArrowUp'?-1:1)+POPULATION)%POPULATION;choose(state.trees[next].id);$('pick'+next).focus();
+  e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?1:1-i;choose(state.trees[next].id);$('pick'+next).focus();
 });
 document.addEventListener('keydown',e=>{if(dialog.open&&e.key==='Escape'){e.preventDefault();closeDialog()}});
 function setPaused(value){state.paused=!!value;cancelGestures();updateInterface();if(state.paused){cancelAnimationFrame(frame);frame=0}else schedule();speak(state.paused?'Forest paused. Growth resumes when you unpause.':'Forest resumed.')}
@@ -919,9 +865,9 @@ window.addEventListener('blur',cancelGestures);window.addEventListener('resize',
 function domReady(){
   $('replay').href='?seed='+WORLD;
   if(typeof ResizeObserver==='function')new ResizeObserver(layout).observe(stage);
-  for(const t of state.trees)makeSprites(t);layout();updateInterface();updateDetails();schedule();
+  for(const t of state.trees)makeSprites(t);layout();updateInterface();schedule();
 }
-for(let slot=0;slot<POPULATION;slot++)spawn(slot);domReady();
+spawn(0);spawn(1);domReady();
 
 /* Opt-in test surfaces: deterministic world clock; versioned object identities. */
 if(DEBUG)Object.defineProperty(window,'RAVENWOOD_DEBUG',{value:Object.freeze({snapshot,sim,treeSignature:()=>JSON.stringify(state.trees.map(t=>({id:t.id,seed:t.seed,cell:t.cell,H:t.model.H,items:t.model.items}))),hitPoint:id=>{const t=state.trees.find(x=>x.id===id)||selected();if(!t)return null;const s=t.sprite,r=treeRect(t);for(let y=Math.floor(s.ah/2);y<s.ah;y+=2)for(let x=0;x<s.aw;x+=2)if(s.alpha[y*s.aw+x]>100)return[r.x+x/dpr*r.d,r.y+y/dpr*r.d];return null}})});
