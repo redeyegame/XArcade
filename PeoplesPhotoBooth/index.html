@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<title>Brazen | Wave Presenter</title>
+<style>
+:root{color-scheme:dark;--ink:#e9edf3;--muted:#9299a6;--line:#292d35;--surface:#111318;--accent:#c7ec6d}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#08090b;color:var(--ink);font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}button,select{font:inherit}button{cursor:pointer;color:inherit;background:#171b21;border:1px solid #353b45;border-radius:10px;padding:10px 13px}button:hover{background:#242b34}button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}button[disabled]{opacity:.45;cursor:default}#app{min-height:100dvh;display:flex;flex-direction:column}.top{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(14px,3vw,40px);gap:15px}.brand{font-size:12px;letter-spacing:.18em;font-weight:800}.brand b{color:var(--accent)}.status{font-size:12px;color:var(--muted)}.stage{flex:1;min-height:0;display:grid;place-items:center;padding:8px clamp(8px,3vw,36px)}.screen{width:min(100%,calc((100dvh - 190px)*16/9));aspect-ratio:16/9;min-height:0;background:#000;box-shadow:0 12px 50px #000b;border:1px solid #202329;position:relative}.screen iframe,.screen #player{width:100%;height:100%}.loader{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#aaa;font-size:14px;pointer-events:none}.toolbar{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;padding:15px 14px calc(16px + env(safe-area-inset-bottom))}.toolbar .divider{height:24px;border-left:1px solid var(--line);margin:0 6px}.toolbar .meta{color:var(--muted);font-variant-numeric:tabular-nums;min-width:98px;text-align:center}.primary{border-color:#7e994d;background:#3b4929}.settings{width:min(680px,calc(100% - 32px));margin:0 auto 12px;padding:15px;border:1px solid var(--line);background:var(--surface);border-radius:14px}.settings[hidden]{display:none}.settings h2{font-size:13px;margin:0 0 8px}.settings p{color:var(--muted);margin:4px 0 10px;font-size:12px}.settings .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0}.settings label{font-size:12px;color:var(--muted)}.settings select{background:#0b0e13;color:var(--ink);border:1px solid #353b45;border-radius:7px;padding:7px;max-width:100%}.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.map button{text-align:left;font-size:12px}.map button.listening{border-color:var(--accent);color:var(--accent)}.small{font-size:11px;color:var(--muted)}.toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:#222b24;color:#dff7b6;border:1px solid #6f8b53;padding:8px 14px;border-radius:99px;pointer-events:none;opacity:0;transition:opacity .2s}.toast.show{opacity:1}@media(max-width:600px){.screen{width:100%}.top{padding:12px}.stage{padding:4px}.toolbar{gap:5px}.toolbar button{padding:9px 10px}.toolbar .meta{min-width:78px;font-size:12px}.map{grid-template-columns:1fr}}:fullscreen .top,:fullscreen .toolbar,:fullscreen .settings{display:none}:fullscreen #app{height:100dvh}:fullscreen .stage{padding:0}:fullscreen .screen{width:min(100vw,177.77778dvh);border:0;box-shadow:none}
+</style>
+</head>
+<body>
+<div id="app">
+<header class="top"><div class="brand">BRAZEN <b>◦</b> WAVE PRESENTER</div><div class="status" id="deviceStatus" aria-live="polite">Keyboard ready · MIDI not connected</div></header>
+<main class="stage"><div class="screen" id="screen"><div id="player"></div><div id="loader" class="loader">Loading YouTube presentation…</div></div></main>
+<nav class="toolbar" aria-label="Presentation controls">
+<button data-action="back" title="Left arrow">−10s</button><button data-action="toggle" class="primary" id="playBtn" title="Space">Play / Pause</button><button data-action="forward" title="Right arrow">+10s</button><span class="meta" id="clock">0:00 / 0:00</span><div class="divider"></div><button data-action="mute" title="M">Mute</button><button id="fullBtn" title="F">Fullscreen</button><button id="settingsBtn" aria-expanded="false" aria-controls="settings">Wave / MIDI</button>
+</nav>
+<section class="settings" id="settings" hidden>
+<h2>Genki Wave · browser MIDI</h2><p>Connect the Wave as a MIDI device using Genki's setup. In Chrome or Edge, click Connect MIDI and grant permission. Select the device, then choose an action below and perform the corresponding Wave gesture to learn its MIDI signal.</p>
+<div class="row"><button id="connectBtn">Connect MIDI</button><label for="deviceSelect">Input</label><select id="deviceSelect" disabled><option>No devices</option></select></div>
+<div class="map" id="mapping"></div>
+<div class="row"><button id="clearBtn">Clear MIDI mappings</button><span class="small" id="lastMidi">No MIDI messages yet.</span></div>
+<p class="small">Mappings are stored locally in this browser. Note-on and MIDI CC messages are supported, with a 350 ms repeat guard. Web MIDI needs a supported browser and typically HTTPS or localhost. Safari/iPhone may require keyboard-mapped gestures instead. YouTube playback requires internet and permission from the video owner to embed.</p>
+</section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+'use strict';
+const VIDEO_ID='7pCR7fgTvrk';
+const ACTIONS={toggle:'Play / Pause',back:'Seek −10s',forward:'Seek +10s',mute:'Mute',fullscreen:'Fullscreen'};
+const $=id=>document.getElementById(id);
+let player=null,ready=false,midiAccess=null,activeInput=null,learning=null;
+let mappings={};try{mappings=JSON.parse(localStorage.getItem('brazen.wave.mappings')||'{}')}catch{}
+let lastTrigger={};
+function notify(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.classList.remove('show'),2100)}
+function formatTime(n){n=Math.floor(Number(n)||0);return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`}
+function updateClock(){if(!ready)return;try{$('clock').textContent=`${formatTime(player.getCurrentTime())} / ${formatTime(player.getDuration())}`}catch{}}
+function command(action){if(action==='fullscreen'){toggleFullscreen();return}if(!ready){notify('YouTube player not ready');return}try{switch(action){case 'toggle':player.getPlayerState()===YT.PlayerState.PLAYING?player.pauseVideo():player.playVideo();break;case 'back':player.seekTo(Math.max(0,player.getCurrentTime()-10),true);break;case 'forward':player.seekTo(Math.min(player.getDuration()||Infinity,player.getCurrentTime()+10),true);break;case 'mute':player.isMuted()?player.unMute():player.mute();break;}updateClock()}catch(e){notify('Playback command unavailable')}}
+function toggleFullscreen(){if(document.fullscreenElement)document.exitFullscreen();else $('app').requestFullscreen?.().catch(()=>notify('Fullscreen unavailable'))}
+window.onYouTubeIframeAPIReady=()=>{player=new YT.Player('player',{videoId:VIDEO_ID,playerVars:{playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.protocol.startsWith('http')?location.origin:undefined},events:{onReady:()=>{ready=true;$('loader').remove();updateClock();},onError:e=>{const codes={2:'Invalid YouTube video ID',5:'YouTube HTML5 playback error',100:'Video not available',101:'Embedding disabled by video owner',150:'Embedding disabled by video owner'};$('loader').textContent=codes[e.data]||'Video could not be loaded';}}});};
+const ytScript=document.createElement('script');ytScript.src='https://www.youtube.com/iframe_api';ytScript.onerror=()=>{$('loader').textContent='YouTube could not load. Check internet connectivity.'};document.head.append(ytScript);
+setInterval(updateClock,500);
+document.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',()=>command(el.dataset.action)));
+$('fullBtn').addEventListener('click',toggleFullscreen);
+$('settingsBtn').addEventListener('click',()=>{const open=$('settings').hidden;$('settings').hidden=!open;$('settingsBtn').setAttribute('aria-expanded',String(open))});
+document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;const mapping={Space:'toggle',ArrowLeft:'back',ArrowRight:'forward',KeyM:'mute',KeyF:'fullscreen'};if(mapping[e.code]){e.preventDefault();if(!e.repeat)command(mapping[e.code])}});
+window.addEventListener('brazen-present',e=>command(e.detail?.command));
+function sig(data){const status=data[0],kind=status&0xF0,chan=(status&0x0F)+1; if(kind===0x90&&data[2]>0)return `note:${chan}:${data[1]}`;if(kind===0xB0&&data[2]>=64)return `cc:${chan}:${data[1]}`;return null}
+function renderMap(){const el=$('mapping');el.replaceChildren();for(const [action,label] of Object.entries(ACTIONS)){const b=document.createElement('button');b.textContent=`${label}: ${mappings[action]||'Unmapped'}${learning===action?' · MOVE WAVE NOW':''}`;if(learning===action)b.classList.add('listening');b.addEventListener('click',()=>{learning=learning===action?null:action;renderMap();if(learning)notify('Perform the Wave gesture now')});el.appendChild(b)}}
+function saveMap(){localStorage.setItem('brazen.wave.mappings',JSON.stringify(mappings));renderMap()}
+function onMidi(e){const key=sig(e.data);$('lastMidi').textContent=`Last: ${[...e.data].map(v=>v.toString(16).padStart(2,'0')).join(' ')}${key?' · '+key:''}`;if(!key)return;if(learning){mappings[learning]=key;notify(`${ACTIONS[learning]} mapped`);learning=null;saveMap();return}const action=Object.keys(mappings).find(a=>mappings[a]===key);if(!action)return;const now=performance.now();if(now-(lastTrigger[action]||0)<350)return;lastTrigger[action]=now;command(action)}
+function chooseInput(id){if(activeInput)activeInput.onmidimessage=null;activeInput=midiAccess?.inputs.get(id)||null;if(activeInput){activeInput.onmidimessage=onMidi;$('deviceStatus').textContent=`MIDI connected · ${activeInput.name}`;notify('Wave MIDI input connected')}else $('deviceStatus').textContent='Keyboard ready · MIDI not connected'}
+function updateInputs(){if(!midiAccess)return;const select=$('deviceSelect');const prior=select.value;select.replaceChildren();for(const input of midiAccess.inputs.values()){const opt=document.createElement('option');opt.value=input.id;opt.textContent=input.name||input.id;select.appendChild(opt)}select.disabled=select.options.length===0;if(!select.disabled){const all=[...midiAccess.inputs.values()];const current=all.find(i=>i.id===prior)||all.find(i=>/wave|genki/i.test(i.name))||all[0];select.value=current.id;chooseInput(current.id)}else{const opt=document.createElement('option');opt.textContent='No MIDI inputs detected';select.appendChild(opt);chooseInput(null)}}
+$('deviceSelect').addEventListener('change',e=>chooseInput(e.target.value));
+$('connectBtn').addEventListener('click',async()=>{if(!navigator.requestMIDIAccess){notify('Web MIDI unavailable in this browser');return}try{midiAccess=await navigator.requestMIDIAccess({sysex:false});midiAccess.onstatechange=updateInputs;updateInputs();if($('deviceSelect').disabled)notify('Connect Wave as a MIDI device first')}catch(e){notify('MIDI access denied or unavailable')}});
+$('clearBtn').addEventListener('click',()=>{mappings={};learning=null;saveMap();notify('MIDI mappings cleared')});
+renderMap();
+</script>
+</body>
+</html>
