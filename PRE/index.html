@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>Brazen Justice | Public Record Explorer</title>
-  <meta name="description" content="A source-linked public-record index and procedural timeline. Claims are labeled by verification status.">
+  <meta name="description" content="A source-linked public-record index, procedural timeline, and RSS publication feed. Claims are labeled by verification status.">
+  <link rel="alternate" type="application/rss+xml" title="Brazen Justice | Public Dispatches" href="./rss.xml">
   <style>
     :root { --paper:#f8f7f4; --white:#fff; --ink:#20242a; --muted:#626a73; --line:#dce0e2; --navy:#1c2d3d; --copper:#a0442a; --slate:#eef0f2; --blue:#365a70; --green:#387263; --shadow:0 12px 40px rgba(22,31,38,.06); font-synthesis:none; }
     * { box-sizing:border-box; }
@@ -101,10 +102,24 @@
     .code-example { background:#192735; color:#e6eef3; border-radius:5px; padding:18px; overflow:auto; font-size:12px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; white-space:pre; line-height:1.6; }
     .foot { border-top:1px solid var(--line); padding:24px 0 40px; color:var(--muted); font-size:12px; }
     .footerflex { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .rss-link { display:inline-flex;gap:6px;align-items:center;border:1px solid #cbd2d6;color:var(--navy);padding:7px 12px;text-decoration:none;font-size:12px;font-weight:800;background:white;border-radius:4px;white-space:nowrap; }
+    .rss-link:hover { background:#f3f5f6; }
+    .rss-dot { height:9px;width:9px;background:#c86a2b;border-radius:50%;box-shadow:0 0 0 3px #f5e6da; }
+    .rss-well { padding:21px;border:1px solid #d8dfe4;background:#f3f6f7;border-radius:5px;margin:18px 0 24px; }
+    .rss-actions { display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:13px 0; }
+    .rss-actions .field { flex:1; min-width:240px; }
+    .rss-hint { font-size:12px;color:var(--muted);margin:7px 0 0; }
+    .dispatch { border:1px solid var(--line);background:var(--white);border-radius:5px;padding:22px 24px;margin:13px 0; }
+    .dispatch-meta { display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:7px;color:var(--muted);font-size:12px; }
+    .dispatch h3 { font-size:18px;margin:0 0 8px; }
+    .dispatch p { margin:0 0 13px;color:var(--muted);font-size:14px; }
+    .dispatch-links { display:flex;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:700; }
+    .overview-dispatch { border-top:1px solid var(--line);padding:12px 0;font-size:13px; }
+    .overview-dispatch:first-child { border:0; }
     .hidden { display:none !important; }
     #msg { font-size:12px; min-height:20px; color:var(--muted); }
     @media (max-width:860px) { .grid { grid-template-columns:repeat(2,1fr); } .columns,.methodcols { grid-template-columns:1fr; } .headright { display:none; } }
-    @media (max-width:540px) { .container { width:calc(100% - 28px); } .hero { padding-top:32px; } .grid { gap:8px; } .stat { padding:14px; } .stat b { font-size:23px; } nav button { padding-inline:12px; } .surface { padding:17px; } .field.search,.field.small { min-width:100%; width:100%; } .deadline-rows { grid-template-columns:1fr; } .topnote { width:100%; margin:2px 0; } .footerflex { flex-wrap:wrap; } }
+    @media (max-width:540px) { .rss-actions .field { min-width:100%; } .container { width:calc(100% - 28px); } .hero { padding-top:32px; } .grid { gap:8px; } .stat { padding:14px; } .stat b { font-size:23px; } nav button { padding-inline:12px; } .surface { padding:17px; } .field.search,.field.small { min-width:100%; width:100%; } .deadline-rows { grid-template-columns:1fr; } .topnote { width:100%; margin:2px 0; } .footerflex { flex-wrap:wrap; } }
     @media print { nav,.toolbar,.filterbar,.btn,.notice { display:none; } .panel { display:block !important; break-before:page; } .panel:first-of-type { break-before:auto; } body { background:white; } }
   </style>
 </head>
@@ -113,6 +128,7 @@
     <div class="container topline">
       <div class="brand"><div class="brandmark" aria-hidden="true">M°</div><div><div class="brandname">BRAZEN JUSTICE</div><div class="brandline">Public record explorer</div></div></div>
       <div class="headright">Independent examination &middot; Evidence before conclusions<br><span id="verified-head">Data not yet loaded</span></div>
+      <a class="rss-link" href="./rss.xml" type="application/rss+xml" title="Subscribe to updates via RSS"><span class="rss-dot" aria-hidden="true"></span> RSS</a>
     </div>
   </header>
   <section class="container hero">
@@ -135,6 +151,7 @@
       <button role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="false" data-view="timeline">Timeline</button>
       <button role="tab" id="tab-deadlines" aria-controls="panel-deadlines" aria-selected="false" data-view="deadlines">Limitations</button>
       <button role="tab" id="tab-calendar" aria-controls="panel-calendar" aria-selected="false" data-view="calendar">Calendar</button>
+      <button role="tab" id="tab-updates" aria-controls="panel-updates" aria-selected="false" data-view="updates">Dispatches / RSS</button>
       <button role="tab" id="tab-method" aria-controls="panel-method" aria-selected="false" data-view="method">Methodology</button>
     </nav>
   </section>
@@ -161,6 +178,11 @@
           <div class="rule"><div class="number">03</div><div><strong>Protect sensitive people.</strong><p>Public-facing documents should be reviewed for privacy and publication appropriateness.</p></div></div>
         </div>
       </div>
+      <div class="surface" style="margin-top:20px;">
+        <div class="eyebrow">Public dispatches</div>
+        <h2>Latest publications</h2>
+        <div id="overviewUpdates"><div class="empty"><b>No dispatches published.</b>Approved release notes will appear here.</div></div>
+      </div>
     </section>
     <section class="panel" role="tabpanel" id="panel-register" aria-labelledby="tab-register">
       <h2>Register of Actions</h2><p class="sectionlead">One row per source-index entry. Search and filter without changing the original record.</p>
@@ -186,24 +208,42 @@
       <h2>Public calendar</h2><p class="sectionlead">Embed a published Google Calendar for verified hearings, milestones, and clearly classified legal dates. Calendar visibility is controlled in Google Calendar.</p>
       <div class="surface"><label for="calendarId"><strong>Public Google Calendar ID</strong></label><p class="sectionlead" style="font-size:13px;margin:4px 0 10px;">In Google Calendar settings, make a dedicated calendar public and copy its Calendar ID. Don't publish internal notes or sensitive data.</p><div class="filterbar"><input class="field search" id="calendarId" type="text" placeholder="calendar-id@group.calendar.google.com" aria-label="Calendar ID"><button class="btn" id="calendarEmbedBtn" type="button">Embed calendar</button><button class="btn secondary" id="calendarClearBtn" type="button">Clear</button></div><p id="calendarMessage" style="font-size:12px;color:var(--muted);margin-top:0;">The public calendar has not been configured.</p><div class="iframebox" id="calendarBox"><div class="empty" style="padding-top:260px;"><b>Calendar preview</b>Paste the public Calendar ID above to load the official Google embed.</div></div></div>
     </section>
+    <section class="panel" role="tabpanel" id="panel-updates" aria-labelledby="tab-updates">
+      <h2>Dispatches &amp; syndication</h2>
+      <p class="sectionlead">A quiet RSS 2.0 feed for approved releases, evidence-packet updates, corrections, and editorial notes. Subscribers can follow the public record without an account or social platform.</p>
+      <div class="rss-well">
+        <div class="eyebrow">Really Simple Syndication</div>
+        <h3 style="margin:8px 0;">One feed. Public releases only.</h3>
+        <div class="rss-actions"><a class="btn" style="text-decoration:none" href="./rss.xml" type="application/rss+xml">Subscribe to RSS</a><button class="btn secondary" id="rssCopyBtn" type="button">Copy feed URL</button></div>
+        <p class="rss-hint">A static website needs a real <code>rss.xml</code> file alongside <code>index.html</code>. Feed updates do not happen automatically when someone imports JSON into a browser.</p>
+        <div style="margin-top:18px;"><label for="siteUrlInput"><strong>Canonical public website URL</strong></label></div>
+        <div class="rss-actions"><input id="siteUrlInput" class="field" type="url" inputmode="url" placeholder="https://your-domain.example/justice/" aria-label="Site URL for RSS publication"><button class="btn secondary" id="rssDownloadBtn" type="button">Generate rss.xml</button></div>
+        <p class="rss-hint" id="rssMessage" aria-live="polite">Enter your eventual HTTPS site address to generate a publishable feed. Or run the bundled Python generator during deployment.</p>
+      </div>
+      <h3>Publication log</h3>
+      <div id="updatesList"></div>
+      <div class="empty" id="updatesEmpty"><b>No public dispatches yet.</b>Add a reviewed, approved entry to <code>updates</code> in the public JSON dataset. The RSS feed deliberately starts empty.</div>
+    </section>
     <section class="panel" role="tabpanel" id="panel-method" aria-labelledby="tab-method">
       <h2>Methodology and release requirements</h2><p class="sectionlead">A living standard for evidence quality, privacy, and reproducibility.</p>
       <div class="methodcols">
         <div class="surface"><h3>Verification vocabulary</h3><div class="rule"><div class="number">01</div><div><strong>Confirmed</strong><p>Directly supported by an identified primary record or reliable independent reporting, scoped to what that record proves.</p></div></div><div class="rule"><div class="number">02</div><div><strong>Reported</strong><p>Attributed to a source, but not independently established by this index.</p></div></div><div class="rule"><div class="number">03</div><div><strong>Disputed</strong><p>Conflicting evidence or express contest by a party; unresolved here.</p></div></div><div class="rule"><div class="number">04</div><div><strong>Needs review</strong><p>Source or classification not yet verified. Do not present as fact.</p></div></div></div>
-        <div class="surface"><h3>Release checklist</h3><p>Every published assertion should link to a source. Each PDF should retain an original file and SHA-256 hash in the private preservation archive, with a separately reviewed, redacted public copy if appropriate.</p><p>Use an explicit corrections history, verify court dates directly, request responses from adversely portrayed subjects, and distinguish allegations, legal filings, judicial findings, and editorial opinion.</p><p>Do not bulk scrape a court website without checking its terms and permissions. The browser import feature uses only files you provide.</p></div>
+        <div class="surface"><h3>Release checklist</h3><p>Every published assertion should link to a source. Each PDF should retain an original file and SHA-256 hash in the private preservation archive, with a separately reviewed, redacted public copy if appropriate.</p><p>Use an explicit corrections history, verify court dates directly, request responses from adversely portrayed subjects, and distinguish allegations, legal filings, judicial findings, and editorial opinion.</p><p>RSS is a curated publication log, not an automatic relay of every pleading. Only reviewed or confirmed entries expressly marked public are syndicated. Generate a new static feed when public data changes.</p><p>Do not bulk scrape a court website without checking its terms and permissions. The browser import feature uses only files you provide.</p></div>
       </div>
       <h3 style="margin-top:28px;">Accepted JSON data structure</h3>
       <p class="sectionlead">The downloadable template is an empty dataset. No historical, case-specific, or statutory facts are prefilled.</p>
       <div class="code-example" id="schemaExample"></div>
     </section>
   </main>
-  <footer class="foot"><div class="container footerflex"><span><strong>BRAZEN JUSTICE</strong> &middot; Evidence before conclusions</span><span>Single-file HTML &middot; Local import &middot; Source-first workflow</span></div></footer>
+  <footer class="foot"><div class="container footerflex"><span><strong>BRAZEN JUSTICE</strong> &middot; Evidence before conclusions</span><span>Standalone HTML &middot; Static RSS 2.0 &middot; Source-first workflow</span></div></footer>
   <script>
   (() => {
     'use strict';
     const TEMPLATE = {
       case: { name: "", caseNumber: "", court: "", description: "", lastVerified: "" },
       calendarId: "",
+      siteUrl: "",
+      updates: [],
       entries: [],
       documents: [],
       events: [],
@@ -212,6 +252,8 @@
       // Document: {id,date,title,type,sha256,status,sourceUrl,public:true}
       // Event: {id,date,title,description,status,sourceUrl}
       // Deadline: {id,title,category,triggerDate,dueDate,statute,tolling,status,sourceUrl,notes}
+      // Public release: {id,title,summary,publishedAt,category,status,public,url,sourceUrl}.
+      // Only approved public updates whose publication time has arrived enter RSS.
     };
     let data = structuredClone(TEMPLATE);
     let newestFirst = true;
@@ -229,7 +271,7 @@
     function asArray(v) { return Array.isArray(v) ? v.filter(x=>x && typeof x==='object' && !Array.isArray(x)) : []; }
     function normalize(raw) {
       if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Expected a JSON object.');
-      return {case: (raw.case && typeof raw.case==='object')?raw.case:{},calendarId:safe(raw.calendarId),entries:asArray(raw.entries),documents:asArray(raw.documents),events:asArray(raw.events),deadlines:asArray(raw.deadlines)};
+      return {case: (raw.case && typeof raw.case==='object')?raw.case:{},calendarId:safe(raw.calendarId),siteUrl:safe(raw.siteUrl),updates:asArray(raw.updates),entries:asArray(raw.entries),documents:asArray(raw.documents),events:asArray(raw.events),deadlines:asArray(raw.deadlines)};
     }
     function update() {
       const publicDocs=data.documents.filter(d=>d.public===true);
@@ -242,13 +284,15 @@
       const metadata=[val(data.case,['court']), val(data.case,['caseNumber']), val(data.case,['description'])].filter(Boolean).join(' · ');
       $('caseSummary').textContent=metadata || 'Import a court-index CSV or a structured public-data JSON file to populate the explorer. The app does not scrape court websites or interpret legal deadlines automatically.';
       $('verified-head').textContent=data.case.lastVerified ? 'Index checked: '+formatDate(data.case.lastVerified) : 'No index verification date';
-      const hasContent=data.entries.length+data.documents.length+data.events.length+data.deadlines.length>0;
+      const hasContent=data.entries.length+data.documents.length+data.events.length+data.deadlines.length+readyUpdates().length>0;
       $('statusNotice').innerHTML='';
       const strong=el('strong',hasContent?'Research dataset loaded. ':'Prepublication workbench. ');
       $('statusNotice').append(strong,document.createTextNode(hasContent?'Loaded browser-side; not independently verified by this app. Check source records and redact public copies before deployment.':'No verified case records have been loaded. Imported data stays in this browser session. Do not import confidential material into a public site.'));
       fillSelect('roaType',data.entries.map(x=>val(x,['type'])));
       fillSelect('docType',publicDocs.map(x=>val(x,['type'])));
-      renderROA(); renderDocs(); renderTimeline(); renderDeadlines();
+      renderROA(); renderDocs(); renderTimeline(); renderDeadlines(); renderUpdates();
+      if (has(data.siteUrl) && !$('siteUrlInput').value) $('siteUrlInput').value=data.siteUrl;
+      applyHash();
       if(has(data.calendarId) && $('calendarId').value!==data.calendarId) { $('calendarId').value=data.calendarId; try { embedCalendar(data.calendarId); } catch(e) { $('calendarMessage').textContent=e.message; } }
     }
     function fillSelect(id,options) { const select=$(id), selected=select.value; while(select.options.length>1) select.remove(1); for(const opt of [...new Set(options.filter(Boolean))].sort()) { const o=el('option',opt); o.value=opt; select.add(o); } select.value=selected; }
@@ -296,6 +340,99 @@
         const src=el('p'); src.append(sourceLink(d.sourceUrl,'Read authority or source')); wrap.append(src); $('deadlineList').append(wrap);
       }
     }
+    function slug(id) { return safe(id).replace(/[^A-Za-z0-9_-]/g,'-'); }
+    function readyUpdates() {
+      return data.updates.filter(u=>u.public===true && ['reviewed','confirmed'].includes(safe(u.status).toLowerCase()) && has(u.id) && has(u.title) && has(u.summary) && has(u.publishedAt) && !Number.isNaN(Date.parse(u.publishedAt)) && Date.parse(u.publishedAt)<=Date.now() && /(Z|[+-]\d{2}:\d{2})$/.test(safe(u.publishedAt)))
+        .sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+    }
+    function renderUpdates() {
+      const updates=readyUpdates();
+      clear($('updatesList'));
+      $('updatesEmpty').classList.toggle('hidden',updates.length>0);
+      clear($('overviewUpdates'));
+      if(!updates.length) $('overviewUpdates').append(el('div','No public releases yet. Approved updates will be listed here and in RSS.','empty'));
+      for(const u of updates) {
+        const id='update-'+slug(u.id), article=el('article',undefined,'dispatch'); article.id=id;
+        const meta=el('div',undefined,'dispatch-meta');
+        const published=new Date(u.publishedAt).toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Los_Angeles'});
+        meta.append(el('span',published));
+        if(has(u.category)) meta.append(el('span',u.category,'pill'));
+        meta.append(badge(u.status));
+        article.append(meta,el('h3',u.title),el('p',u.summary));
+        const links=el('div',undefined,'dispatch-links');
+        const perm=el('a','Permalink'); perm.href='#'+id; links.append(perm);
+        if(has(u.sourceUrl)) links.append(sourceLink(u.sourceUrl,'Supporting source'));
+        if(has(u.url)) {
+          try {
+            const target=new URL(u.url,'https://example.org/');
+            if(!['https:','http:'].includes(target.protocol)) throw Error();
+            const link=el('a','Full publication'); link.href=u.url; link.rel='noopener noreferrer'; links.append(link);
+          } catch { links.append(el('span','Invalid publication link','mini-label')); }
+        }
+        article.append(links); $('updatesList').append(article);
+      }
+      for(const u of updates.slice(0,3)) {
+        const wrap=el('div',undefined,'overview-dispatch');
+        const link=el('a',u.title); link.href='#update-'+slug(u.id);
+        const time=el('div',new Date(u.publishedAt).toLocaleDateString('en-US',{dateStyle:'medium',timeZone:'America/Los_Angeles'}),'mini-label');
+        wrap.append(time,link); $('overviewUpdates').append(wrap);
+      }
+    }
+    function selectPanel(view) {
+      document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===view?'true':'false'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${view}`));
+    }
+    function applyHash() {
+      if(location.hash==='#updates' || location.hash.startsWith('#update-')) {
+        selectPanel('updates');
+        const target=location.hash.slice(1), node=$(target);
+        if(node) requestAnimationFrame(()=>node.scrollIntoView({block:'start'}));
+      }
+    }
+    function canonicalBase() {
+      const entered=$('siteUrlInput').value.trim() || data.siteUrl || (/^https?:$/.test(location.protocol)?new URL('./',location.href).href:'');
+      if(!entered) throw Error('Enter your public HTTPS site URL first.');
+      const u=new URL(entered);
+      if(u.protocol!=='https:' && !(u.protocol==='http:' && ['localhost','127.0.0.1'].includes(u.hostname))) throw Error('Use an HTTPS URL (HTTP is allowed only for localhost testing).');
+      if(u.username||u.password||u.search||u.hash) throw Error('Use a clean website URL without credentials, search parameters, or hash.');
+      if(u.pathname.endsWith('.html')) return new URL('./',u).href;
+      return u.href.endsWith('/') ? u.href : u.href+'/';
+    }
+    function rssXml() {
+      const base=canonicalBase(), items=readyUpdates().slice(0,50);
+      const esc=v=>safe(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+      const linkFor=u=>{
+        const link=has(u.url)?u.url:'index.html#update-'+slug(u.id);
+        const url=new URL(link,base);
+        if(url.protocol!=='https:' && !(url.protocol==='http:' && ['localhost','127.0.0.1'].includes(url.hostname))) throw Error('Unsafe update URL: '+link);
+        return url.href;
+      };
+      const lines=['<?xml version="1.0" encoding="UTF-8"?>','<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">','  <channel>',
+        '    <title>Brazen Justice | Public Dispatches</title>',`    <link>${esc(base)}</link>`,
+        '    <description>Reviewed public releases, evidence indexes, and corrections. Claims are attributed to their sources.</description>',
+        '    <language>en-us</language>',`    <lastBuildDate>${esc(new Date().toUTCString())}</lastBuildDate>`,
+        `    <atom:link href="${esc(new URL('rss.xml',base).href)}" rel="self" type="application/rss+xml"/>`];
+      for(const u of items) {
+        lines.push('    <item>',`      <title>${esc(u.title)}</title>`,`      <link>${esc(linkFor(u))}</link>`,
+          `      <guid isPermaLink="false">${esc('brazen-justice:'+u.id)}</guid>`,`      <pubDate>${esc(new Date(u.publishedAt).toUTCString())}</pubDate>`,
+          `      <description>${esc(u.summary)}</description>`,`      <category>${esc(u.category||'Public record')}</category>`,'    </item>');
+      }
+      lines.push('  </channel>','</rss>'); return {xml:lines.join('\n')+'\n',count:items.length,base};
+    }
+    function downloadRss() {
+      try {
+        const {xml,count}=rssXml(), blob=new Blob([xml],{type:'application/rss+xml;charset=utf-8'}), objectURL=URL.createObjectURL(blob), a=el('a');
+        a.href=objectURL; a.download='rss.xml'; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(objectURL),1000);
+        $('rssMessage').textContent=`Generated rss.xml with ${count} approved public update(s). Upload it next to index.html; regenerate it after each release.`;
+      } catch(e) { $('rssMessage').textContent=e.message; }
+    }
+    async function copyRssLink() {
+      try {
+        const link=new URL('rss.xml',canonicalBase()).href;
+        await navigator.clipboard.writeText(link);
+        $('rssMessage').textContent='Copied subscription URL: '+link;
+      } catch(e) { $('rssMessage').textContent=e.message+' (or copy the URL from the published feed).'; }
+    }
     function parseCSV(text) {
       // RFC4180-style quoted fields, including doubled quotation marks and embedded newlines.
       const rows=[],row=[]; let cell='',inQuotes=false;
@@ -321,7 +458,10 @@
     $('templateBtn').addEventListener('click',downloadJson);
     $('jsonFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=JSON.parse(await f.text());data=normalize(raw);update();flash(`Loaded ${f.name} (not source-verified).`);}catch(err){flash('Import failed: '+err.message);}e.target.value='';});
     $('csvFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{data.entries=parseCSV(await f.text());update();flash(`Loaded ${data.entries.length} ROA entries from ${f.name}.`);}catch(err){flash('CSV import failed: '+err.message);}e.target.value='';});
-    document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{const v=btn.dataset.view;document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-selected',b===btn?'true':'false'));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${v}`));}));
+    document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>selectPanel(btn.dataset.view)));
+    window.addEventListener('hashchange',applyHash);
+    $('rssDownloadBtn').addEventListener('click',downloadRss);
+    $('rssCopyBtn').addEventListener('click',copyRssLink);
     for(const id of ['roaSearch','roaType','roaStatus']) $(id).addEventListener('input',renderROA);
     for(const id of ['docSearch','docType']) $(id).addEventListener('input',renderDocs);
     $('roaSort').addEventListener('click',()=>{newestFirst=!newestFirst;$('roaSort').textContent=newestFirst?'Newest first ↓':'Oldest first ↑';renderROA();});
@@ -335,7 +475,7 @@
     }
     $('calendarEmbedBtn').addEventListener('click',()=>{try{embedCalendar($('calendarId').value);}catch(e){$('calendarMessage').textContent=e.message;}});
     $('calendarClearBtn').addEventListener('click',()=>{$('calendarId').value='';clear($('calendarBox'));$('calendarBox').append(el('div','Calendar embed cleared.','empty'));$('calendarMessage').textContent='No calendar configured.';});
-    $('schemaExample').textContent=JSON.stringify({case:{name:'',caseNumber:'',court:'',description:'',lastVerified:''},calendarId:'',entries:[{id:'',date:'YYYY-MM-DD',title:'',filer:'',type:'',status:'needs-review',sourceUrl:'',documentId:''}],documents:[{id:'',date:'YYYY-MM-DD',title:'',type:'',sha256:'',status:'needs-review',sourceUrl:'',public:false}],events:[{id:'',date:'YYYY-MM-DD',title:'',description:'',status:'needs-review',sourceUrl:''}],deadlines:[{id:'',title:'',category:'',triggerDate:'YYYY-MM-DD',dueDate:'YYYY-MM-DD',statute:'',tolling:'',status:'needs-review',sourceUrl:'',notes:''}]},null,2);
+    $('schemaExample').textContent=JSON.stringify({case:{name:'',caseNumber:'',court:'',description:'',lastVerified:''},calendarId:'',siteUrl:'',updates:[{id:'release-id',title:'',summary:'',publishedAt:'YYYY-MM-DDTHH:mm:ss-08:00',category:'Report',status:'needs-review',public:false,url:'',sourceUrl:''}],entries:[{id:'',date:'YYYY-MM-DD',title:'',filer:'',type:'',status:'needs-review',sourceUrl:'',documentId:''}],documents:[{id:'',date:'YYYY-MM-DD',title:'',type:'',sha256:'',status:'needs-review',sourceUrl:'',public:false}],events:[{id:'',date:'YYYY-MM-DD',title:'',description:'',status:'needs-review',sourceUrl:''}],deadlines:[{id:'',title:'',category:'',triggerDate:'YYYY-MM-DD',dueDate:'YYYY-MM-DD',statute:'',tolling:'',status:'needs-review',sourceUrl:'',notes:''}]},null,2);
     update();
     // On static hosting, optionally load a public, curated companion JSON file.
     // Opening index.html via file:// remains self-contained and uses manual imports.

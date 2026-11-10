@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Brazen Justice | Public Record Explorer</title>
+  <meta name="description" content="A source-linked public-record index and procedural timeline. Claims are labeled by verification status.">
+  <style>
+    :root { --paper:#f8f7f4; --white:#fff; --ink:#20242a; --muted:#626a73; --line:#dce0e2; --navy:#1c2d3d; --copper:#a0442a; --slate:#eef0f2; --blue:#365a70; --green:#387263; --shadow:0 12px 40px rgba(22,31,38,.06); font-synthesis:none; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--paper); color:var(--ink); margin:0; font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:15px; line-height:1.55; }
+    a { color:#24485e; text-decoration-thickness:1px; text-underline-offset:3px; }
+    a:hover { color:var(--copper); }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid #6391ae; outline-offset:2px; }
+    .container { width:min(1180px, calc(100% - 48px)); margin:0 auto; }
+    header { border-bottom:1px solid var(--line); background:rgba(255,255,255,.94); }
+    .topline { display:flex; gap:18px; justify-content:space-between; align-items:center; min-height:80px; }
+    .brand { display:flex; gap:13px; align-items:center; min-width:0; }
+    .brandmark { display:grid; place-items:center; width:44px; height:44px; background:var(--navy); color:white; font-family:Georgia,serif; font-size:23px; font-weight:700; border-radius:3px; letter-spacing:-2px; }
+    .brandname { font-weight:800; font-size:15px; letter-spacing:.11em; white-space:nowrap; }
+    .brandline { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.14em; }
+    .headright { text-align:right; font-size:12px; color:var(--muted); }
+    .pill { font-size:11px; border:1px solid var(--line); display:inline-block; padding:3px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.08em; font-weight:750; background:#fff; color:var(--muted); }
+    .pill.confirmed, .pill.reviewed { border-color:#bed6cd; color:#2d6657; background:#f3f9f6; }
+    .pill.reported { border-color:#d0d8e0; color:#37576c; background:#f7fafc; }
+    .pill.disputed { border-color:#ead0c7; color:#914b37; background:#fff7f3; }
+    .pill.pending,.pill.needs-review { background:#faf9f6; color:#655c51; }
+    .hero { padding:50px 0 26px; }
+    .eyebrow { font-size:11px; text-transform:uppercase; color:var(--copper); font-weight:800; letter-spacing:.18em; }
+    h1,h2,h3 { letter-spacing:-.025em; }
+    h1 { font-family:Georgia,"Times New Roman",serif; font-weight:500; font-size:clamp(34px,5vw,60px); line-height:1.13; margin:11px 0 14px; }
+    h2 { font-size:24px; font-weight:680; margin:0 0 8px; }
+    h3 { font-size:16px; margin:0 0 7px; }
+    .intro { font-size:17px; color:var(--muted); max-width:780px; margin:0; }
+    .notice { border-left:3px solid var(--copper); background:#fff; border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:26px; padding:14px 17px; font-size:13px; color:#5b4e47; }
+    .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:17px 0; }
+    .btn { background:var(--navy); color:#fff; border:1px solid var(--navy); border-radius:4px; padding:10px 14px; font-weight:650; font-size:13px; }
+    .btn:hover { background:#304b61; }
+    .btn.secondary { color:var(--navy); background:#fff; border-color:#c6cdd1; }
+    .btn.secondary:hover { background:#f1f4f5; }
+    .btn.sm { padding:7px 10px; }
+    .file-label { display:inline-flex; align-items:center; justify-content:center; }
+    input[type=file] { position:absolute; width:1px; height:1px; opacity:0; overflow:hidden; }
+    .topnote { margin-left:auto; font-size:12px; color:var(--muted); }
+    nav { display:flex; gap:2px; overflow:auto; border-bottom:1px solid #cbd0d4; margin-top:14px; }
+    nav button { border:0; border-bottom:3px solid transparent; background:transparent; padding:13px 17px 12px; color:var(--muted); font-size:13px; font-weight:700; white-space:nowrap; }
+    nav button[aria-selected="true"] { border-bottom-color:var(--copper); color:var(--ink); }
+    main { padding:26px 0 72px; }
+    .panel { display:none; }
+    .panel.active { display:block; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .stat { padding:18px 20px; border:1px solid var(--line); background:var(--white); border-radius:5px; }
+    .stat b { display:block; font-size:27px; font-variant-numeric:tabular-nums; line-height:1.2; }
+    .stat span { font-size:12px; color:var(--muted); }
+    .columns { display:grid; grid-template-columns:minmax(0,2fr) minmax(260px,1fr); gap:20px; margin-top:20px; }
+    .surface { background:var(--white); padding:22px; border:1px solid var(--line); border-radius:5px; box-shadow:var(--shadow); }
+    .surface + .surface { margin-top:16px; }
+    .sectionlead { color:var(--muted); margin:0 0 19px; }
+    .rule { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-top:1px solid var(--line); }
+    .rule .number { min-width:28px; color:var(--copper); font-size:12px; font-weight:800; }
+    .rule strong { display:block; font-size:13px; }
+    .rule p { color:var(--muted); font-size:12px; margin:2px 0 0; }
+    .filterbar { display:flex; gap:11px; align-items:center; flex-wrap:wrap; margin:16px 0; }
+    .field { border:1px solid #cbd2d6; background:#fff; border-radius:4px; padding:10px 12px; min-height:41px; color:var(--ink); }
+    .field.search { min-width:270px; flex:1; }
+    .field.small { width:185px; }
+    .table-scroll { overflow-x:auto; border:1px solid var(--line); border-radius:5px; background:#fff; }
+    table { width:100%; border-collapse:collapse; min-width:720px; }
+    thead { background:#f4f5f5; }
+    th { text-align:left; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#58616c; padding:14px 14px; white-space:nowrap; font-weight:800; }
+    td { border-top:1px solid #e5e8ea; padding:15px 14px; vertical-align:top; font-size:13px; }
+    td .sub { display:block; margin-top:5px; color:var(--muted); font-size:12px; }
+    .empty { padding:42px 20px; text-align:center; color:var(--muted); }
+    .empty b { display:block; color:var(--ink); margin-bottom:6px; }
+    .timeline { padding-left:24px; border-left:2px solid #cdd6dc; margin:22px 0 0 8px; }
+    .time-item { position:relative; padding:0 0 30px 15px; }
+    .time-item:before { content:""; background:var(--copper); border:3px solid var(--paper); border-radius:50%; width:12px; height:12px; position:absolute; left:-32px; top:3px; }
+    .time-date { font-size:12px; font-weight:750; color:var(--muted); }
+    .time-title { font-size:17px; font-weight:680; margin:3px 0; }
+    .time-body { font-size:13px; color:var(--muted); margin:5px 0 7px; }
+    .deadline { border:1px solid var(--line); background:#fff; border-radius:5px; padding:18px; margin:12px 0; }
+    .deadline-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; }
+    .deadline h3 { margin:0; }
+    .deadline-rows { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .mini-label { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+    .mini-val { display:block; font-size:13px; font-weight:700; margin-top:3px; }
+    .visual-line { height:4px; background:#dce5e9; margin:19px 4px; position:relative; }
+    .visual-line:before, .visual-line:after { content:""; width:11px; height:11px; background:#3d6882; border-radius:50%; position:absolute; top:-3.5px; }
+    .visual-line:before { left:-4px; }
+    .visual-line:after { right:-4px; background:var(--copper); }
+    .deadline-note { margin:0; color:var(--muted); font-size:12px; }
+    .iframebox { width:100%; min-height:620px; background:#f1f2f2; border:1px solid var(--line); border-radius:5px; overflow:hidden; }
+    iframe { display:block; width:100%; height:620px; border:0; }
+    .callout { background:#f3f5f6; border:1px solid #e0e6e9; padding:16px 18px; border-radius:4px; font-size:13px; }
+    .callout strong { display:block; margin-bottom:5px; }
+    .methodcols { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .code-example { background:#192735; color:#e6eef3; border-radius:5px; padding:18px; overflow:auto; font-size:12px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; white-space:pre; line-height:1.6; }
+    .foot { border-top:1px solid var(--line); padding:24px 0 40px; color:var(--muted); font-size:12px; }
+    .footerflex { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .hidden { display:none !important; }
+    #msg { font-size:12px; min-height:20px; color:var(--muted); }
+    @media (max-width:860px) { .grid { grid-template-columns:repeat(2,1fr); } .columns,.methodcols { grid-template-columns:1fr; } .headright { display:none; } }
+    @media (max-width:540px) { .container { width:calc(100% - 28px); } .hero { padding-top:32px; } .grid { gap:8px; } .stat { padding:14px; } .stat b { font-size:23px; } nav button { padding-inline:12px; } .surface { padding:17px; } .field.search,.field.small { min-width:100%; width:100%; } .deadline-rows { grid-template-columns:1fr; } .topnote { width:100%; margin:2px 0; } .footerflex { flex-wrap:wrap; } }
+    @media print { nav,.toolbar,.filterbar,.btn,.notice { display:none; } .panel { display:block !important; break-before:page; } .panel:first-of-type { break-before:auto; } body { background:white; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topline">
+      <div class="brand"><div class="brandmark" aria-hidden="true">M°</div><div><div class="brandname">BRAZEN JUSTICE</div><div class="brandline">Public record explorer</div></div></div>
+      <div class="headright">Independent examination &middot; Evidence before conclusions<br><span id="verified-head">Data not yet loaded</span></div>
+    </div>
+  </header>
+  <section class="container hero">
+    <div class="eyebrow">#ThemToo &nbsp; / &nbsp; Research workbench</div>
+    <h1>The record should speak.</h1>
+    <p class="intro">Search the docket. Read the filings. Trace the procedure. Examine the claims and deadlines against the underlying sources.</p>
+    <div class="notice" id="statusNotice"><strong>Prepublication workbench.</strong> No verified case records have been loaded. Imported data stays in this browser session. Do not import confidential material into a public site.</div>
+    <div class="toolbar">
+      <label class="btn file-label" for="jsonFile">Import public-data JSON</label>
+      <input id="jsonFile" type="file" accept=".json,application/json" aria-label="Import public-data JSON">
+      <label class="btn secondary file-label" for="csvFile">Import ROA CSV</label>
+      <input id="csvFile" type="file" accept=".csv,text/csv" aria-label="Import Register of Actions CSV">
+      <button class="btn secondary" id="templateBtn" type="button">Download JSON template</button>
+      <span class="topnote" id="msg" aria-live="polite">Single-file app &middot; No account or database required</span>
+    </div>
+    <nav role="tablist" aria-label="Data views">
+      <button role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" data-view="overview">Overview</button>
+      <button role="tab" id="tab-register" aria-controls="panel-register" aria-selected="false" data-view="register">Register</button>
+      <button role="tab" id="tab-documents" aria-controls="panel-documents" aria-selected="false" data-view="documents">Documents</button>
+      <button role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="false" data-view="timeline">Timeline</button>
+      <button role="tab" id="tab-deadlines" aria-controls="panel-deadlines" aria-selected="false" data-view="deadlines">Limitations</button>
+      <button role="tab" id="tab-calendar" aria-controls="panel-calendar" aria-selected="false" data-view="calendar">Calendar</button>
+      <button role="tab" id="tab-method" aria-controls="panel-method" aria-selected="false" data-view="method">Methodology</button>
+    </nav>
+  </section>
+  <main class="container">
+    <section class="panel active" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+      <div class="grid">
+        <div class="stat"><b id="countEntries">0</b><span>Register entries</span></div>
+        <div class="stat"><b id="countDocs">0</b><span>Public documents</span></div>
+        <div class="stat"><b id="countEvents">0</b><span>Timeline events</span></div>
+        <div class="stat"><b id="countPending">0</b><span>Deadline reviews open</span></div>
+      </div>
+      <div class="columns">
+        <div class="surface">
+          <div class="eyebrow">Case index</div>
+          <h2 id="caseTitle">Awaiting public record</h2>
+          <p class="sectionlead" id="caseSummary">Import a court-index CSV or a structured public-data JSON file to populate the explorer. The app does not scrape court websites or interpret legal deadlines automatically.</p>
+          <div class="callout"><strong>What this is</strong>A navigable index linking assertions to primary documents, distinguishing allegations from findings, and separating procedural facts from legal analysis.</div>
+        </div>
+        <div class="surface">
+          <div class="eyebrow">Editorial standards</div>
+          <h2>Read critically.</h2>
+          <div class="rule"><div class="number">01</div><div><strong>Primary records first.</strong><p>Original source URL and a stable document identifier wherever available.</p></div></div>
+          <div class="rule"><div class="number">02</div><div><strong>Status is not a verdict.</strong><p>Reported, disputed, verified, and under review have different meanings.</p></div></div>
+          <div class="rule"><div class="number">03</div><div><strong>Protect sensitive people.</strong><p>Public-facing documents should be reviewed for privacy and publication appropriateness.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-register" aria-labelledby="tab-register">
+      <h2>Register of Actions</h2><p class="sectionlead">One row per source-index entry. Search and filter without changing the original record.</p>
+      <div class="filterbar"><input class="field search" type="search" id="roaSearch" placeholder="Search date, filing, party, text, or document ID" aria-label="Search register"><select class="field small" id="roaType" aria-label="Filter register type"><option value="">All types</option></select><select class="field small" id="roaStatus" aria-label="Filter register verification"><option value="">All verification levels</option><option value="confirmed">Confirmed</option><option value="reported">Reported</option><option value="disputed">Disputed</option><option value="needs-review">Needs review</option></select><button class="btn secondary sm" id="roaSort" type="button">Newest first ↓</button></div>
+      <div class="table-scroll"><table><thead><tr><th>Date</th><th>Filing / event</th><th>Party / filer</th><th>Type</th><th>Verification</th><th>Source</th></tr></thead><tbody id="roaBody"></tbody></table><div class="empty" id="roaEmpty"><b>No entries yet.</b>Import the court register as CSV or JSON.</div></div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-documents" aria-labelledby="tab-documents">
+      <h2>Public document library</h2><p class="sectionlead">Only records marked for publication appear here. The app indexes links; it does not ingest or host PDFs.</p>
+      <div class="filterbar"><input class="field search" type="search" id="docSearch" placeholder="Search title, type, ID, or checksum" aria-label="Search documents"><select class="field small" id="docType" aria-label="Filter document type"><option value="">All types</option></select></div>
+      <div class="table-scroll"><table><thead><tr><th>Date</th><th>Document</th><th>Type</th><th>Verification</th><th>Original checksum</th><th>Link</th></tr></thead><tbody id="docBody"></tbody></table><div class="empty" id="docEmpty"><b>No public documents indexed.</b>Use source links and cryptographic checksums for verifiability.</div></div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-timeline" aria-labelledby="tab-timeline">
+      <h2>Procedural timeline</h2><p class="sectionlead">Chronological events linked to their documentary basis. Unverified dates remain labeled.</p>
+      <div class="timeline" id="timeList"></div><div class="empty" id="timeEmpty"><b>No events yet.</b>Import timeline events or ROA entries.</div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-deadlines" aria-labelledby="tab-deadlines">
+      <h2>Limitations and deadline map</h2>
+      <p class="sectionlead">A research register, not a legal opinion. Each candidate deadline must record its triggering event, applicable law, tolling assumptions, and review status.</p>
+      <div class="callout"><strong>Legal-review gate</strong>Do not put an unreviewed statutory calculation on a public calendar as a definite last day to file. Appeals, claim-presentation periods, hearing dates, and statutes of limitations are legally distinct.</div>
+      <div id="deadlineList"></div><div class="empty" id="deadlineEmpty"><b>No deadline analyses yet.</b>Add reviewed deadlines through the JSON template.</div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-calendar" aria-labelledby="tab-calendar">
+      <h2>Public calendar</h2><p class="sectionlead">Embed a published Google Calendar for verified hearings, milestones, and clearly classified legal dates. Calendar visibility is controlled in Google Calendar.</p>
+      <div class="surface"><label for="calendarId"><strong>Public Google Calendar ID</strong></label><p class="sectionlead" style="font-size:13px;margin:4px 0 10px;">In Google Calendar settings, make a dedicated calendar public and copy its Calendar ID. Don't publish internal notes or sensitive data.</p><div class="filterbar"><input class="field search" id="calendarId" type="text" placeholder="calendar-id@group.calendar.google.com" aria-label="Calendar ID"><button class="btn" id="calendarEmbedBtn" type="button">Embed calendar</button><button class="btn secondary" id="calendarClearBtn" type="button">Clear</button></div><p id="calendarMessage" style="font-size:12px;color:var(--muted);margin-top:0;">The public calendar has not been configured.</p><div class="iframebox" id="calendarBox"><div class="empty" style="padding-top:260px;"><b>Calendar preview</b>Paste the public Calendar ID above to load the official Google embed.</div></div></div>
+    </section>
+    <section class="panel" role="tabpanel" id="panel-method" aria-labelledby="tab-method">
+      <h2>Methodology and release requirements</h2><p class="sectionlead">A living standard for evidence quality, privacy, and reproducibility.</p>
+      <div class="methodcols">
+        <div class="surface"><h3>Verification vocabulary</h3><div class="rule"><div class="number">01</div><div><strong>Confirmed</strong><p>Directly supported by an identified primary record or reliable independent reporting, scoped to what that record proves.</p></div></div><div class="rule"><div class="number">02</div><div><strong>Reported</strong><p>Attributed to a source, but not independently established by this index.</p></div></div><div class="rule"><div class="number">03</div><div><strong>Disputed</strong><p>Conflicting evidence or express contest by a party; unresolved here.</p></div></div><div class="rule"><div class="number">04</div><div><strong>Needs review</strong><p>Source or classification not yet verified. Do not present as fact.</p></div></div></div>
+        <div class="surface"><h3>Release checklist</h3><p>Every published assertion should link to a source. Each PDF should retain an original file and SHA-256 hash in the private preservation archive, with a separately reviewed, redacted public copy if appropriate.</p><p>Use an explicit corrections history, verify court dates directly, request responses from adversely portrayed subjects, and distinguish allegations, legal filings, judicial findings, and editorial opinion.</p><p>Do not bulk scrape a court website without checking its terms and permissions. The browser import feature uses only files you provide.</p></div>
+      </div>
+      <h3 style="margin-top:28px;">Accepted JSON data structure</h3>
+      <p class="sectionlead">The downloadable template is an empty dataset. No historical, case-specific, or statutory facts are prefilled.</p>
+      <div class="code-example" id="schemaExample"></div>
+    </section>
+  </main>
+  <footer class="foot"><div class="container footerflex"><span><strong>BRAZEN JUSTICE</strong> &middot; Evidence before conclusions</span><span>Single-file HTML &middot; Local import &middot; Source-first workflow</span></div></footer>
+  <script>
+  (() => {
+    'use strict';
+    const TEMPLATE = {
+      case: { name: "", caseNumber: "", court: "", description: "", lastVerified: "" },
+      calendarId: "",
+      entries: [],
+      documents: [],
+      events: [],
+      deadlines: [],
+      // Example fields for an entry: {id,date,title,description,filer,type,status,sourceUrl,documentId}
+      // Document: {id,date,title,type,sha256,status,sourceUrl,public:true}
+      // Event: {id,date,title,description,status,sourceUrl}
+      // Deadline: {id,title,category,triggerDate,dueDate,statute,tolling,status,sourceUrl,notes}
+    };
+    let data = structuredClone(TEMPLATE);
+    let newestFirst = true;
+    const $ = id => document.getElementById(id);
+    const safe = v => String(v === null || v === undefined ? '' : v);
+    const has = v => safe(v).trim().length > 0;
+    const formatDate = d => /^\d{4}-\d{2}-\d{2}$/.test(safe(d)) ? new Date(`${d}T12:00:00`).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}) : (has(d) ? safe(d) : 'Not provided');
+    const stamp = s => /^\d{4}-\d{2}-\d{2}$/.test(safe(s)) ? safe(s) : '0000-00-00';
+    const clear = node => node.replaceChildren();
+    function el(tag, txt, className) { const n=document.createElement(tag); if(txt !== undefined) n.textContent=safe(txt); if(className) n.className=className; return n; }
+    function addCell(row, content, cls) { const td=el('td'); if (content instanceof Node) td.append(content); else td.textContent=safe(content); if(cls) td.className=cls; row.append(td); return td; }
+    function badge(status) { let normalized=safe(status||'needs-review').toLowerCase().replace(/[^a-z-]/g,'-'); const span=el('span',safe(status||'Needs review').replace(/-/g,' '),'pill '+normalized); return span; }
+    function sourceLink(url,label='Open source') { if(!has(url)) return el('span','Not linked','sub'); try { const u=new URL(url); if(!['https:','http:'].includes(u.protocol)) throw Error(); const a=el('a',label); a.href=u.href; a.target='_blank'; a.rel='noopener noreferrer'; return a; } catch { return el('span','Invalid URL','sub'); } }
+    function val(obj,keys) { for(const k of keys) if(has(obj?.[k])) return safe(obj[k]); return ''; }
+    function asArray(v) { return Array.isArray(v) ? v.filter(x=>x && typeof x==='object' && !Array.isArray(x)) : []; }
+    function normalize(raw) {
+      if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Expected a JSON object.');
+      return {case: (raw.case && typeof raw.case==='object')?raw.case:{},calendarId:safe(raw.calendarId),entries:asArray(raw.entries),documents:asArray(raw.documents),events:asArray(raw.events),deadlines:asArray(raw.deadlines)};
+    }
+    function update() {
+      const publicDocs=data.documents.filter(d=>d.public===true);
+      const events=allEvents();
+      $('countEntries').textContent=data.entries.length.toLocaleString();
+      $('countDocs').textContent=publicDocs.length.toLocaleString();
+      $('countEvents').textContent=events.length.toLocaleString();
+      $('countPending').textContent=data.deadlines.filter(d=>!['reviewed','confirmed'].includes(safe(d.status).toLowerCase())).length.toLocaleString();
+      $('caseTitle').textContent=val(data.case,['name','caseNumber']) || 'Awaiting public record';
+      const metadata=[val(data.case,['court']), val(data.case,['caseNumber']), val(data.case,['description'])].filter(Boolean).join(' · ');
+      $('caseSummary').textContent=metadata || 'Import a court-index CSV or a structured public-data JSON file to populate the explorer. The app does not scrape court websites or interpret legal deadlines automatically.';
+      $('verified-head').textContent=data.case.lastVerified ? 'Index checked: '+formatDate(data.case.lastVerified) : 'No index verification date';
+      const hasContent=data.entries.length+data.documents.length+data.events.length+data.deadlines.length>0;
+      $('statusNotice').innerHTML='';
+      const strong=el('strong',hasContent?'Research dataset loaded. ':'Prepublication workbench. ');
+      $('statusNotice').append(strong,document.createTextNode(hasContent?'Loaded browser-side; not independently verified by this app. Check source records and redact public copies before deployment.':'No verified case records have been loaded. Imported data stays in this browser session. Do not import confidential material into a public site.'));
+      fillSelect('roaType',data.entries.map(x=>val(x,['type'])));
+      fillSelect('docType',publicDocs.map(x=>val(x,['type'])));
+      renderROA(); renderDocs(); renderTimeline(); renderDeadlines();
+      if(has(data.calendarId) && $('calendarId').value!==data.calendarId) { $('calendarId').value=data.calendarId; try { embedCalendar(data.calendarId); } catch(e) { $('calendarMessage').textContent=e.message; } }
+    }
+    function fillSelect(id,options) { const select=$(id), selected=select.value; while(select.options.length>1) select.remove(1); for(const opt of [...new Set(options.filter(Boolean))].sort()) { const o=el('option',opt); o.value=opt; select.add(o); } select.value=selected; }
+    function renderROA() {
+      const q=$('roaSearch').value.toLowerCase().trim(), type=$('roaType').value, status=$('roaStatus').value;
+      const arr=data.entries.filter(x=>(!q || Object.values(x).join(' ').toLowerCase().includes(q))&&(!type||val(x,['type'])===type)&&(!status||safe(x.status||'needs-review').toLowerCase()===status));
+      arr.sort((a,b)=> (newestFirst?-1:1)*stamp(a.date).localeCompare(stamp(b.date)));
+      clear($('roaBody')); $('roaEmpty').classList.toggle('hidden',arr.length>0);
+      for(const item of arr) {
+        const tr=el('tr'); addCell(tr,formatDate(item.date));
+        const title=el('div',val(item,['title','entry','event'])||'(Untitled entry)'); const sub=el('span',val(item,['description','summary','id'])||'','sub'); title.append(sub); addCell(tr,title);
+        addCell(tr,val(item,['filer','party'])||'—'); addCell(tr,val(item,['type'])||'—'); addCell(tr,badge(item.status)); addCell(tr,sourceLink(item.sourceUrl||item.url||'')); $('roaBody').append(tr);
+      }
+    }
+    function renderDocs() {
+      const q=$('docSearch').value.toLowerCase().trim(), type=$('docType').value;
+      const arr=data.documents.filter(x=>x.public===true&&(!q||Object.values(x).join(' ').toLowerCase().includes(q))&&(!type||val(x,['type'])===type));
+      arr.sort((a,b)=>stamp(b.date).localeCompare(stamp(a.date)));
+      clear($('docBody')); $('docEmpty').classList.toggle('hidden',arr.length>0);
+      for(const item of arr) {
+        const tr=el('tr'); addCell(tr,formatDate(item.date));
+        const title=el('div',val(item,['title','id'])||'(Untitled document)'); title.append(el('span',safe(item.id||''),'sub')); addCell(tr,title);
+        addCell(tr,item.type||'—'); addCell(tr,badge(item.status));
+        const hash=safe(item.sha256||''); const cell=el('span',hash?hash.slice(0,18)+'…':'Not provided'); if(hash) cell.title=hash; addCell(tr,cell); addCell(tr,sourceLink(item.sourceUrl||'')); $('docBody').append(tr);
+      }
+    }
+    function allEvents() { const ev=data.events.length?data.events:data.entries.map(x=>({id:x.id,date:x.date,title:val(x,['title','entry','event']),description:x.description,status:x.status,sourceUrl:x.sourceUrl||x.url})); return [...ev].sort((a,b)=>stamp(a.date).localeCompare(stamp(b.date))); }
+    function renderTimeline() {
+      const arr=allEvents(); clear($('timeList')); $('timeEmpty').classList.toggle('hidden',arr.length>0);
+      for(const e of arr) { const wrap=el('article',undefined,'time-item'); wrap.append(el('div',formatDate(e.date),'time-date'),el('div',val(e,['title','id'])||'Event','time-title'));
+        if(has(e.description)) wrap.append(el('p',e.description,'time-body'));
+        const row=el('div'); row.append(badge(e.status),' ',sourceLink(e.sourceUrl)); wrap.append(row); $('timeList').append(wrap);
+      }
+    }
+    function renderDeadlines() {
+      const arr=[...data.deadlines].sort((a,b)=>stamp(a.dueDate).localeCompare(stamp(b.dueDate)));
+      clear($('deadlineList')); $('deadlineEmpty').classList.toggle('hidden',arr.length>0);
+      for(const d of arr) {
+        const wrap=el('article',undefined,'deadline'), head=el('div',undefined,'deadline-head'), left=el('div'); left.append(el('h3',d.title||'Untitled deadline'),el('div',d.category||'Deadline analysis','mini-label')); head.append(left,badge(d.status)); wrap.append(head);
+        const details=el('div',undefined,'deadline-rows');
+        for(const [lab,value] of [['Trigger event',formatDate(d.triggerDate)],['Proposed deadline',formatDate(d.dueDate)],['Authority',d.statute||'Not provided']]) { const box=el('div'); box.append(el('span',lab,'mini-label'),el('span',value,'mini-val')); details.append(box); }
+        wrap.append(details,el('div',undefined,'visual-line'));
+        wrap.append(el('div','Trigger to proposed deadline · schematic, not to scale','mini-label'));
+        const note=el('p',`Tolling/exceptions: ${d.tolling||'Not evaluated'}${d.notes?' · '+d.notes:''}`,'deadline-note'); wrap.append(note);
+        const src=el('p'); src.append(sourceLink(d.sourceUrl,'Read authority or source')); wrap.append(src); $('deadlineList').append(wrap);
+      }
+    }
+    function parseCSV(text) {
+      // RFC4180-style quoted fields, including doubled quotation marks and embedded newlines.
+      const rows=[],row=[]; let cell='',inQuotes=false;
+      text=text.replace(/^\uFEFF/,'');
+      for(let i=0;i<text.length;i++) { const c=text[i],next=text[i+1]; if(c==='"') { if(inQuotes && next==='"') { cell+='"'; i++; } else inQuotes=!inQuotes; } else if(c===','&&!inQuotes) { row.push(cell); cell=''; } else if((c==='\n'||c==='\r')&&!inQuotes) { if(c==='\r'&&next==='\n') i++; row.push(cell); if(row.some(v=>v.trim())) rows.push([...row]); row.length=0; cell=''; } else cell+=c; }
+      if(inQuotes) throw Error('CSV contains an unmatched quote.'); row.push(cell); if(row.some(v=>v.trim())) rows.push(row);
+      if(rows.length<2) throw Error('CSV requires a header and at least one data row.');
+      const header=rows.shift().map(h=>h.trim().toLowerCase().replace(/[^a-z0-9]+/g,''));
+      const pick=(obj,keys)=>{for(const k of keys)if(has(obj[k])) return obj[k]; return '';};
+      return rows.map((r,i)=>{ const obj={}; header.forEach((h,j)=>obj[h]=(r[j]||'').trim());
+        return {id:pick(obj,['id','entryid','roaid'])||`CSV-${String(i+1).padStart(5,'0')}`,
+          date:pick(obj,['date','filingdate','eventdate','filed','entrydate']),
+          title:pick(obj,['title','event','description','entry','roaentry','documentname'])||'Untitled ROA entry',
+          description:pick(obj,['description','entrytext','eventdescription','text','comments']),
+          filer:pick(obj,['filer','party','filedby','submittedby']),
+          type:pick(obj,['type','eventtype','filingtype'])||'Register entry',
+          status:pick(obj,['status','verificationstatus'])||'needs-review',
+          sourceUrl:pick(obj,['sourceurl','url','documenturl','link']),
+          documentId:pick(obj,['documentid','docid'])}; });
+    }
+    function downloadJson() { const blob=new Blob([JSON.stringify(TEMPLATE,null,2)+'\n'],{type:'application/json'}), url=URL.createObjectURL(blob), a=el('a'); a.href=url; a.download='brazen-justice-public-data-template.json'; document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url); }
+    function flash(s) { $('msg').textContent=s; }
+    $('templateBtn').addEventListener('click',downloadJson);
+    $('jsonFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=JSON.parse(await f.text());data=normalize(raw);update();flash(`Loaded ${f.name} (not source-verified).`);}catch(err){flash('Import failed: '+err.message);}e.target.value='';});
+    $('csvFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{data.entries=parseCSV(await f.text());update();flash(`Loaded ${data.entries.length} ROA entries from ${f.name}.`);}catch(err){flash('CSV import failed: '+err.message);}e.target.value='';});
+    document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{const v=btn.dataset.view;document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-selected',b===btn?'true':'false'));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${v}`));}));
+    for(const id of ['roaSearch','roaType','roaStatus']) $(id).addEventListener('input',renderROA);
+    for(const id of ['docSearch','docType']) $(id).addEventListener('input',renderDocs);
+    $('roaSort').addEventListener('click',()=>{newestFirst=!newestFirst;$('roaSort').textContent=newestFirst?'Newest first ↓':'Oldest first ↑';renderROA();});
+    function embedCalendar(id) {
+      // Accept a Calendar ID only. Never accept arbitrary iframe URLs.
+      const val=safe(id).trim();
+      if(val.length>300 || !/^[a-zA-Z0-9_.@#%+-]+$/.test(val)) throw Error('Enter a valid Google Calendar ID, not a URL.');
+      const iframe=el('iframe'); iframe.title='Public Brazen Justice Calendar'; iframe.loading='lazy'; iframe.referrerPolicy='strict-origin-when-cross-origin';
+      iframe.src='https://calendar.google.com/calendar/embed?src='+encodeURIComponent(val)+'&ctz=America%2FLos_Angeles&mode=AGENDA&showTitle=0';
+      clear($('calendarBox')); $('calendarBox').append(iframe); $('calendarMessage').textContent='Displaying the public Google Calendar. If it is empty, confirm its sharing permissions in Google Calendar.';
+    }
+    $('calendarEmbedBtn').addEventListener('click',()=>{try{embedCalendar($('calendarId').value);}catch(e){$('calendarMessage').textContent=e.message;}});
+    $('calendarClearBtn').addEventListener('click',()=>{$('calendarId').value='';clear($('calendarBox'));$('calendarBox').append(el('div','Calendar embed cleared.','empty'));$('calendarMessage').textContent='No calendar configured.';});
+    $('schemaExample').textContent=JSON.stringify({case:{name:'',caseNumber:'',court:'',description:'',lastVerified:''},calendarId:'',entries:[{id:'',date:'YYYY-MM-DD',title:'',filer:'',type:'',status:'needs-review',sourceUrl:'',documentId:''}],documents:[{id:'',date:'YYYY-MM-DD',title:'',type:'',sha256:'',status:'needs-review',sourceUrl:'',public:false}],events:[{id:'',date:'YYYY-MM-DD',title:'',description:'',status:'needs-review',sourceUrl:''}],deadlines:[{id:'',title:'',category:'',triggerDate:'YYYY-MM-DD',dueDate:'YYYY-MM-DD',statute:'',tolling:'',status:'needs-review',sourceUrl:'',notes:''}]},null,2);
+    update();
+    // On static hosting, optionally load a public, curated companion JSON file.
+    // Opening index.html via file:// remains self-contained and uses manual imports.
+    if(/^https?:$/.test(location.protocol)) fetch('./public-record.json',{cache:'no-store'})
+      .then(resp=>{if(!resp.ok) throw Error(); return resp.json();})
+      .then(raw=>{data=normalize(raw);update();flash('Published public-record.json loaded.');})
+      .catch(()=>{});
+  })();
+  </script>
+</body>
+</html>
